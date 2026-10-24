@@ -15,5 +15,5 @@ N 100 60 420 60 {lab=0}
 C {devices/vsource.sym} 180 -130 0 0 {name=VCC value=5}
 C {devices/res.sym} 420 -100 0 0 {name=R_S value=88k}
 C {devices/res.sym} 420 0 0 0 {name=R_L value=20k}
-C {devices/gnd.sym} 420 100 0 0 {name=GND lab=0}
+C {devices/gnd.sym} 420 60 0 0 {name=GND lab=0}
 C {devices/code_shown.sym} 700 -80 0 0 {name=SIM only_toplevel=true value=".control\nop\nprint v(S)\n.endc"}
