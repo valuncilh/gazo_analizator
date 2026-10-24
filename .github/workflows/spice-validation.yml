@@ -32,7 +32,6 @@ jobs:
         run: sh spice/fetch_vendor_models.sh
 
       - name: Test downloaded TI model compatibility with ngspice
-        continue-on-error: true
         run: sh spice/run_vendor_model_test.sh
 
       - name: Run 4.7 uF and 47 uF timer scenarios
