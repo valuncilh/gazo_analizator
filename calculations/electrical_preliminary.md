@@ -238,7 +238,7 @@ U_{OH}(DA1) \ge U_{HA,min} + U_F(VD1),
 ## 11. Источники для расчётной части
 
 1. Кузнецов С. «Бытовой сигнализатор утечки газа» // Радио. 2022. № 11. С. 46–48. https://www.radioradar.net/radiofan/home_appliances/household_gas_leak_detector.html.
-2. Winsen. MQ-4 Semiconductor Sensor, manual v1.5. https://www.winsen-sensor.com/d/files/MQ-4.pdf.
+2. Winsen. *MQ-4 Semiconductor Sensor*, Manual v1.6, valid from 2021-07-01. https://www.winsen-sensor.com/d/files/mq-4-%28ver1_6%29---manual.pdf.
 3. КР1006ВИ1, техническое описание. https://radiolub.ru/uploads/2012pic/kr1006vi1.pdf.
 4. КТ3102, техническая спецификация семейства. https://doc.platan.ru/pdf/datasheets/russia/KT3102.pdf.
 5. HCM12X Series, паспорт звуковых излучателей. https://www.kaili-buzzer.com/Buzzer-Datasheet/Magnetic-Buzzer/HCM12X.pdf.
