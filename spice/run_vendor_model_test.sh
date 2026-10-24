@@ -46,7 +46,7 @@ checks = {
     "sensor_clean_air_after": (0.926, 0.88, 0.98),
 }
 for name, (expected, low, high) in checks.items():
-    match = re.search(rf"^{name}\\s*=\\s*([0-9.eE+-]+)", log, re.MULTILINE)
+    match = re.search(rf"^{name}\s*=\s*([0-9.eE+-]+)", log, re.MULTILINE)
     if match is None:
         print(f"ERROR: {name} measurement missing from ngspice log", file=sys.stderr)
         raise SystemExit(1)
@@ -57,7 +57,7 @@ for name, (expected, low, high) in checks.items():
         raise SystemExit(1)
 
 for name, state in [("reset_air_initial", "low"), ("reset_at_1000ppm", "high"), ("reset_clean_after", "low")]:
-    match = re.search(rf"^{name}\\s*=\\s*([0-9.eE+-]+)", log, re.MULTILINE)
+    match = re.search(rf"^{name}\s*=\s*([0-9.eE+-]+)", log, re.MULTILINE)
     if match is None:
         print(f"ERROR: {name} measurement missing from ngspice log", file=sys.stderr)
         raise SystemExit(1)
