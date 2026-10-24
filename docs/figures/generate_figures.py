@@ -204,6 +204,37 @@ def caption_plot(source, destination, title, subtitle):
     draw.text((44, 62), subtitle, fill=GREY, font=font_sub)
     canvas.save(destination, optimize=True)
 
+# Preserve the published reference schematic as a separately attributed figure.
+source_scheme = Path("docs/figures/source_schematic.webp")
+if source_scheme.is_file():
+    source_im = Image.open(source_scheme).convert("RGB")
+    source_width = 1500
+    source_height = round(source_im.height * source_width / source_im.width)
+    source_im = source_im.resize((source_width, source_height), Image.Resampling.LANCZOS)
+    top_band, bottom_band = 112, 44
+    source_canvas = Image.new("RGB", (source_width, source_height + top_band + bottom_band), "white")
+    source_canvas.paste(source_im, (0, top_band))
+    source_draw = ImageDraw.Draw(source_canvas)
+    source_draw.text(
+        (42, 12),
+        "Рисунок 0 — исходная схема из публикации С. Кузнецова",
+        fill=INK,
+        font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 29),
+    )
+    source_draw.text(
+        (44, 62),
+        "Источник: «Радио», 2022, № 11, с. 46–48. В оригинале используется модуль с DOUT.",
+        fill=GREY,
+        font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 17),
+    )
+    source_draw.text(
+        (42, top_band + source_height + 10),
+        "Референсный рисунок, не изменённая авторская схема. Адаптация под аналоговый выход S оформлена отдельно.",
+        fill=GREY,
+        font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 15),
+    )
+    source_canvas.save(OUT / "fig00_source_scheme_from_article.png", optimize=True)
+
 caption_plot(
     "spice/bode_linearized.png",
     OUT / "fig06_bode_linearized_submodels.png",
