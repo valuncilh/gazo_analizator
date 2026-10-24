@@ -8,8 +8,16 @@ SCH=docs/figures/xschem_probe/mq4_divider.sch
 mkdir -p "$OUT"
 : > "$OUT/xschem.log"
 
+# Ubuntu installs the generic symbols here. Use a dedicated rc so the runner's
+# generated ~/.xschem/xschemrc cannot point at a nonexistent user library.
+test -d /usr/share/xschem/xschem_library/devices
+test -s /usr/share/xschem/xschem_library/devices/res.sym
+cat > "$OUT/xschemrc" <<'XSCHEMRC'
+set XSCHEM_LIBRARY_PATH {/usr/share/xschem/xschem_library}
+XSCHEMRC
+
 xschem --version | tee "$OUT/xschem_version.txt"
-xschem -n -s -x -q --netlist_path "$OUT" --netlist_filename mq4_divider.spice "$SCH" > "$OUT/xschem.log" 2>&1
+xschem -n -s -x -q --rcfile "$OUT/xschemrc" --netlist_path "$OUT" --netlist_filename mq4_divider.spice "$SCH" > "$OUT/xschem.log" 2>&1
 test -s "$OUT/mq4_divider.spice"
 
 echo "=== Exported xschem SPICE netlist ==="
@@ -39,7 +47,7 @@ if abs(actual - expected) > 0.005:
 PY
 
 # Export a picture for visual comparison with docs/figures/fig02_mq4_equivalent.png.
-xvfb-run -a xschem --png -q "$SCH" > "$OUT/xschem_png_export.log" 2>&1
+xvfb-run -a xschem --png -q --rcfile "$OUT/xschemrc" "$SCH" > "$OUT/xschem_png_export.log" 2>&1
 PNG=$(find docs/figures/xschem_probe -maxdepth 1 -type f -name 'mq4_divider.png' -print -quit)
 if [ -z "$PNG" ]; then
     PNG=$(find . -maxdepth 5 -type f -name 'mq4_divider.png' -print -quit)
