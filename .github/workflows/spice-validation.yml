@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "spice/**"
+      - "docs/figures/**"
       - ".github/workflows/spice-validation.yml"
   pull_request:
     paths:
@@ -12,7 +13,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   ngspice-smoke-test:
@@ -45,6 +46,19 @@ jobs:
           python3 -m py_compile spice/plot_bode.py
           python3 spice/plot_bode.py
 
+      - name: Generate annotated PNG figures
+        run: |
+          python3 docs/figures/generate_figures.py
+          cp spice/bode_linearized.png docs/figures/fig06_bode_linearized_submodels.png
+          cp spice/vendor_chain_plots.png docs/figures/fig07_transient_vendor_model.png
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/figures/*.png
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish annotated SPICE PNG figures [skip ci]"
+            git push
+          fi
+
       - name: Upload simulation output and logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -65,3 +79,4 @@ jobs:
             spice/vendor_model_test.log
             spice/vendor_model_results.dat
             spice/vendor_chain_plots.png
+            docs/figures/*.png
