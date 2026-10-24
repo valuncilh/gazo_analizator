@@ -48,16 +48,11 @@ if abs(actual - expected) > 0.005:
     raise SystemExit(1)
 PY
 
-# Export a picture for visual comparison with docs/figures/fig02_mq4_equivalent.png.
-xvfb-run -a xschem --png -q --rcfile "$OUT/xschemrc" "$SCH" > "$OUT/xschem_png_export.log" 2>&1
-PNG=$(find docs/figures/xschem_probe -maxdepth 1 -type f -name 'mq4_divider.png' -print -quit)
-if [ -z "$PNG" ]; then
-    PNG=$(find . -maxdepth 5 -type f -name 'mq4_divider.png' -print -quit)
-fi
-if [ -z "$PNG" ] || [ ! -s "$PNG" ]; then
+# Export a picture in command mode so CI does not leave a hidden GUI process.
+xschem -x --png --plotfile "$OUT/mq4_divider.png" -q --rcfile "$OUT/xschemrc" "$SCH" > "$OUT/xschem_png_export.log" 2>&1
+if [ ! -s "$OUT/mq4_divider.png" ]; then
     echo "ERROR: xschem PNG export was not created" >&2
     cat "$OUT/xschem_png_export.log" >&2
     exit 1
 fi
-cp "$PNG" "$OUT/mq4_divider.png"
 echo "xschem fragment export and netlist checks passed."
