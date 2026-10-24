@@ -171,7 +171,7 @@ arrow(ax,(3.4,1.58),(5.25,1.58),"RESET",PURPLE)
 arrow(ax,(5.25,1.58),(6.45,3.35),"",PURPLE)
 arrow(ax,(9.0,4.15),(10.25,4.15),"OUT",ORANGE)
 block(ax,10.25,3.3,2.8,1.5,"Нагрузки","HL1 через R6\nVT2/HA1 через R9",GREEN,"#ECFDF3",True)
-block(ax,9.7,1.0,3.7,1.15,"Номинал не исправлен","4,7 мкФ → около 12,47 Гц",RED,"#FEF3F2",False)
+block(ax,9.7,.55,3.7,1.1,"Номинал не исправлен","4,7 мкФ → около 12,47 Гц",RED,"#FEF3F2",False)
 ax.text(.8,.4,"CT и RESET — разные цепи. 47 мкФ здесь не установлен, а рассматривается только как сравнение (~1,25 Гц).",fontsize=9,color=GREY)
 finish(fig,"fig04_timer_555_analogue.png")
 
@@ -218,7 +218,7 @@ ground(ax,6.25,1.55)
 # NPN symbol, with the same emitter, base, and collector connections as QVT2.
 qx,qy=7.2,3.0
 ax.plot([qx,qx],[qy-.46,qy+.46],c=INK,lw=1.9)
-wire(ax,[(6.25,3.0),(qx-.62,qy)],PURPLE,1.7)
+wire(ax,[(6.25,3.0),(qx,qy)],PURPLE,1.7)
 ax.plot([qx,qx+.48],[qy+.22,qy+.68],c=INK,lw=1.9)
 ax.plot([qx,qx+.48],[qy-.22,qy-.68],c=INK,lw=1.9)
 arrow(ax,(qx+.18,qy-.38),(qx+.39,qy-.58),"",INK)
