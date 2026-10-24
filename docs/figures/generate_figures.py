@@ -259,7 +259,7 @@ caption_plot(
     "spice/vendor_chain_plots.png",
     OUT / "fig07_transient_vendor_model.png",
     "Рисунок 7 — переходные процессы тестовой цепочки",
-    "TI TLV7041/TLC555, аналог 2N3904 вместо КТ3102ГМ, сценарный MQ-4 делитель.",
+    "TI TLV7041/TLC555, аналог 2N3904 вместо КТ3102ГМ, сценарный делитель MQ-4.",
 )
 
 print("Generated annotated schematic PNGs in", OUT)
