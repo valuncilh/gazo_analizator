@@ -120,12 +120,23 @@ wire(ax,[(1.55,6.35),(1.55,5.85)],ORANGE); resistor_v(ax,1.55,5.85,4.85,"P1 ве
 node(ax,1.55,4.5,TEAL); resistor_v(ax,1.55,4.5,3.3,"P1 низ",BLUE)
 wire(ax,[(1.55,4.85),(1.55,4.5)],TEAL); wire(ax,[(1.55,3.3),(1.55,2.9)]); ground(ax,1.55,2.9)
 wire(ax,[(1.55,4.5),(3.2,4.5)],TEAL,1.8); ax.text(1.85,4.72,"U_REF",color=TEAL,fontweight="bold")
+# Показываем движок P1, который задаёт опорное напряжение U_REF.
+ax.annotate("",xy=(1.55,4.5),xytext=(.82,5.12),
+            arrowprops=dict(arrowstyle="-|>",lw=1.4,color=ORANGE,mutation_scale=10))
+ax.text(.35,5.22,"ползунок P1",fontsize=8,color=ORANGE)
 block(ax,4.55,3.0,2.35,2.4,"U2: TLV7041","IN+ ← U_REF\nIN− ← S\nOUT = DOUT′",BLUE,"#EAF2FF",False)
 wire(ax,[(3.2,4.5),(4.55,4.5)],TEAL,1.7); wire(ax,[(3.2,3.55),(4.55,3.55)],RED,1.7)
 ax.text(3.25,3.77,"S",color=RED,fontweight="bold")
 wire(ax,[(6.9,4.15),(8.55,4.15)],BLUE,1.8); node(ax,8.55,4.15,BLUE); ax.text(7.0,4.4,"DOUT′",color=BLUE,fontweight="bold")
 for x,lab in [(9.65,"R1=160 кОм"),(11.55,"R8=2,2 кОм")]:
     wire(ax,[(x,6.35),(x,5.8)],ORANGE); resistor_v(ax,x,5.8,4.25,lab); wire(ax,[(x,4.25),(x,4.15),(8.55,4.15)],BLUE); node(ax,x,4.15,BLUE)
+# Развязка питания U2: C_U2 между VCC и общей землёй, как в SPICE netlist.
+wire(ax,[(12.55,6.35),(12.55,5.88)],ORANGE,1.3)
+ax.plot([12.30,12.80],[5.88,5.88],c=INK,lw=1.6)
+ax.plot([12.30,12.80],[5.68,5.68],c=INK,lw=1.6)
+wire(ax,[(12.55,5.68),(12.55,5.08)],INK,1.3)
+ground(ax,12.55,5.08)
+ax.text(12.82,5.76,"C_U2 = 100 нФ",fontsize=7.5,color=INK,va="center")
 wire(ax,[(8.55,4.15),(8.55,5.65)],TEAL,1.4); resistor_h(ax,6.6,8.55,5.65,"RHYS = 100 кОм",TEAL)
 wire(ax,[(6.6,5.65),(3.2,5.65),(3.2,4.5)],TEAL,1.4); node(ax,3.2,4.5,TEAL)
 block(ax,9.2,1.45,3.9,1.3,"Логика инверсии","S > U_REF → низкий уровень\nS < U_REF → высокий уровень",BLUE,PALE,False)
