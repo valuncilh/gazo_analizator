@@ -1,5 +1,9 @@
 name: SPICE behavioral model smoke test
 
+concurrency:
+  group: spice-validation
+  cancel-in-progress: true
+
 on:
   push:
     paths:
@@ -63,7 +67,7 @@ jobs:
           git add docs/figures/*.png docs/figures/source_schematic.webp
           if ! git diff --cached --quiet; then
             git commit -m "Publish annotated SPICE PNG figures [skip ci]"
-            git push
+            git push origin HEAD:main
           fi
 
       - name: Upload simulation output and logs
