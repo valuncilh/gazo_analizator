@@ -1,7 +1,7 @@
 name: SPICE behavioral model smoke test
 
 concurrency:
-  group: spice-validation
+  group: spice-validation-${{ github.event_name }}
   cancel-in-progress: true
 
 on:
@@ -17,7 +17,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   ngspice-smoke-test:
@@ -65,6 +65,27 @@ jobs:
       - name: Generate annotated PNG figures
         run: |
           python3 docs/figures/generate_figures.py
+
+      - name: Commit regenerated PNGs to the PR branch
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          PR_BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          set -eu
+          mkdir -p /tmp/generated-figures
+          cp docs/figures/fig*.png /tmp/generated-figures/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$PR_BRANCH"
+          git checkout --force -B "$PR_BRANCH" "origin/$PR_BRANCH"
+          cp /tmp/generated-figures/fig*.png docs/figures/
+          git add docs/figures/fig*.png
+          if git diff --cached --quiet; then
+            echo "Generated figures already match the PR branch."
+            exit 0
+          fi
+          git commit -m "Обновить PNG рисунков 0–8 [skip ci]"
+          git push origin "HEAD:$PR_BRANCH"
 
       - name: Upload simulation output and logs
         if: always()
