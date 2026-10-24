@@ -128,7 +128,7 @@ for x,lab in [(9.65,"R1=160 кОм"),(11.55,"R8=2,2 кОм")]:
     wire(ax,[(x,6.35),(x,5.8)],ORANGE); resistor_v(ax,x,5.8,4.25,lab); wire(ax,[(x,4.25),(x,4.15),(8.55,4.15)],BLUE); node(ax,x,4.15,BLUE)
 wire(ax,[(8.55,4.15),(8.55,5.65)],TEAL,1.4); resistor_h(ax,6.6,8.55,5.65,"RHYS = 100 кОм",TEAL)
 wire(ax,[(6.6,5.65),(3.2,5.65),(3.2,4.5)],TEAL,1.4); node(ax,3.2,4.5,TEAL)
-block(ax,9.2,1.45,3.9,1.3,"Логика инверсии","S > U_REF → DOUT′ low\nS < U_REF → DOUT′ high",BLUE,PALE,False)
+block(ax,9.2,1.45,3.9,1.3,"Логика инверсии","S > U_REF → DOUT низкий\nS < U_REF → DOUT высокий",BLUE,PALE,False)
 ax.text(.8,.45,"Порог и ширина гистерезиса зависят от настройки P1, RHYS, уровней выхода и параметров фактического компаратора.",fontsize=9,color=GREY)
 finish(fig,"fig03_comparator_hysteresis.png")
 
@@ -177,7 +177,7 @@ ax.add_patch(Polygon([[9.07,5.22],[9.43,5.22],[9.25,5.55]],closed=True,facecolor
 ax.plot([9.04,9.46],[5.62,5.62],c=GREEN,lw=1.7)
 wire(ax,[(9.25,5.62),(9.25,6.3)],GREEN,1.3); wire(ax,[(9.25,5.22),(9.25,3.55),(7.6,3.55)],GREEN,1.3)
 ax.text(9.7,5.4,"VD1, катод к +5 В",fontsize=9,color=GREEN)
-block(ax,4.4,2.1,1.8,1.4,"VT2","NPN low-side\nключ, 2N3904*",PURPLE,"#F3E8FF",True)
+block(ax,4.4,2.1,1.8,1.4,"VT2","NPN, ключ по минусу\n2N3904 как аналог*",PURPLE,"#F3E8FF",True)
 wire(ax,[(5.8,3.55),(5.8,3.0)],INK,1.7); wire(ax,[(5.25,2.1),(5.25,1.55)]); ground(ax,5.25,1.55)
 wire(ax,[(.9,3.0),(1.35,3.0)],BLUE,1.7); resistor_h(ax,1.35,3.2,3.0,"R9=560 Ω",BLUE)
 wire(ax,[(3.2,3.0),(3.55,3.0)],BLUE); wire(ax,[(3.55,3.0),(3.55,2.72)],BLUE)
