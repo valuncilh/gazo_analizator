@@ -5,7 +5,7 @@ from matplotlib.patches import FancyBboxPatch, Circle, Polygon
 OUT = Path("docs/figures")
 OUT.mkdir(parents=True, exist_ok=True)
 INK="#182230"; BLUE="#2166AC"; TEAL="#168A8A"; ORANGE="#D97706"
-RED="#B42318"; GREEN="#27864A"; GREY="#667085"; PALE="#F2F4F7"
+RED="#B42318"; GREEN="#27864A"; PURPLE="#6941C6"; GREY="#667085"; PALE="#F2F4F7"
 plt.rcParams.update({"font.family":"DejaVu Sans","font.size":10})
 
 def canvas(title, subtitle, size=(14,7.8)):
