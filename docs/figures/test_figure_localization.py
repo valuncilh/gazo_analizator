@@ -59,6 +59,8 @@ def main() -> int:
     require("NPN low-side" not in figures, "В рисунках осталась английская подпись low-side")
     require("DOUT′ low" not in figures and "DOUT′ high" not in figures,
             "В логике рисунка компаратора остались английские уровни low/high")
+    require("ползунок P1" in figures, "На рисунке компаратора не обозначен движок потенциометра P1")
+    require("C_U2 = 100 нФ" in figures, "На рисунке компаратора отсутствует конденсатор развязки C_U2")
 
     # Сверка критических узлов с SPICE-источником, а не с иллюстративными линиями.
     for netlist_name, netlist in [
