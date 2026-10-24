@@ -1,0 +1,67 @@
+* gazo_analizator -- AC analysis of linearized dynamic submodels
+* Target simulator: ngspice.
+*
+* IMPORTANT LIMITS:
+* 1) The full alarm is nonlinear (gas-dependent resistor, threshold comparator,
+*    hysteresis and astable timer). A single classical LTI Bode plot for the
+*    entire alarm chain is not mathematically defined.
+* 2) The sensor response curves below are first-order approximations derived
+*    visually from Winsen MQ-4 manual v1.6, Fig. 6 "Response and Resume".
+*    The manual does not specify numeric time constants. They are illustrative
+*    and must not be treated as guaranteed MQ-4 parameters.
+* 3) Timer RC plots represent each switch state separately, not the full
+*    nonlinear astable oscillator.
+*
+* Source: https://www.winsen-sensor.com/d/files/mq-4-%28ver1_6%29---manual.pdf
+* Fig. 6 shown on PDF page 5 (zero-based page index 4).
+
+.title MQ-4 approximate sensor dynamics and 555 timing-RC Bode plots
+
+.param TAU_RISE=2.2
+.param TAU_RECOVERY=3.0
+.param R_SENSOR=1Meg
+.param R4=8.2k
+.param R5=8.2k
+.param C1=4.7u
+
+* Unit-amplitude equivalent perturbation in normalized gas signal.
+* It is NOT a voltage-per-ppm sensor calibration.
+VGAS G_IN 0 DC 0 AC 1
+R_GAS_RISE G_IN G_RISE {R_SENSOR}
+C_GAS_RISE G_RISE 0 {TAU_RISE/R_SENSOR}
+R_GAS_RECOVERY G_IN G_RECOVERY {R_SENSOR}
+C_GAS_RECOVERY G_RECOVERY 0 {TAU_RECOVERY/R_SENSOR}
+
+* Linearized timing capacitor network with charge switch state fixed.
+V_TIMER T_IN 0 DC 0 AC 1
+R_TIMER_CHARGE T_IN T_CHARGE {R4+R5}
+C_TIMER_CHARGE T_CHARGE 0 {C1}
+
+* Linearized timing capacitor network with discharge switch state fixed.
+R_TIMER_DISCHARGE T_IN T_DISCHARGE {R5}
+C_TIMER_DISCHARGE T_DISCHARGE 0 {C1}
+
+.control
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+ac dec 100 1m 1k
+
+let H_RISE = v(G_RISE)/v(G_IN)
+let H_RECOVERY = v(G_RECOVERY)/v(G_IN)
+let H_TIMER_CHARGE = v(T_CHARGE)/v(T_IN)
+let H_TIMER_DISCHARGE = v(T_DISCHARGE)/v(T_IN)
+
+let RISE_DB = db(H_RISE)
+let RISE_PHASE = ph(H_RISE)*57.2957795131
+let RECOVERY_DB = db(H_RECOVERY)
+let RECOVERY_PHASE = ph(H_RECOVERY)*57.2957795131
+let TIMER_CHARGE_DB = db(H_TIMER_CHARGE)
+let TIMER_CHARGE_PHASE = ph(H_TIMER_CHARGE)*57.2957795131
+let TIMER_DISCHARGE_DB = db(H_TIMER_DISCHARGE)
+let TIMER_DISCHARGE_PHASE = ph(H_TIMER_DISCHARGE)*57.2957795131
+
+wrdata spice/bode_results.dat RISE_DB RISE_PHASE RECOVERY_DB RECOVERY_PHASE TIMER_CHARGE_DB TIMER_CHARGE_PHASE TIMER_DISCHARGE_DB TIMER_DISCHARGE_PHASE
+quit
+.endc
+.end
