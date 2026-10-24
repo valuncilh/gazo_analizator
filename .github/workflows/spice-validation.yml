@@ -51,6 +51,9 @@ jobs:
       - name: Run 4.7 uF and 47 uF timer scenarios
         run: sh spice/run_comparison.sh
 
+      - name: Check Russian graph labels and key schematic connections
+        run: python3 docs/figures/test_figure_localization.py
+
       - name: Run AC analysis and create Bode plots
         run: |
           set -o pipefail
