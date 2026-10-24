@@ -1,6 +1,7 @@
 * gazo_analizator SPICE behavioral baseline
 * Target: ngspice.
 * A1.S is a synthetic analog stimulus, not a gas concentration calibration.
+* The current measurement covers the modeled external electronics only. Actual A1 board/heater current is not included.
 * U2, KT3102GM and the KR1006VI1 timer use behavioral/proxy models only.
 * This file checks logic and trends, not guaranteed electrical limits.
 
