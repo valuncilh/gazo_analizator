@@ -90,7 +90,7 @@ PY
 # Run the same circuit with sound and HL2 disabled. The indicator current must
 # fall to leakage-level values, proving that the control switch is in series.
 OFF_NETLIST="$WORK_DIR/alarm_chain_vendor_sound_off.cir"
-sed -e 's/^\\.param SOUND_ENABLE=1$/.param SOUND_ENABLE=0/' -e 's@spice/vendor_model_results.dat@spice/vendor_model_results_sound_off.dat@' "$TMP_NETLIST" > "$OFF_NETLIST"
+sed -e 's/^\.param SOUND_ENABLE=1$/.param SOUND_ENABLE=0/' -e 's@spice/vendor_model_results.dat@spice/vendor_model_results_sound_off.dat@' "$TMP_NETLIST" > "$OFF_NETLIST"
 HOME="$WORK_DIR" ngspice -b "$OFF_NETLIST" > spice/vendor_model_sound_off.log 2>&1
 test -s spice/vendor_model_results_sound_off.dat
 grep -q "i_hl2_peak" spice/vendor_model_sound_off.log
