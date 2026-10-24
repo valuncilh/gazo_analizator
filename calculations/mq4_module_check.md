@@ -79,3 +79,4 @@ I_B \approx \frac{5{,}0 - 0{,}7}{10\ \text{кОм} + 13\ \text{кОм}} \approx 
 - BotnRoll, *MQ-4 Methane Gas Sensor Module*, SEN08108: https://www.botnroll.com/en/biometrics/6333-mq-4-methane-gas-sensor-module.html.
 - Winsen, *MQ-4 Semiconductor Sensor*, Manual v1.6: https://www.winsen-sensor.com/d/files/mq-4-%28ver1_6%29---manual.pdf.
 - Soldered Electronics, исходники аппаратной разработки MQ4 breakout, ревизия V1.1.1: https://github.com/SolderedElectronics/Methane.-CNG-sensor-MQ4-breakout-hardware-design/tree/main/CAD/V1.1.1.
+- RadioProg, архив файлов, запись *Gas-Sensor-Schematic.pdf*: https://radioprog.ru/last-files. Запись найдена, но файл не удалось получить, поэтому содержимое не использовано как доказательство параметров DOUT.
