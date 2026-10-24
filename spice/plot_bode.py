@@ -79,8 +79,8 @@ axes[1, 0].set_ylabel("Модуль передаточной функции, д�
 axes[1, 0].legend(loc="best")
 axes[1, 0].grid(True, which="both", alpha=0.3)
 
-axes[1, 1].semilogx(frequency, charge_phase, label="Charge state")
-axes[1, 1].semilogx(frequency, discharge_phase, label="Discharge state")
+axes[1, 1].semilogx(frequency, charge_phase, label="Заряд")
+axes[1, 1].semilogx(frequency, discharge_phase, label="Разряд")
 axes[1, 1].set_title("ФЧХ RC-состояний таймера")
 axes[1, 1].set_xlabel("Частота, Гц")
 axes[1, 1].set_ylabel("Фаза, градусы")
