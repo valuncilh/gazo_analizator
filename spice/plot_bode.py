@@ -57,38 +57,38 @@ if np.any(frequency <= 0) or not np.all(np.isfinite(data[:, :9])):
 
 fig, axes = plt.subplots(2, 2, figsize=(13, 9), sharex=True)
 
-axes[0, 0].semilogx(frequency, rise_db, label="Gas-on / rise, tau=2.2 s")
-axes[0, 0].semilogx(frequency, recovery_db, label="Gas-off / recovery, tau=3.0 s")
-axes[0, 0].set_title("MQ-4 response dynamics (approximation)")
-axes[0, 0].set_ylabel("Magnitude, dB")
+axes[0, 0].semilogx(frequency, rise_db, label="Газ подан / нарастание, τ = 2,2 с")
+axes[0, 0].semilogx(frequency, recovery_db, label="Газ удалён / восстановление, τ = 3,0 с")
+axes[0, 0].set_title("Динамика отклика MQ-4 (приближение)")
+axes[0, 0].set_ylabel("Модуль передаточной функции, дБ")
 axes[0, 0].legend(loc="best")
 axes[0, 0].grid(True, which="both", alpha=0.3)
 
-axes[0, 1].semilogx(frequency, rise_phase, label="Gas-on / rise")
-axes[0, 1].semilogx(frequency, recovery_phase, label="Gas-off / recovery")
-axes[0, 1].set_title("Sensor phase response (approximation)")
-axes[0, 1].set_ylabel("Phase, degrees")
+axes[0, 1].semilogx(frequency, rise_phase, label="Газ подан / нарастание")
+axes[0, 1].semilogx(frequency, recovery_phase, label="Газ удалён / восстановление")
+axes[0, 1].set_title("Фазовая характеристика MQ-4 (приближение)")
+axes[0, 1].set_ylabel("Фаза, градусы")
 axes[0, 1].legend(loc="best")
 axes[0, 1].grid(True, which="both", alpha=0.3)
 
-axes[1, 0].semilogx(frequency, charge_db, label="Charge state, (R4+R5)C1")
-axes[1, 0].semilogx(frequency, discharge_db, label="Discharge state, R5C1")
-axes[1, 0].set_title("Timer RC-state magnitude")
-axes[1, 0].set_xlabel("Frequency, Hz")
-axes[1, 0].set_ylabel("Magnitude, dB")
+axes[1, 0].semilogx(frequency, charge_db, label="Заряд, (R4+R5)C1")
+axes[1, 0].semilogx(frequency, discharge_db, label="Разряд, R5C1")
+axes[1, 0].set_title("АЧХ RC-состояний таймера")
+axes[1, 0].set_xlabel("Частота, Гц")
+axes[1, 0].set_ylabel("Модуль передаточной функции, дБ")
 axes[1, 0].legend(loc="best")
 axes[1, 0].grid(True, which="both", alpha=0.3)
 
 axes[1, 1].semilogx(frequency, charge_phase, label="Charge state")
 axes[1, 1].semilogx(frequency, discharge_phase, label="Discharge state")
-axes[1, 1].set_title("Timer RC-state phase")
-axes[1, 1].set_xlabel("Frequency, Hz")
-axes[1, 1].set_ylabel("Phase, degrees")
+axes[1, 1].set_title("ФЧХ RC-состояний таймера")
+axes[1, 1].set_xlabel("Частота, Гц")
+axes[1, 1].set_ylabel("Фаза, градусы")
 axes[1, 1].legend(loc="best")
 axes[1, 1].grid(True, which="both", alpha=0.3)
 
 fig.suptitle(
-    "Bode plots of linearized submodels — not the nonlinear alarm as a whole",
+    "АЧХ и ФЧХ линейных моделей — не всего нелинейного сигнализатора",
     fontsize=12,
 )
 fig.tight_layout()
