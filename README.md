@@ -31,6 +31,7 @@
 
 - `data/collection_status.md` — состояние сбора исходных данных и технические выводы.
 - `requirements/project_checklist.md` — требования методических материалов и аудит готовности.
+- `requirements/report_formatting.md` — контрольный лист оформления итоговой РПЗ по ГОСТ 7.32–2017.
 - `requirements/technical_assignment_draft.md` — рабочий проект технического задания с разделением требований и допущений.
 - `data/component_selection.md` — предварительный выбор ЭКБ и ограничения по паспортным данным.
 - `calculations/verification_log.md` — арифметическая проверка, несоответствия и редакционные замечания.
