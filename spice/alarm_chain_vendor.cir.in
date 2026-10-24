@@ -1,0 +1,83 @@
+* gazo_analizator: vendor-model chain test template
+* Tokens @TLV7041_LIB@ and @TLC555_LIB@ are replaced by run_vendor_model_test.sh.
+* U2 uses TI's official TLV7041 PSpice library.
+* DA1 uses TI's TLC555 PSpice model as a functional analogue to bipolar KR1006VI1.
+* KT3102GM is approximated with a generic 2N3904 SPICE model.
+* MQ-4 input is synthetic; its value is not mapped to methane ppm.
+* HA1 is represented by a 166.7 ohm load, not a full active-buzzer model.
+
+.include "@TLV7041_LIB@"
+.include "@TLC555_LIB@"
+
+.title Gas alarm chain using vendor comparator and timer-analogue models
+.param SOUND_ENABLE=1
+.param C_TIMER=4.7u
+
+VCCSRC VCC 0 DC 5
+C3 VCC 0 47u
+C_U2 VCC 0 100n
+VSENSE S 0 PWL(0 0.30 0.20 0.30 0.80 4.50 2.20 4.50 2.40 0.30 3.50 0.30)
+
+* Sensor resistance/reference proxy node. It is a test stimulus only.
+RP1A VCC UREF 5k
+RP1B UREF 0 5k
+RHYS DOUT UREF 100k
+R1 VCC DOUT 160k
+R8 VCC DOUT 2.2k
+
+* Official TI TLV7041 subcircuit pin order: IN+, IN-, OUT, V+, V-.
+XU2 UREF S DOUT VCC 0 TLV7041
+
+* The KT3102GM is not represented by this 2N3904 analogue exactly.
+R2 DOUT VT1_B 10k
+QVT1 RESET VT1_B 0 Q_2N3904
+R3 VCC RESET 2k
+
+* Approximate 2N3904 model for logic/load behaviour, not a guarantee for KT3102GM.
+.model Q_2N3904 NPN(IS=6.734f XTI=3 EG=1.11 VAF=74.03 BF=416.4 NE=1.259 ISE=6.734f IKF=66.78m XTB=1.5 BR=0.7371 NC=2 ISC=0 IKR=0 RC=1 CJC=3.638p MJC=0.3085 VJC=0.75 FC=0.5 CJE=4.493p MJE=0.2593 VJE=0.75 TR=239.5n TF=301.2p ITF=0.4 VTF=4 XTF=2 RB=10)
+
+* Original astable network nominal values.
+R4 VCC DISCH 8.2k
+R5 DISCH CT 8.2k
+C1 CT 0 {C_TIMER}
+C2 CTRL555 0 100n
+
+* Official TI TLC555 analogue model pin order:
+* THRES, CONT, TRIG, RESET, OUT, DISC, VCC, GND.
+* TLC555 is CMOS and not electrically identical to the bipolar KR1006VI1.
+XDA1 CT CTRL555 CT RESET OUT DISCH VCC 0 TLC555_6
+
+* Generic LED proxies, retained for current loading.
+R6 OUT HL1_A 220
+D_HL1 HL1_A 0 D_LED_PROXY
+.model D_LED_PROXY D(IS=1e-20 N=2 RS=2 CJO=10p)
+
+* Sound switch and buzzer-load proxy.
+VSA1 SOUND_EN 0 DC {5*SOUND_ENABLE}
+.model SW_ENABLE SW(Ron=0.1 Roff=1e9 Vt=2.5 Vh=0.1)
+R9 OUT R9_N 560
+S_SA1 R9_N VT2_B SOUND_EN 0 SW_ENABLE
+RBE VT2_B 0 1Meg
+QVT2 BZ_COL VT2_B 0 Q_2N3904
+RBZ VCC BZ_COL 166.7
+D1 BZ_COL VCC D_CLAMP_PROXY
+.model D_CLAMP_PROXY D(IS=1e-9 N=1.2 RS=0.2 CJO=20p BV=50 IBV=10u)
+
+R7 VCC HL2_A 220
+D_HL2 HL2_A 0 D_LED_PROXY
+S_HL2 HL2_A 0 SOUND_EN 0 SW_ENABLE
+
+.control
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+tran 0.1m 3.5
+wrdata spice/vendor_model_results.dat v(S) v(UREF) v(DOUT) v(RESET) v(CT) v(OUT) v(BZ_COL)
+meas tran t_reset_rise WHEN v(RESET)=2.5 RISE=1
+meas tran t_alarm_first_rise WHEN v(OUT)=2.5 RISE=1
+meas tran t_alarm_period TRIG v(OUT) VAL=2.5 RISE=2 TARG v(OUT) VAL=2.5 RISE=3
+let modelled_current = -i(VCCSRC)
+meas tran i_vendor_model_peak MAX modelled_current
+quit
+.endc
+.end
