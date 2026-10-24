@@ -25,8 +25,11 @@ jobs:
       - name: Install ngspice and plotting dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ngspice python3-numpy python3-matplotlib
+          sudo apt-get install -y ngspice python3-numpy python3-matplotlib curl unzip
           ngspice --version
+
+      - name: Probe official TI SPICE model archives
+        run: sh spice/fetch_vendor_models.sh
 
       - name: Run 4.7 uF and 47 uF timer scenarios
         run: sh spice/run_comparison.sh
@@ -55,3 +58,4 @@ jobs:
             spice/bode_ngspice.log
             spice/bode_results.dat
             spice/bode_linearized.png
+            spice/vendor_model_probe.log
