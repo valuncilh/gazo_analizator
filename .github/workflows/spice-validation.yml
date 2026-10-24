@@ -1,0 +1,52 @@
+name: SPICE behavioral model smoke test
+
+on:
+  push:
+    paths:
+      - "spice/**"
+      - ".github/workflows/spice-validation.yml"
+  pull_request:
+    paths:
+      - "spice/**"
+      - ".github/workflows/spice-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ngspice-smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install ngspice and plotting dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ngspice python3-numpy python3-matplotlib
+          ngspice --version
+
+      - name: Run behavioral model
+        run: |
+          set -o pipefail
+          ngspice -b spice/alarm_chain_behavioral.cir 2>&1 | tee spice/ngspice.log
+          test -s spice/spice_chain_results.dat
+
+      - name: Validate plot script syntax
+        run: python3 -m py_compile spice/plot_results.py
+
+      - name: Plot transient results
+        run: python3 spice/plot_results.py
+
+      - name: Upload simulation output and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ngspice-smoke-test-output
+          if-no-files-found: warn
+          path: |
+            spice/ngspice.log
+            spice/spice_chain_results.dat
+            spice/spice_chain_plots.png
