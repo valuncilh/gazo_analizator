@@ -28,6 +28,8 @@ def main() -> int:
         '"Time, s"',
         '"Gas-on / rise"',
         '"Gas-off / recovery"',
+        'label="Charge state"',
+        'label="Discharge state"',
         '"Bode plots of linearized submodels',
         '"Sensor stimulus and comparator reference"',
         '"Comparator output and timer reset"',
