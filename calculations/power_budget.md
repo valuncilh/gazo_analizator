@@ -133,3 +133,6 @@ I_{alarm,1401SA1,cat}=150+6+30+15{,}8+15{,}8+3{,}502+2
 - КР1006ВИ1, техническое описание: https://radiolub.ru/uploads/2012pic/kr1006vi1.pdf.
 - HCM12X Series, паспорт: https://www.kaili-buzzer.com/Buzzer-Datasheet/Magnetic-Buzzer/HCM12X.pdf.
 - Amperka, библиотека TroykaMQ: https://github.com/amperka/TroykaMQ.
+- ОКБ Микроэлектроники, карточка 1401СА1РМК/Р1МК по ТУ АЕЯР.431000.815-03ТУ: https://inni.info/produkt/osnovnaya-nomenklatura-vypuskayemoy-produktsii/schetverennyy-komparator-napryazheniya-1401sa1rmk.
+- Анион, PDF 1401СА1РМК/Р1МК, предоставленный пользователем: https://www.anion.ru/assets/files/pdf/1401sa1r%281%29mk-%28mehl%29.pdf. Открытие PDF завершалось тайм-аутом.
+- «Электроника и Связь» / Platan, справочное описание базового 1401СА1: https://doc.platan.ru/pdf/datasheets/russia/1401SA1.pdf. Не заменяет ТУ конкретного исполнения РМК/Р1МК.
