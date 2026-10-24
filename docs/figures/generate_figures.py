@@ -128,7 +128,7 @@ for x,lab in [(9.65,"R1=160 кОм"),(11.55,"R8=2,2 кОм")]:
     wire(ax,[(x,6.35),(x,5.8)],ORANGE); resistor_v(ax,x,5.8,4.25,lab); wire(ax,[(x,4.25),(x,4.15),(8.55,4.15)],BLUE); node(ax,x,4.15,BLUE)
 wire(ax,[(8.55,4.15),(8.55,5.65)],TEAL,1.4); resistor_h(ax,6.6,8.55,5.65,"RHYS = 100 кОм",TEAL)
 wire(ax,[(6.6,5.65),(3.2,5.65),(3.2,4.5)],TEAL,1.4); node(ax,3.2,4.5,TEAL)
-block(ax,9.2,1.45,3.9,1.3,"Логика инверсии","S > U_REF → DOUT′ low\nS < U_REF → DOUT′ high",BLUE,PALE,False)
+block(ax,9.2,1.45,3.9,1.3,"Логика инверсии","S > U_REF → низкий уровень\nS < U_REF → высокий уровень",BLUE,PALE,False)
 ax.text(.8,.45,"Порог и ширина гистерезиса зависят от настройки P1, RHYS, уровней выхода и параметров фактического компаратора.",fontsize=9,color=GREY)
 finish(fig,"fig03_comparator_hysteresis.png")
 
@@ -143,6 +143,9 @@ wire(ax,[(2.0,6.3),(2.0,5.8)],ORANGE)
 resistor_v(ax,2.0,5.8,4.55,"R4=8,2 кОм",ORANGE)
 wire(ax,[(2.0,4.55),(2.0,4.1)],INK)
 node(ax,2.0,4.1); ax.text(1.03,4.26,"DISCH",fontsize=9,color=INK)
+# Перемычка показывает электрическое соединение узла DISCH с левым выводом R5.
+# В SPICE обе точки являются одним узлом: DISCH.
+wire(ax,[(2.0,4.1),(2.2,4.1)],INK)
 resistor_h(ax,2.2,4.7,4.1,"R5=8,2 кОм",BLUE)
 wire(ax,[(4.7,4.1),(4.7,3.55)],BLUE); node(ax,4.7,4.1,BLUE)
 ax.text(4.48,4.34,"CT",color=BLUE,fontweight="bold")
@@ -177,7 +180,7 @@ ax.add_patch(Polygon([[9.07,5.22],[9.43,5.22],[9.25,5.55]],closed=True,facecolor
 ax.plot([9.04,9.46],[5.62,5.62],c=GREEN,lw=1.7)
 wire(ax,[(9.25,5.62),(9.25,6.3)],GREEN,1.3); wire(ax,[(9.25,5.22),(9.25,3.55),(7.6,3.55)],GREEN,1.3)
 ax.text(9.7,5.4,"VD1, катод к +5 В",fontsize=9,color=GREEN)
-block(ax,4.4,2.1,1.8,1.4,"VT2","NPN low-side\nключ, 2N3904*",PURPLE,"#F3E8FF",True)
+block(ax,4.4,2.1,1.8,1.4,"VT2","NPN-ключ\nпо нижнему плечу\nмодель 2N3904*",PURPLE,"#F3E8FF",True)
 wire(ax,[(5.8,3.55),(5.8,3.0)],INK,1.7); wire(ax,[(5.25,2.1),(5.25,1.55)]); ground(ax,5.25,1.55)
 wire(ax,[(.9,3.0),(1.35,3.0)],BLUE,1.7); resistor_h(ax,1.35,3.2,3.0,"R9=560 Ω",BLUE)
 wire(ax,[(3.2,3.0),(3.55,3.0)],BLUE); wire(ax,[(3.55,3.0),(3.55,2.72)],BLUE)
@@ -196,7 +199,9 @@ period=[80.20065,801.6786]
 bars=ax.bar(labels,period,color=[BLUE,ORANGE],width=.55)
 ax.set_ylabel("Период OUT, мс"); ax.set_ylim(0,900); ax.grid(axis="y",alpha=.25)
 for b,v in zip(bars,period):
-    ax.text(b.get_x()+b.get_width()/2,v+18,f"{v:.2f} мс\n{1000/v:.2f} Гц",ha="center",va="bottom",fontweight="bold",color=INK)
+    period_text = f"{v:.2f}".replace(".", ",")
+    frequency_text = f"{1000/v:.2f}".replace(".", ",")
+    ax.text(b.get_x()+b.get_width()/2,v+18,f"{period_text} мс\n{frequency_text} Гц",ha="center",va="bottom",fontweight="bold",color=INK)
 ax.text(.02,-.18,"ngspice 42, поведенческая модель. 47 мкФ не утверждён как новый номинал схемы.",transform=ax.transAxes,fontsize=9,color=GREY)
 fig.tight_layout(rect=[0,.05,1,.92]); fig.savefig(OUT/"fig08_timer_period_comparison.png",dpi=180,bbox_inches="tight",facecolor="white"); plt.close(fig)
 # Add numbered Russian captions to the charts produced by ngspice.
@@ -205,7 +210,8 @@ from PIL import Image, ImageDraw, ImageFont
 def caption_plot(source, destination, title, subtitle):
     source = Path(source)
     if not source.is_file():
-        raise FileNotFoundError(f"Expected ngspice plot is missing: {source}")
+        print(f"Пропуск {destination}: сначала выполните анализ ngspice ({source} не найден).")
+        return False
     im = Image.open(source).convert("RGB")
     w, h = im.size
     band = 108
@@ -217,6 +223,7 @@ def caption_plot(source, destination, title, subtitle):
     draw.text((42, 12), title, fill=INK, font=font_title)
     draw.text((44, 62), subtitle, fill=GREY, font=font_sub)
     canvas.save(destination, optimize=True)
+    return True
 
 # Preserve the published reference schematic as a separately attributed figure.
 source_scheme = Path("docs/figures/source_schematic.webp")
