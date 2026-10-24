@@ -5,6 +5,7 @@ Requires numpy and matplotlib. The simulator output is intentionally kept
 outside version control until a successful, reviewed run has been captured.
 """
 from pathlib import Path
+import argparse
 import sys
 
 try:
@@ -19,8 +20,27 @@ except ImportError as exc:
     raise SystemExit(2)
 
 ROOT = Path(__file__).resolve().parent
-DATA_PATH = ROOT / "spice_chain_results.dat"
-PLOT_PATH = ROOT / "spice_chain_plots.png"
+parser = argparse.ArgumentParser(description="Plot ngspice transient data.")
+parser.add_argument(
+    "--input",
+    type=Path,
+    default=ROOT / "spice_chain_results.dat",
+    help="ngspice wrdata file. Default: spice/spice_chain_results.dat",
+)
+parser.add_argument(
+    "--output",
+    type=Path,
+    default=ROOT / "spice_chain_plots.png",
+    help="Output PNG path. Default: spice/spice_chain_plots.png",
+)
+args = parser.parse_args()
+DATA_PATH = args.input
+PLOT_PATH = args.output
+
+if not DATA_PATH.is_absolute() and not DATA_PATH.is_file():
+    DATA_PATH = ROOT / DATA_PATH
+if not PLOT_PATH.is_absolute() and not PLOT_PATH.parent.exists():
+    PLOT_PATH = ROOT / PLOT_PATH
 
 if not DATA_PATH.is_file():
     print(
@@ -71,5 +91,6 @@ axes[2].legend(loc="best")
 axes[2].grid(True, alpha=0.3)
 
 fig.tight_layout()
+PLOT_PATH.parent.mkdir(parents=True, exist_ok=True)
 fig.savefig(PLOT_PATH, dpi=160)
 print(f"Saved plot to {PLOT_PATH}")
