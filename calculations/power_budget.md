@@ -204,3 +204,4 @@ RUNIC остаётся альтернативой, а не основным ко
 - ЗАО «ОКБ МЭЛ», одностраничный PDF 1401СА1РМК/Р1МК, предоставленный пользователем и прочитанный непосредственно: https://www.anion.ru/assets/files/pdf/1401sa1r%281%29mk-%28mehl%29.pdf.
 - «Электроника и Связь» / Platan, справочное описание базового 1401СА1: https://doc.platan.ru/pdf/datasheets/russia/1401SA1.pdf. Не заменяет ТУ конкретного исполнения РМК/Р1МК.
 - RUNIC. *RS331-Q1, RS393-Q1, RS339-Q1. General-Purpose Low-Voltage Open-Drain Output Comparator*, Rev. A.1.1, 06.03.2024: https://www.run-ic.com/en/upload/goods/20240311/202403111404008107.pdf. Сценарная альтернатива, не основной выбранный компонент.
+- Texas Instruments. *TLV703x-Q1 and TLV704x-Q1 Rail-to-Rail, Low-Power Comparators*, datasheet Rev. D, February 2023: https://www.ti.com/lit/ds/symlink/tlv7041-q1.pdf. Основной выбранный компаратор TLV7041-Q1.
