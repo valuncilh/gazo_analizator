@@ -1,0 +1,76 @@
+* gazo_analizator SPICE behavioral baseline
+* Target: ngspice.
+* A1.S is a synthetic analog stimulus, not a gas concentration calibration.
+* U2, KT3102GM and the KR1006VI1 timer use behavioral/proxy models only.
+* This file checks logic and trends, not guaranteed electrical limits.
+
+.title Gas alarm chain behavioral baseline
+.param SOUND_ENABLE=1
+.param C_TIMER=4.7u
+
+VCCSRC VCC 0 DC 5
+C3 VCC 0 47u
+C_U2 VCC 0 100n
+VSENSE S 0 PWL(0 0.30 0.20 0.30 0.80 4.50 1.40 4.50 1.60 0.30 3.00 0.30)
+
+* P1 at midpoint, plus external feedback resistor.
+RP1A VCC UREF 5k
+RP1B UREF 0 5k
+RHYS DOUT UREF 100k
+R1 VCC DOUT 160k
+R8 VCC DOUT 2.2k
+
+* Open-drain comparator proxy. External feedback is modeled by RHYS.
+ECOMP CTRL_COMP 0 VALUE = {V(S)-V(UREF)}
+S_U2 DOUT 0 CTRL_COMP 0 SW_OC
+.model SW_OC SW(Ron=60 Roff=1e9 Vt=0 Vh=3.25m)
+
+* VT1 proxy. Replace with a validated KT3102GM model at a later stage.
+R2 DOUT VT1_B 10k
+QVT1 RESET VT1_B 0 Q_KT3102_PROXY
+R3 VCC RESET 2k
+.model Q_KT3102_PROXY NPN(IS=1e-14 BF=200 VAF=80 IKF=0.1 ISE=1e-13 NE=1.5 BR=5 RC=1 RE=0.5 CJE=10p CJC=4p TF=0.4n TR=20n)
+
+* Timer values deliberately preserve the working data.
+* R4=R5=8.2k and C1=4.7uF imply approximately 12.5Hz, not 1-2Hz.
+R4 VCC DISCH 8.2k
+R5 DISCH CT 8.2k
+C1 CT 0 {C_TIMER}
+EDIS_CTRL CTRL_DIS 0 VALUE = {if(V(RESET)<2.5,5,V(CT)-V(VCC)/2)}
+S_DISCH DISCH 0 CTRL_DIS 0 SW_555
+EOUT_HI_CTRL CTRL_OUT_HI 0 VALUE = {if(V(RESET)>2.5,V(VCC)/2-V(CT),-5)}
+S_OUT_HI OUT VCC CTRL_OUT_HI 0 SW_555
+EOUT_LO_CTRL CTRL_OUT_LO 0 VALUE = {if(V(RESET)<2.5,5,V(CT)-V(VCC)/2)}
+S_OUT_LO OUT 0 CTRL_OUT_LO 0 SW_555
+.model SW_555 SW(Ron=2 Roff=1e9 Vt=0 Vh=0.833333)
+
+* Generic LED and buzzer-load proxies.
+R6 OUT HL1_A 220
+D_HL1 HL1_A 0 D_LED_PROXY
+.model D_LED_PROXY D(IS=1e-20 N=2 RS=2 CJO=10p)
+VSA1 SOUND_EN 0 DC {5*SOUND_ENABLE}
+.model SW_ENABLE SW(Ron=0.1 Roff=1e9 Vt=2.5 Vh=0.1)
+R9 OUT R9_N 560
+S_SA1 R9_N VT2_B SOUND_EN 0 SW_ENABLE
+RBE VT2_B 0 1Meg
+QVT2 BZ_COL VT2_B 0 Q_KT3102_PROXY
+RBZ VCC BZ_COL 166.7
+D1 BZ_COL VCC D_CLAMP_PROXY
+.model D_CLAMP_PROXY D(IS=1e-9 N=1.2 RS=0.2 CJO=20p BV=50 IBV=10u)
+R7 VCC HL2_A 220
+D_HL2 HL2_A HL2_K D_LED_PROXY
+S_HL2 HL2_K 0 SOUND_EN 0 SW_ENABLE
+
+.control
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+tran 0.1m 3.0
+wrdata spice_chain_results.dat v(S) v(UREF) v(DOUT) v(RESET) v(CT) v(OUT) v(BZ_COL)
+meas tran t_reset_rise WHEN v(RESET)=2.5 RISE=1
+meas tran t_alarm_first_rise WHEN v(OUT)=2.5 RISE=1
+meas tran t_alarm_period TRIG v(OUT) VAL=2.5 RISE=1 TARG v(OUT) VAL=2.5 RISE=2
+meas tran i_supply_peak MAX par('-i(VCCSRC)')
+quit
+.endc
+.end
