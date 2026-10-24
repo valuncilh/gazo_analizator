@@ -44,7 +44,7 @@ if data.ndim != 2 or data.shape[1] < 8 or data.shape[0] < 2:
     )
     raise SystemExit(1)
 
-time_s, sensor_v, reference_v, dout_v, reset_v, timer_cap_v, timer_out_v, buzzer_col_v = data[:, :8]
+time_s, sensor_v, reference_v, dout_v, reset_v, timer_cap_v, timer_out_v, buzzer_col_v = (data[:, i] for i in range(8))
 
 fig, axes = plt.subplots(3, 1, figsize=(11, 8), sharex=True)
 
