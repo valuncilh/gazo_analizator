@@ -31,6 +31,14 @@ jobs:
       - name: Run 4.7 uF and 47 uF timer scenarios
         run: sh spice/run_comparison.sh
 
+      - name: Run AC analysis and create Bode plots
+        run: |
+          set -o pipefail
+          ngspice -b spice/sensor_bode.cir 2>&1 | tee spice/bode_ngspice.log
+          test -s spice/bode_results.dat
+          python3 -m py_compile spice/plot_bode.py
+          python3 spice/plot_bode.py
+
       - name: Upload simulation output and logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -44,3 +52,6 @@ jobs:
             spice/spice_chain_results_4p7u.dat
             spice/spice_chain_results_47u.dat
             spice/spice_chain_plots.png
+            spice/bode_ngspice.log
+            spice/bode_results.dat
+            spice/bode_linearized.png
