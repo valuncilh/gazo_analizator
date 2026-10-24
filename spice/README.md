@@ -2,6 +2,8 @@
 
 Журнал текущего состояния: [`checkpoint_2026-10-25.md`](checkpoint_2026-10-25.md).
 
+Каталог PNG-рисунков и приближённых схем: [docs/figures/README.md](../docs/figures/README.md).
+
 ## Первый этап: поведенческая модель
 
 Файл `alarm_chain_behavioral.cir` моделирует цепочку:
