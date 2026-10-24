@@ -149,3 +149,4 @@ L_x L_y \ge S_{\text{пл}}.
 5. Каталог электротехнического оборудования. Конденсаторы К50-35, габариты и масса. https://electro.mashinform.ru/kondensatory-razlichnogo-naznacheniya/kondensatory-k50-35-obj3207.html.
 6. ГОСТ Р 57439–2017. Приборы полупроводниковые. Основные размеры. Размерный ряд корпуса КТ-26. https://rags.ru/documents/prod/gost-r_gosudarstvennyj-standart/31/gost_38522.html.
 7. Публикация о бытовом газосигнализаторе с модулем MQ-4. https://www.radioradar.net/radiofan/home_appliances/household_gas_leak_detector.html.
+8. RUNIC. *RS331-Q1, RS393-Q1, RS339-Q1*, package outline dimensions, SOT-23-5. https://www.run-ic.com/en/upload/goods/20240311/202403111404008107.pdf. The body dimensions of the backup comparator are used only for a preliminary package projection.
