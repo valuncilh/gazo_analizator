@@ -95,6 +95,13 @@ wrdata spice/vendor_model_results.dat v(S) v(UREF) v(DOUT) v(RESET) v(CT) v(OUT)
 meas tran t_reset_rise WHEN v(RESET)=2.5 RISE=1
 meas tran t_alarm_first_rise WHEN v(OUT)=2.5 RISE=1
 meas tran t_alarm_period TRIG v(OUT) VAL=2.5 RISE=2 TARG v(OUT) VAL=2.5 RISE=3
+meas tran sensor_clean_air FIND v(S) AT=0.5
+meas tran sensor_1000ppm FIND v(S) AT=1.2
+meas tran sensor_5000ppm FIND v(S) AT=2.0
+meas tran sensor_clean_air_after FIND v(S) AT=3.0
+meas tran reset_air_initial FIND v(RESET) AT=0.5
+meas tran reset_at_1000ppm FIND v(RESET) AT=1.2
+meas tran reset_clean_after FIND v(RESET) AT=3.0
 let modelled_current = -i(VCCSRC)
 meas tran i_vendor_model_peak MAX modelled_current
 quit
