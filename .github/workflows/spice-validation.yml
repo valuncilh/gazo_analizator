@@ -31,6 +31,10 @@ jobs:
       - name: Probe official TI SPICE model archives
         run: sh spice/fetch_vendor_models.sh
 
+      - name: Test downloaded TI model compatibility with ngspice
+        continue-on-error: true
+        run: sh spice/run_vendor_model_test.sh
+
       - name: Run 4.7 uF and 47 uF timer scenarios
         run: sh spice/run_comparison.sh
 
@@ -59,3 +63,5 @@ jobs:
             spice/bode_results.dat
             spice/bode_linearized.png
             spice/vendor_model_probe.log
+            spice/vendor_model_test.log
+            spice/vendor_model_results.dat
