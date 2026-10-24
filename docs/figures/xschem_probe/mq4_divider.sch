@@ -12,6 +12,8 @@ N 420 30 420 60 {lab=0}
 N 180 -100 100 -100 {lab=0}
 N 100 -100 100 60 {lab=0}
 N 100 60 420 60 {lab=0}
+C {devices/lab_pin.sym} 300 -160 0 0 {name=l1 lab=VCC}
+C {devices/lab_pin.sym} 420 -50 0 0 {name=l2 lab=S}
 C {devices/vsource.sym} 180 -130 0 0 {name=VCC value=5}
 C {devices/res.sym} 420 -100 0 0 {name=R_S value=88k}
 C {devices/res.sym} 420 0 0 0 {name=R_L value=20k}
