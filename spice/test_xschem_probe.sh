@@ -25,7 +25,7 @@ import re
 import sys
 
 log = Path(sys.argv[1]).read_text(errors="replace")
-m = re.search(r"v\\(s\\)\\s*=\\s*([0-9.eE+-]+)", log, re.IGNORECASE)
+m = re.search(r"v\(s\)\s*=\s*([0-9.eE+-]+)", log, re.IGNORECASE)
 if m is None:
     print("ERROR: xschem probe did not report v(S)", file=sys.stderr)
     print(log, file=sys.stderr)
