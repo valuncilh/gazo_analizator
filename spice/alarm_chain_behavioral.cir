@@ -67,7 +67,7 @@ set noaskquit
 set wr_singlescale
 set wr_vecnames
 tran 0.1m 3.0
-wrdata spice_chain_results.dat v(S) v(UREF) v(DOUT) v(RESET) v(CT) v(OUT) v(BZ_COL)
+wrdata spice/spice_chain_results.dat v(S) v(UREF) v(DOUT) v(RESET) v(CT) v(OUT) v(BZ_COL)
 meas tran t_reset_rise WHEN v(RESET)=2.5 RISE=1
 meas tran t_alarm_first_rise WHEN v(OUT)=2.5 RISE=1
 meas tran t_alarm_period TRIG v(OUT) VAL=2.5 RISE=1 TARG v(OUT) VAL=2.5 RISE=2
