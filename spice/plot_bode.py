@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Plot Bode magnitude and phase for the linearized SPICE submodels.
+"""Построение АЧХ и ФЧХ линейных SPICE-подмоделей.
 
-The sensor curves are rough first-order fits to the visual response shape in
-Winsen MQ-4 manual v1.6, Fig. 6. They are not manufacturer-guaranteed time
-constants or a calibrated concentration-to-voltage transfer function.
+Кривые датчика — приближённая аппроксимация рисунка 6 руководства Winsen
+MQ-4 v1.6. Это не гарантированные изготовителем постоянные времени и не
+калиброванная передаточная функция «концентрация газа — напряжение».
 """
 from pathlib import Path
 import sys
@@ -13,8 +13,9 @@ try:
     import matplotlib.pyplot as plt
 except ImportError as exc:
     print(
-        "Missing plotting dependency. Install numpy and matplotlib. "
-        f"Import error: {exc}",
+        "Не найдены зависимости для построения графиков. "
+        "Установите numpy и matplotlib. "
+        f"Подробности: {exc}",
         file=sys.stderr,
     )
     raise SystemExit(2)
@@ -25,8 +26,8 @@ PLOT_PATH = ROOT / "bode_linearized.png"
 
 if not DATA_PATH.is_file():
     print(
-        f"Missing {DATA_PATH}. Run ngspice -b spice/sensor_bode.cir "
-        "from the repository root first.",
+        f"Не найден файл {DATA_PATH}. Сначала выполните "
+        "ngspice -b spice/sensor_bode.cir из корня репозитория.",
         file=sys.stderr,
     )
     raise SystemExit(1)
@@ -34,13 +35,13 @@ if not DATA_PATH.is_file():
 try:
     data = np.loadtxt(DATA_PATH, skiprows=1)
 except (OSError, ValueError) as exc:
-    print(f"Could not parse ngspice AC data {DATA_PATH}: {exc}", file=sys.stderr)
+    print(f"Не удалось прочитать данные AC-анализа {DATA_PATH}: {exc}", file=sys.stderr)
     raise SystemExit(1)
 
 if data.ndim != 2 or data.shape[1] < 9 or data.shape[0] < 10:
     print(
-        "Unexpected AC data layout. Expected frequency plus 8 vectors: "
-        "magnitude and phase for sensor rise/recovery and timer charge/discharge.",
+        "Неверный формат данных AC-анализа. Ожидаются частота и 8 векторов: "
+        "модуль и фаза для нарастания/восстановления датчика и заряда/разряда таймера.",
         file=sys.stderr,
     )
     raise SystemExit(1)
@@ -52,45 +53,45 @@ charge_db, charge_phase = data[:, 5], data[:, 6]
 discharge_db, discharge_phase = data[:, 7], data[:, 8]
 
 if np.any(frequency <= 0) or not np.all(np.isfinite(data[:, :9])):
-    print("AC output contains non-positive frequencies or non-finite values.", file=sys.stderr)
+    print("В данных AC-анализа есть неположительные частоты или нечисловые значения.", file=sys.stderr)
     raise SystemExit(1)
 
 fig, axes = plt.subplots(2, 2, figsize=(13, 9), sharex=True)
 
-axes[0, 0].semilogx(frequency, rise_db, label="Gas-on / rise, tau=2.2 s")
-axes[0, 0].semilogx(frequency, recovery_db, label="Gas-off / recovery, tau=3.0 s")
-axes[0, 0].set_title("MQ-4 response dynamics (approximation)")
-axes[0, 0].set_ylabel("Magnitude, dB")
+axes[0, 0].semilogx(frequency, rise_db, label="Поступление газа, τ = 2,2 с")
+axes[0, 0].semilogx(frequency, recovery_db, label="Восстановление, τ = 3,0 с")
+axes[0, 0].set_title("Динамика отклика MQ-4 (приближение)")
+axes[0, 0].set_ylabel("Амплитуда, дБ")
 axes[0, 0].legend(loc="best")
 axes[0, 0].grid(True, which="both", alpha=0.3)
 
-axes[0, 1].semilogx(frequency, rise_phase, label="Gas-on / rise")
-axes[0, 1].semilogx(frequency, recovery_phase, label="Gas-off / recovery")
-axes[0, 1].set_title("Sensor phase response (approximation)")
-axes[0, 1].set_ylabel("Phase, degrees")
+axes[0, 1].semilogx(frequency, rise_phase, label="Поступление газа")
+axes[0, 1].semilogx(frequency, recovery_phase, label="Восстановление")
+axes[0, 1].set_title("Фазовая характеристика датчика (приближение)")
+axes[0, 1].set_ylabel("Фаза, градусы")
 axes[0, 1].legend(loc="best")
 axes[0, 1].grid(True, which="both", alpha=0.3)
 
-axes[1, 0].semilogx(frequency, charge_db, label="Charge state, (R4+R5)C1")
-axes[1, 0].semilogx(frequency, discharge_db, label="Discharge state, R5C1")
-axes[1, 0].set_title("Timer RC-state magnitude")
-axes[1, 0].set_xlabel("Frequency, Hz")
-axes[1, 0].set_ylabel("Magnitude, dB")
+axes[1, 0].semilogx(frequency, charge_db, label="Заряд: (R4 + R5)C1")
+axes[1, 0].semilogx(frequency, discharge_db, label="Разряд: R5C1")
+axes[1, 0].set_title("АЧХ RC-цепи таймера в отдельных состояниях")
+axes[1, 0].set_xlabel("Частота, Гц")
+axes[1, 0].set_ylabel("Амплитуда, дБ")
 axes[1, 0].legend(loc="best")
 axes[1, 0].grid(True, which="both", alpha=0.3)
 
-axes[1, 1].semilogx(frequency, charge_phase, label="Charge state")
-axes[1, 1].semilogx(frequency, discharge_phase, label="Discharge state")
-axes[1, 1].set_title("Timer RC-state phase")
-axes[1, 1].set_xlabel("Frequency, Hz")
-axes[1, 1].set_ylabel("Phase, degrees")
+axes[1, 1].semilogx(frequency, charge_phase, label="Состояние заряда")
+axes[1, 1].semilogx(frequency, discharge_phase, label="Состояние разряда")
+axes[1, 1].set_title("ФЧХ RC-цепи таймера в отдельных состояниях")
+axes[1, 1].set_xlabel("Частота, Гц")
+axes[1, 1].set_ylabel("Фаза, градусы")
 axes[1, 1].legend(loc="best")
 axes[1, 1].grid(True, which="both", alpha=0.3)
 
 fig.suptitle(
-    "Bode plots of linearized submodels — not the nonlinear alarm as a whole",
+    "АЧХ и ФЧХ линейных подмоделей. Не характеристики сигнализатора целиком",
     fontsize=12,
 )
 fig.tight_layout()
 fig.savefig(PLOT_PATH, dpi=180)
-print(f"Saved Bode plots to {PLOT_PATH}")
+print(f"Графики сохранены: {PLOT_PATH}")
