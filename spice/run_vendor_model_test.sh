@@ -32,5 +32,7 @@ HOME="$WORK_DIR" ngspice -b "$TMP_NETLIST" > spice/vendor_model_test.log 2>&1
 test -s spice/vendor_model_results.dat
 grep -q "t_reset_rise" spice/vendor_model_test.log
 grep -q "t_alarm_period" spice/vendor_model_test.log
+python3 -m py_compile spice/plot_results.py
+python3 spice/plot_results.py --input spice/vendor_model_results.dat --output spice/vendor_chain_plots.png
 
-echo "Vendor-model transient test completed. See spice/vendor_model_test.log."
+echo "Vendor-model transient test completed. See spice/vendor_model_test.log and spice/vendor_chain_plots.png."
