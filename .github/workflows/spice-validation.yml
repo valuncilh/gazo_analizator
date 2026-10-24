@@ -28,17 +28,8 @@ jobs:
           sudo apt-get install -y ngspice python3-numpy python3-matplotlib
           ngspice --version
 
-      - name: Run behavioral model
-        run: |
-          set -o pipefail
-          ngspice -b spice/alarm_chain_behavioral.cir 2>&1 | tee spice/ngspice.log
-          test -s spice/spice_chain_results.dat
-
-      - name: Validate plot script syntax
-        run: python3 -m py_compile spice/plot_results.py
-
-      - name: Plot transient results
-        run: python3 spice/plot_results.py
+      - name: Run 4.7 uF and 47 uF timer scenarios
+        run: sh spice/run_comparison.sh
 
       - name: Upload simulation output and logs
         if: always()
@@ -48,5 +39,8 @@ jobs:
           if-no-files-found: warn
           path: |
             spice/ngspice.log
+            spice/ngspice_47u.log
             spice/spice_chain_results.dat
+            spice/spice_chain_results_4p7u.dat
+            spice/spice_chain_results_47u.dat
             spice/spice_chain_plots.png
