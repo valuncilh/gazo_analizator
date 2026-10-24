@@ -48,8 +48,9 @@ if abs(actual - expected) > 0.005:
     raise SystemExit(1)
 PY
 
-# Export a picture in command mode so CI does not leave a hidden GUI process.
-xschem -x --png --plotfile "$OUT/mq4_divider.png" -q --rcfile "$OUT/xschemrc" "$SCH" > "$OUT/xschem_png_export.log" 2>&1
+# PNG rendering requires an X display. Xvfb provides one without a physical desktop,
+# and timeout prevents an export bug from stalling the entire validation job.
+timeout 20s xvfb-run -a xschem --png --plotfile "$OUT/mq4_divider.png" -q --rcfile "$OUT/xschemrc" "$SCH" > "$OUT/xschem_png_export.log" 2>&1
 if [ ! -s "$OUT/mq4_divider.png" ]; then
     echo "ERROR: xschem PNG export was not created" >&2
     cat "$OUT/xschem_png_export.log" >&2
