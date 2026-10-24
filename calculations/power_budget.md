@@ -203,8 +203,8 @@ P_{\mathrm{in,peak,est}}=5{,}1\cdot0{,}2336
 Если в дальнейшем будет разрешено использовать зарубежный компаратор RUNIC RS331-Q1, для собственного тока U2 можно использовать до 0,24 мА по паспорту S52 при \(V_S=5{,}0\) В и полном температурном диапазоне. Относительно основного бюджетного значения 2 мА это уменьшает расчётную сумму приблизительно на 1,76 мА.
 
 \[
-I_{\mathrm{alarm,peak,RS331Q1}}\approx233{,}6-2{,}0+0{,}24
-=231{,}84\ \text{мА}\approx231{,}8\ \text{мА}.
+I_{\mathrm{alarm,peak,RS331Q1}}=150+6+30+15{,}8+15{,}8+3{,}443+0{,}24+0{,}638+1{,}5+8{,}46
+\approx231{,}9\ \text{мА}.
 \tag{14}
 \]
 
@@ -222,3 +222,4 @@ I_{\mathrm{alarm,peak,RS331Q1}}\approx233{,}6-2{,}0+0{,}24
 - ОКБ Микроэлектроники, карточка 1401СА1РМК/Р1МК по ТУ АЕЯР.431000.815-03ТУ: https://inni.info/produkt/osnovnaya-nomenklatura-vypuskayemoy-produktsii/schetverennyy-komparator-napryazheniya-1401sa1rmk.
 - ЗАО «ОКБ МЭЛ», одностраничный PDF 1401СА1РМК/Р1МК, предоставленный пользователем и прочитанный непосредственно: https://www.anion.ru/assets/files/pdf/1401sa1r%281%29mk-%28mehl%29.pdf.
 - «Электроника и Связь» / Platan, справочное описание базового 1401СА1: https://doc.platan.ru/pdf/datasheets/russia/1401SA1.pdf. Не заменяет ТУ конкретного исполнения РМК/Р1МК.
+- RUNIC. *RS331-Q1, RS393-Q1, RS339-Q1. General-Purpose Low-Voltage Open-Drain Output Comparator*, Rev. A.1.1, 06.03.2024: https://www.run-ic.com/en/upload/goods/20240311/202403111404008107.pdf. Сценарная альтернатива, не основной выбранный компонент.
