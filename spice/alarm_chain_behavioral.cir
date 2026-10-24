@@ -70,9 +70,10 @@ tran 0.1m 3.0
 wrdata spice/spice_chain_results.dat v(S) v(UREF) v(DOUT) v(RESET) v(CT) v(OUT) v(BZ_COL)
 meas tran t_reset_rise WHEN v(RESET)=2.5 RISE=1
 meas tran t_alarm_first_rise WHEN v(OUT)=2.5 RISE=1
-meas tran t_alarm_period TRIG v(OUT) VAL=2.5 RISE=1 TARG v(OUT) VAL=2.5 RISE=2
+meas tran t_alarm_startup_period TRIG v(OUT) VAL=2.5 RISE=1 TARG v(OUT) VAL=2.5 RISE=2
+meas tran t_alarm_period_steady TRIG v(OUT) VAL=2.5 RISE=2 TARG v(OUT) VAL=2.5 RISE=3
 let supply_current = -i(VCCSRC)
-meas tran i_supply_peak MAX supply_current
+meas tran i_modelled_circuit_peak MAX supply_current
 quit
 .endc
 .end
