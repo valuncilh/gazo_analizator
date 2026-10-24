@@ -132,18 +132,19 @@ block(ax,9.2,1.45,3.9,1.3,"Логика инверсии","S > U_REF → DOUT н
 ax.text(.8,.45,"Порог и ширина гистерезиса зависят от настройки P1, RHYS, уровней выхода и параметров фактического компаратора.",fontsize=9,color=GREY)
 finish(fig,"fig03_comparator_hysteresis.png")
 
-# Figure 4. 555 timer functional analogue.
-fig,ax=canvas("Рисунок 4 — функциональный аналог астабильного таймера 555",
- "TLC555 — аналог для SPICE-проверки, а не электрически точная замена биполярного КР1006ВИ1.",(15,7.8))
-wire(ax,[(.9,6.3),(9.0,6.3)],ORANGE,1.8); ax.text(.9,6.53,"+5 В",color=ORANGE,fontweight="bold")
+# Figure 4. 555 timer electrical schematic approximation.
+fig,ax=canvas("Рисунок 4 — электрическая схема таймера 555 и сброса",
+ "TLC555 — функциональный SPICE-аналог КР1006ВИ1. Внешние соединения и номиналы сверены с netlist.",(15,7.8))
+wire(ax,[(.9,6.3),(9.0,6.3)],ORANGE,1.8)
+ax.text(.9,6.53,"+5 В",color=ORANGE,fontweight="bold")
 
-# Timing network is drawn separately from RESET so the two nets cannot be
-# mistaken as electrically connected in this approximate illustration.
+# R4/R5/C1 timing network, with a continuous electrical connection at DISCH.
 wire(ax,[(2.0,6.3),(2.0,5.8)],ORANGE)
-resistor_v(ax,2.0,5.8,4.55,"R4=8,2 кОм",ORANGE)
+resistor_v(ax,2.0,5.8,4.55,"R4 = 8,2 кОм",ORANGE)
 wire(ax,[(2.0,4.55),(2.0,4.1)],INK)
 node(ax,2.0,4.1); ax.text(1.03,4.26,"DISCH",fontsize=9,color=INK)
-resistor_h(ax,2.2,4.7,4.1,"R5=8,2 кОм",BLUE)
+wire(ax,[(2.0,4.1),(2.2,4.1)],INK,1.7)
+resistor_h(ax,2.2,4.7,4.1,"R5 = 8,2 кОм",BLUE)
 wire(ax,[(4.7,4.1),(4.7,3.55)],BLUE); node(ax,4.7,4.1,BLUE)
 ax.text(4.48,4.34,"CT",color=BLUE,fontweight="bold")
 ax.plot([4.43,4.97],[3.15,3.15],c=INK,lw=1.9)
@@ -151,10 +152,32 @@ ax.plot([4.43,4.97],[2.9,2.9],c=INK,lw=1.9)
 wire(ax,[(4.7,3.55),(4.7,3.15)],BLUE)
 wire(ax,[(4.7,2.9),(4.7,2.3)],INK)
 ground(ax,4.7,2.3)
-ax.text(5.0,3.03,"C1=4,7 мкФ",fontsize=9,color=INK)
+ax.text(5.0,3.03,"C1 = 4,7 мкФ",fontsize=9,color=INK)
 
-block(ax,6.45,3.1,2.55,2.25,"DA1: TLC555","THRES/TRIG ← CT\nCONT → C2\nDISCH ← узел R4/R5\nRESET ← VT1\nOUT → нагрузка",ORANGE,"#FFF4E5",True)
-# Питание, общий вывод и вход CONT показаны отдельными электрическими соединениями.
+# Discrete RESET transistor QVT1 and its two resistors.
+wire(ax,[(.95,6.3),(.95,5.8)],ORANGE)
+resistor_v(ax,.95,5.8,4.5,"R3 = 2 кОм",PURPLE)
+wire(ax,[(.95,4.5),(.95,4.1)],PURPLE,1.6)
+node(ax,.95,4.1,PURPLE)
+ax.text(1.12,4.26,"RESET",fontsize=8.7,color=PURPLE,fontweight="bold")
+wire(ax,[(.95,4.1),(.95,3.4),(2.78,3.4),(2.78,3.18)],PURPLE,1.7)
+qx,qy=2.3,2.5
+ax.plot([qx,qx],[qy-.46,qy+.46],c=INK,lw=1.9)
+wire(ax,[(1.9,qy),(qx,qy)],PURPLE,1.7)
+ax.plot([qx,qx+.48],[qy+.22,qy+.68],c=INK,lw=1.9)
+ax.plot([qx,qx+.48],[qy-.22,qy-.68],c=INK,lw=1.9)
+arrow(ax,(qx+.18,qy-.38),(qx+.39,qy-.58),"",INK)
+wire(ax,[(qx+.48,qy+.68),(qx+.48,3.18)],INK,1.7)
+wire(ax,[(qx+.48,qy-.68),(qx+.48,1.65)],INK,1.7)
+ground(ax,qx+.48,1.65)
+ax.text(qx-.18,qy+.72,"QVT1",fontsize=9.5,color=INK,fontweight="bold")
+ax.text(qx-.18,qy+.46,"2N3904*",fontsize=8.2,color=GREY)
+wire(ax,[(.45,qy),(.7,qy)],PURPLE,1.6)
+resistor_h(ax,.7,1.9,qy,"R2 = 10 кОм",PURPLE)
+ax.text(.44,qy+.28,"DOUT",fontsize=8.5,color=PURPLE,fontweight="bold")
+# The RESET label is repeated at the IC pin as an off-page/net-label connection.
+# Equal net labels denote the same electrical node without a long crossing wire.
+block(ax,6.45,3.1,2.55,2.25,"DA1: TLC555","THRES/TRIG ← CT\nCONT ← C2 = 100 нФ\nDISCH ← DISCH\nRESET ← RESET\nOUT → рисунок 5",ORANGE,"#FFF4E5",True)
 wire(ax,[(8.05,5.35),(8.05,6.3)],ORANGE,1.5); node(ax,8.05,6.3,ORANGE)
 ax.text(8.12,5.62,"VCC",fontsize=8.5,color=ORANGE)
 wire(ax,[(8.35,3.1),(8.35,2.3)],INK,1.4); ground(ax,8.35,2.3)
@@ -166,13 +189,11 @@ ax.text(9.95,2.68,"C2 = 100 нФ",fontsize=8.5,color=TEAL,va="center")
 ax.text(8.96,3.72,"CONT",fontsize=8,color=TEAL)
 arrow(ax,(4.7,4.1),(6.45,4.45),"CT",BLUE)
 arrow(ax,(2.0,4.1),(6.45,3.85),"DISCH",GREY)
-block(ax,.95,1.0,2.45,1.15,"VT1","Открыт → RESET low\nЗакрыт → RESET high",PURPLE,"#F3E8FF",True)
-arrow(ax,(3.4,1.58),(5.25,1.58),"RESET",PURPLE)
-arrow(ax,(5.25,1.58),(6.45,3.35),"",PURPLE)
+ax.text(6.25,3.35,"RESET",fontsize=8.5,color=PURPLE,ha="right",va="center")
 arrow(ax,(9.0,4.15),(10.25,4.15),"OUT",ORANGE)
-block(ax,10.25,3.3,2.8,1.5,"Нагрузки","HL1 через R6\nVT2/HA1 через R9",GREEN,"#ECFDF3",True)
-block(ax,9.7,.55,3.7,1.1,"Номинал не исправлен","4,7 мкФ → около 12,47 Гц",RED,"#FEF3F2",False)
-ax.text(.8,.4,"CT и RESET — разные цепи. 47 мкФ здесь не установлен, а рассматривается только как сравнение (~1,25 Гц).",fontsize=9,color=GREY)
+ax.text(10.4,4.15,"каскад на рисунке 5",fontsize=8.5,color=ORANGE,va="center")
+block(ax,9.7,.55,3.7,1.1,"Номинал не изменён","C1 = 4,7 мкФ → около 12,47 Гц",RED,"#FEF3F2",False)
+ax.text(.8,.4,"* 2N3904 — функциональный аналог КТ3102ГМ. 47 мкФ показан только как отдельный сравнительный сценарий.",fontsize=8.7,color=GREY)
 finish(fig,"fig04_timer_555_analogue.png")
 
 # Figure 5. Electrical output stage approximation.

@@ -12,7 +12,9 @@ mkdir -p "$OUT"
 # generated ~/.xschem/xschemrc cannot point at a nonexistent user library.
 test -d /usr/share/xschem/xschem_library/devices
 test -s /usr/share/xschem/xschem_library/devices/res.sym
+test -s /usr/share/xschem/xschemrc
 cat > "$OUT/xschemrc" <<'XSCHEMRC'
+source /usr/share/xschem/xschemrc
 set XSCHEM_LIBRARY_PATH {/usr/share/xschem/xschem_library}
 XSCHEMRC
 
