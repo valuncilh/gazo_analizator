@@ -25,7 +25,10 @@ sed \
     -e "s|@TLC555_LIB@|$TLC_LIB|g" \
     spice/alarm_chain_vendor.cir.in > "$TMP_NETLIST"
 
-ngspice -b "$TMP_NETLIST" > spice/vendor_model_test.log 2>&1
+# PSpice vendor libraries use constructs such as VSWITCH, VT, and if().
+# Tell ngspice to translate the included PSpice libraries before parsing them.
+printf 'set ngbehavior=ps\n' > "$WORK_DIR/.spiceinit"
+HOME="$WORK_DIR" ngspice -b "$TMP_NETLIST" > spice/vendor_model_test.log 2>&1
 test -s spice/vendor_model_results.dat
 grep -q "t_reset_rise" spice/vendor_model_test.log
 grep -q "t_alarm_period" spice/vendor_model_test.log
