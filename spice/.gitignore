@@ -11,3 +11,5 @@ bode_results.dat
 bode_linearized.png
 
 vendor_model_probe.log
+vendor_model_test.log
+vendor_model_results.dat
