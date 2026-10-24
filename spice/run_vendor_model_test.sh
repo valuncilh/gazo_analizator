@@ -69,7 +69,52 @@ for name, state in [("reset_air_initial", "low"), ("reset_at_1000ppm", "high"), 
         raise SystemExit(1)
 PY
 
+# Verify the sound-enabled indicator branch draws current through HL2.
+python3 - <<'PY'
+from pathlib import Path
+import re
+import sys
+
+log = Path("spice/vendor_model_test.log").read_text(errors="replace")
+match = re.search(r"^i_hl2_peak\\s*=\\s*([0-9.eE+-]+)", log, re.MULTILINE)
+if match is None:
+    print("ERROR: enabled HL2 current measurement is missing", file=sys.stderr)
+    raise SystemExit(1)
+current = float(match.group(1))
+print(f"HL2 peak current with SOUND_ENABLE=1: {current:.6g} A")
+if current < 1e-4:
+    print("ERROR: HL2 branch is not conducting when enabled", file=sys.stderr)
+    raise SystemExit(1)
+PY
+
+# Run the same circuit with sound and HL2 disabled. The indicator current must
+# fall to leakage-level values, proving that the control switch is in series.
+OFF_NETLIST="$WORK_DIR/alarm_chain_vendor_sound_off.cir"
+sed \\
+    -e 's/^\\.param SOUND_ENABLE=1$/.param SOUND_ENABLE=0/' \\
+    -e 's@spice/vendor_model_results.dat@spice/vendor_model_results_sound_off.dat@' \\
+    "$TMP_NETLIST" > "$OFF_NETLIST"
+HOME="$WORK_DIR" ngspice -b "$OFF_NETLIST" > spice/vendor_model_sound_off.log 2>&1
+test -s spice/vendor_model_results_sound_off.dat
+grep -q "i_hl2_peak" spice/vendor_model_sound_off.log
+python3 - <<'PY'
+from pathlib import Path
+import re
+import sys
+
+log = Path("spice/vendor_model_sound_off.log").read_text(errors="replace")
+match = re.search(r"^i_hl2_peak\\s*=\\s*([0-9.eE+-]+)", log, re.MULTILINE)
+if match is None:
+    print("ERROR: disabled HL2 current measurement is missing", file=sys.stderr)
+    raise SystemExit(1)
+current = float(match.group(1))
+print(f"HL2 peak current with SOUND_ENABLE=0: {current:.6g} A")
+if current > 1e-7:
+    print("ERROR: HL2 still conducts when disabled", file=sys.stderr)
+    raise SystemExit(1)
+PY
+
 python3 -m py_compile spice/plot_results.py
 python3 spice/plot_results.py --input spice/vendor_model_results.dat --output spice/vendor_chain_plots.png
 
-echo "Vendor-model transient test completed. See spice/vendor_model_test.log and spice/vendor_chain_plots.png."
+echo "Vendor-model transient test completed. See SPICE logs and spice/vendor_chain_plots.png."
