@@ -32,6 +32,43 @@ HOME="$WORK_DIR" ngspice -b "$TMP_NETLIST" > spice/vendor_model_test.log 2>&1
 test -s spice/vendor_model_results.dat
 grep -q "t_reset_rise" spice/vendor_model_test.log
 grep -q "t_alarm_period" spice/vendor_model_test.log
+
+python3 - <<'PY'
+from pathlib import Path
+import re
+import sys
+
+log = Path("spice/vendor_model_test.log").read_text(errors="replace")
+checks = {
+    "sensor_clean_air": (0.926, 0.88, 0.98),
+    "sensor_1000ppm": (2.500, 2.45, 2.55),
+    "sensor_5000ppm": (3.125, 3.05, 3.20),
+    "sensor_clean_air_after": (0.926, 0.88, 0.98),
+}
+for name, (expected, low, high) in checks.items():
+    match = re.search(rf"^{name}\\s*=\\s*([0-9.eE+-]+)", log, re.MULTILINE)
+    if match is None:
+        print(f"ERROR: {name} measurement missing from ngspice log", file=sys.stderr)
+        raise SystemExit(1)
+    value = float(match.group(1))
+    print(f"{name}: {value:.6f} V")
+    if not low <= value <= high:
+        print(f"ERROR: {name}={value:.6f} V outside [{low}, {high}] V", file=sys.stderr)
+        raise SystemExit(1)
+
+for name, state in [("reset_air_initial", "low"), ("reset_at_1000ppm", "high"), ("reset_clean_after", "low")]:
+    match = re.search(rf"^{name}\\s*=\\s*([0-9.eE+-]+)", log, re.MULTILINE)
+    if match is None:
+        print(f"ERROR: {name} measurement missing from ngspice log", file=sys.stderr)
+        raise SystemExit(1)
+    value = float(match.group(1))
+    print(f"{name}: {value:.6f} V")
+    valid = value < 1.0 if state == "low" else value > 2.5
+    if not valid:
+        print(f"ERROR: RESET did not reach expected {state} state at {name}", file=sys.stderr)
+        raise SystemExit(1)
+PY
+
 python3 -m py_compile spice/plot_results.py
 python3 spice/plot_results.py --input spice/vendor_model_results.dat --output spice/vendor_chain_plots.png
 
