@@ -6,3 +6,6 @@ spice_chain_results_4p7u.dat
 spice_chain_results_47u.dat
 spice_chain_plots.png
 __pycache__/
+bode_ngspice.log
+bode_results.dat
+bode_linearized.png
