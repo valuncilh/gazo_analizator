@@ -185,4 +185,36 @@ for b,v in zip(bars,period):
     ax.text(b.get_x()+b.get_width()/2,v+18,f"{v:.2f} мс\n{1000/v:.2f} Гц",ha="center",va="bottom",fontweight="bold",color=INK)
 ax.text(.02,-.18,"ngspice 42, поведенческая модель. 47 мкФ не утверждён как новый номинал схемы.",transform=ax.transAxes,fontsize=9,color=GREY)
 fig.tight_layout(rect=[0,.05,1,.92]); fig.savefig(OUT/"fig08_timer_period_comparison.png",dpi=180,bbox_inches="tight",facecolor="white"); plt.close(fig)
+# Add numbered Russian captions to the charts produced by ngspice.
+from PIL import Image, ImageDraw, ImageFont
+
+def caption_plot(source, destination, title, subtitle):
+    source = Path(source)
+    if not source.is_file():
+        raise FileNotFoundError(f"Expected ngspice plot is missing: {source}")
+    im = Image.open(source).convert("RGB")
+    w, h = im.size
+    band = 108
+    canvas = Image.new("RGB", (w, h + band), "white")
+    canvas.paste(im, (0, band))
+    draw = ImageDraw.Draw(canvas)
+    font_title = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 30)
+    font_sub = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 18)
+    draw.text((42, 12), title, fill=INK, font=font_title)
+    draw.text((44, 62), subtitle, fill=GREY, font=font_sub)
+    canvas.save(destination, optimize=True)
+
+caption_plot(
+    "spice/bode_linearized.png",
+    OUT / "fig06_bode_linearized_submodels.png",
+    "Рисунок 6 — АЧХ и ФЧХ линейных подсистем",
+    "MQ-4 — условная аппроксимация. RC-состояния таймера показаны отдельно.",
+)
+caption_plot(
+    "spice/vendor_chain_plots.png",
+    OUT / "fig07_transient_vendor_model.png",
+    "Рисунок 7 — переходные процессы тестовой цепочки",
+    "TI TLV7041/TLC555, аналог 2N3904 вместо КТ3102ГМ, сценарный MQ-4 делитель.",
+)
+
 print("Generated annotated schematic PNGs in", OUT)
