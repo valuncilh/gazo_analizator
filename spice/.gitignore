@@ -9,3 +9,5 @@ __pycache__/
 bode_ngspice.log
 bode_results.dat
 bode_linearized.png
+
+vendor_model_probe.log
