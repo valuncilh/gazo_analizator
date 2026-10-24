@@ -91,7 +91,7 @@ finish(fig,"fig01_system_architecture.png")
 
 # Figure 2. MQ-4 divider.
 fig,ax=canvas("Рисунок 2 — приближённая электрическая модель MQ-4",
- "Эквивалент Rs + RL. Он не воспроизводит внутреннюю схему платы Amperka и не является калибровкой конкретного экземпляра.",(15,7.8))
+ "Однорезисторный электрический эквивалент. В SPICE Rs выбирается между тремя сценарными ветвями через управляемые ключи.",(15,7.8))
 ax.text(1.0,6.1,"+5 В",ha="center",fontsize=11,fontweight="bold",color=ORANGE)
 wire(ax,[(1,5.9),(1,5.45)],ORANGE,1.7); resistor_v(ax,1,5.45,3.7,"Rs(CH₄)",TEAL)
 wire(ax,[(1,3.7),(1,3.15),(2.7,3.15)]); node(ax,1,3.15,TEAL)
@@ -114,10 +114,10 @@ finish(fig,"fig02_mq4_equivalent.png")
 
 # Figure 3. Comparator with feedback.
 fig,ax=canvas("Рисунок 3 — приближённая схема компаратора с гистерезисом",
- "Выбранный U2 — TLV7041-Q1. Внешние номиналы показаны как рабочая топология; точная внутренняя схема IC здесь не раскрывается.",(15,8))
+ "U2 — TLV7041-Q1. RP1A и RP1B — фиксированный делитель UREF из netlist, не потенциометр.",(15,8))
 wire(ax,[(.8,6.35),(13.0,6.35)],ORANGE,1.8); ax.text(.8,6.57,"+5 В",color=ORANGE,fontweight="bold")
-wire(ax,[(1.55,6.35),(1.55,5.85)],ORANGE); resistor_v(ax,1.55,5.85,4.85,"P1 верх",ORANGE)
-node(ax,1.55,4.5,TEAL); resistor_v(ax,1.55,4.5,3.3,"P1 низ",BLUE)
+wire(ax,[(1.55,6.35),(1.55,5.85)],ORANGE); resistor_v(ax,1.55,5.85,4.85,"RP1A = 5,2 кОм",ORANGE)
+node(ax,1.55,4.5,TEAL); resistor_v(ax,1.55,4.5,3.3,"RP1B = 4,8 кОм",BLUE)
 wire(ax,[(1.55,4.85),(1.55,4.5)],TEAL); wire(ax,[(1.55,3.3),(1.55,2.9)]); ground(ax,1.55,2.9)
 wire(ax,[(1.55,4.5),(3.2,4.5)],TEAL,1.8); ax.text(1.85,4.72,"U_REF",color=TEAL,fontweight="bold")
 block(ax,4.55,3.0,2.35,2.4,"U2: TLV7041","IN+ ← U_REF\nIN− ← S\nOUT = DOUT′",BLUE,"#EAF2FF",False)
@@ -135,7 +135,7 @@ finish(fig,"fig03_comparator_hysteresis.png")
 # Figure 4. 555 timer functional analogue.
 fig,ax=canvas("Рисунок 4 — функциональный аналог астабильного таймера 555",
  "TLC555 — аналог для SPICE-проверки, а не электрически точная замена биполярного КР1006ВИ1.",(15,7.8))
-wire(ax,[(.9,6.3),(7.8,6.3)],ORANGE,1.8); ax.text(.9,6.53,"+5 В",color=ORANGE,fontweight="bold")
+wire(ax,[(.9,6.3),(9.0,6.3)],ORANGE,1.8); ax.text(.9,6.53,"+5 В",color=ORANGE,fontweight="bold")
 
 # Timing network is drawn separately from RESET so the two nets cannot be
 # mistaken as electrically connected in this approximate illustration.
@@ -153,7 +153,17 @@ wire(ax,[(4.7,2.9),(4.7,2.3)],INK)
 ground(ax,4.7,2.3)
 ax.text(5.0,3.03,"C1=4,7 мкФ",fontsize=9,color=INK)
 
-block(ax,6.45,3.1,2.55,2.25,"DA1: TLC555","THRES/TRIG ← CT\nDISCH ← узел R4/R5\nRESET ← VT1\nOUT → нагрузка",ORANGE,"#FFF4E5",True)
+block(ax,6.45,3.1,2.55,2.25,"DA1: TLC555","THRES/TRIG ← CT\nCONT → C2\nDISCH ← узел R4/R5\nRESET ← VT1\nOUT → нагрузка",ORANGE,"#FFF4E5",True)
+# Питание, общий вывод и вход CONT показаны отдельными электрическими соединениями.
+wire(ax,[(8.05,5.35),(8.05,6.3)],ORANGE,1.5); node(ax,8.05,6.3,ORANGE)
+ax.text(8.12,5.62,"VCC",fontsize=8.5,color=ORANGE)
+wire(ax,[(8.35,3.1),(8.35,2.3)],INK,1.4); ground(ax,8.35,2.3)
+ax.text(8.42,2.82,"GND",fontsize=8.5,color=INK)
+wire(ax,[(9.0,3.55),(9.65,3.55),(9.65,2.8)],TEAL,1.4)
+ax.plot([9.4,9.9],[2.8,2.8],c=TEAL,lw=1.8); ax.plot([9.4,9.9],[2.55,2.55],c=TEAL,lw=1.8)
+wire(ax,[(9.65,2.55),(9.65,2.3)],TEAL,1.4); ground(ax,9.65,2.3)
+ax.text(9.95,2.68,"C2 = 100 нФ",fontsize=8.5,color=TEAL,va="center")
+ax.text(8.96,3.72,"CONT",fontsize=8,color=TEAL)
 arrow(ax,(4.7,4.1),(6.45,4.45),"CT",BLUE)
 arrow(ax,(2.0,4.1),(6.45,3.85),"DISCH",GREY)
 block(ax,.95,1.0,2.45,1.15,"VT1","Открыт → RESET low\nЗакрыт → RESET high",PURPLE,"#F3E8FF",True)
@@ -165,27 +175,78 @@ block(ax,9.7,1.0,3.7,1.15,"Номинал не исправлен","4,7 мкФ �
 ax.text(.8,.4,"CT и RESET — разные цепи. 47 мкФ здесь не установлен, а рассматривается только как сравнение (~1,25 Гц).",fontsize=9,color=GREY)
 finish(fig,"fig04_timer_555_analogue.png")
 
-# Figure 5. Buzzer output approximation.
-fig,ax=canvas("Рисунок 5 — приближённая схема звукового выхода",
- "Зуммер заменён резистивным эквивалентом для оценки постоянного тока. Это не модель акустики или внутреннего генератора HA1.",(15,7.8))
-wire(ax,[(.9,6.3),(12.8,6.3)],ORANGE,1.8); ax.text(.9,6.52,"+5 В",color=ORANGE,fontweight="bold")
-wire(ax,[(7.6,6.3),(7.6,5.75)],ORANGE); block(ax,6.8,4.75,1.6,1.0,"HA1","активный",ORANGE,"#FFF4E5",True)
-wire(ax,[(7.6,4.75),(7.6,3.55),(5.8,3.55)],INK,1.8); node(ax,7.6,3.55)
-# protection diode branch
-wire(ax,[(9.25,6.3),(9.25,5.7)],GREEN,1.4)
-ax.add_patch(Polygon([[9.07,5.22],[9.43,5.22],[9.25,5.55]],closed=True,facecolor="white",edgecolor=GREEN,lw=1.4))
-ax.plot([9.04,9.46],[5.62,5.62],c=GREEN,lw=1.7)
-wire(ax,[(9.25,5.62),(9.25,6.3)],GREEN,1.3); wire(ax,[(9.25,5.22),(9.25,3.55),(7.6,3.55)],GREEN,1.3)
-ax.text(9.7,5.4,"VD1, катод к +5 В",fontsize=9,color=GREEN)
-block(ax,4.4,2.1,1.8,1.4,"VT2","NPN, ключ по минусу\n2N3904 как аналог*",PURPLE,"#F3E8FF",True)
-wire(ax,[(5.8,3.55),(5.8,3.0)],INK,1.7); wire(ax,[(5.25,2.1),(5.25,1.55)]); ground(ax,5.25,1.55)
-wire(ax,[(.9,3.0),(1.35,3.0)],BLUE,1.7); resistor_h(ax,1.35,3.2,3.0,"R9=560 Ω",BLUE)
-wire(ax,[(3.2,3.0),(3.55,3.0)],BLUE); wire(ax,[(3.55,3.0),(3.55,2.72)],BLUE)
-wire(ax,[(3.55,2.72),(3.84,2.92)],BLUE); wire(ax,[(3.92,3.0),(4.4,3.0)],BLUE)
-ax.text(.9,3.27,"OUT",fontsize=9.5,color=BLUE,fontweight="bold"); ax.text(3.62,3.25,"SA1",fontsize=9,color=BLUE)
-block(ax,.95,4.65,2.65,1.0,"HL1","OUT → R6=220 Ω → LED",RED,"#FEF3F2",False)
-block(ax,10.0,2.0,3.05,1.6,"Эквивалент HA1","RBZ ≈ 166,7 Ω\nI ≈ 30 мА при 5 В\nНе настоящий зуммер",ORANGE,"#FFF4CC",True)
-ax.text(.8,.42,"* 2N3904 используется вместо КТ3102ГМ как сценарный аналог. Ток базы и насыщение нужно подтвердить отдельно.",fontsize=9,color=GREY)
+# Figure 5. Electrical output stage approximation.
+fig,ax=canvas("Рисунок 5 — приближённая электрическая схема выходного каскада",
+ "RBZ заменяет активный зуммер только резистивной нагрузкой. Управляемый ключ S_SA1 моделирует сигнал разрешения SOUND_ENABLE.",(15,8))
+wire(ax,[(.65,6.45),(13.35,6.45)],ORANGE,1.8)
+ax.text(.7,6.66,"+5 В",color=ORANGE,fontweight="bold")
+
+# Actual LED branch: OUT -> R6 -> HL1 -> 0.
+wire(ax,[(.8,3.0),(.8,5.45)],BLUE,1.7)
+wire(ax,[(.8,5.45),(1.1,5.45)],BLUE,1.7)
+resistor_h(ax,1.1,2.75,5.45,"R6 = 220 Ω",BLUE)
+wire(ax,[(2.75,5.45),(3.25,5.45)],BLUE,1.7)
+wire(ax,[(3.25,5.45),(3.25,5.12)],BLUE,1.7)
+ax.add_patch(Polygon([[3.03,5.12],[3.47,5.12],[3.25,4.78]],closed=True,facecolor="white",edgecolor=RED,lw=1.6))
+ax.plot([3.02,3.48],[4.73,4.73],c=RED,lw=1.8)
+wire(ax,[(3.25,4.73),(3.25,4.32)],RED,1.5)
+ground(ax,3.25,4.32)
+arrow(ax,(3.5,5.18),(3.72,5.42),"",RED)
+arrow(ax,(3.66,5.02),(3.88,5.26),"",RED)
+ax.text(3.56,4.96,"HL1",fontsize=9,color=RED)
+ax.text(.7,2.72,"OUT",fontsize=9.5,color=BLUE,fontweight="bold")
+node(ax,.8,3.0,BLUE)
+
+# R9 and the voltage-controlled switch feeding the NPN base.
+wire(ax,[(.8,3.0),(1.05,3.0)],BLUE,1.7)
+resistor_h(ax,1.05,2.75,3.0,"R9 = 560 Ω",BLUE)
+wire(ax,[(2.75,3.0),(3.08,3.0)],BLUE,1.7)
+wire(ax,[(3.08,3.0),(3.68,3.28)],PURPLE,1.7)
+wire(ax,[(3.82,3.0),(4.12,3.0)],PURPLE,1.7)
+wire(ax,[(4.12,3.0),(6.25,3.0)],PURPLE,1.7)
+ax.text(3.0,3.46,"S_SA1",fontsize=9,color=PURPLE,fontweight="bold")
+ax.text(3.0,2.52,"SOUND_EN / 0",fontsize=8.5,color=PURPLE)
+ax.text(3.0,2.30,"управляемый ключ",fontsize=8,color=GREY)
+node(ax,6.25,3.0,PURPLE)
+
+# Base pull-down: RBE is explicitly present in the SPICE netlist.
+wire(ax,[(6.25,3.0),(6.25,2.62)],INK,1.4)
+resistor_v(ax,6.25,2.62,1.72,"RBE = 1 МОм",INK)
+wire(ax,[(6.25,1.72),(6.25,1.55)],INK,1.4)
+ground(ax,6.25,1.55)
+
+# NPN symbol, with the same emitter, base, and collector connections as QVT2.
+qx,qy=7.2,3.0
+ax.plot([qx,qx],[qy-.46,qy+.46],c=INK,lw=1.9)
+wire(ax,[(6.25,3.0),(qx-.62,qy)],PURPLE,1.7)
+ax.plot([qx,qx+.48],[qy+.22,qy+.68],c=INK,lw=1.9)
+ax.plot([qx,qx+.48],[qy-.22,qy-.68],c=INK,lw=1.9)
+arrow(ax,(qx+.18,qy-.38),(qx+.39,qy-.58),"",INK)
+wire(ax,[(qx+.48,qy+.68),(qx+.48,4.78)],INK,1.7)
+wire(ax,[(qx+.48,qy-.68),(qx+.48,1.8)],INK,1.7)
+ground(ax,qx+.48,1.8)
+ax.text(qx-.2,qy+.7,"QVT2",fontsize=9.5,color=INK,fontweight="bold")
+ax.text(qx-.15,qy+.45,"2N3904*",fontsize=8.5,color=GREY)
+node(ax,qx+.48,4.78,INK)
+ax.text(qx+.65,4.93,"BZ_COL",fontsize=8.5,color=INK)
+
+# RBZ load from VCC to BZ_COL. It is a resistor, not a buzzer model.
+wire(ax,[(10.0,6.45),(10.0,6.05)],ORANGE,1.7)
+resistor_v(ax,10.0,6.05,4.78,"RBZ = 166,7 Ω",ORANGE)
+wire(ax,[(10.0,4.78),(7.68,4.78)],ORANGE,1.7)
+node(ax,10.0,4.78,ORANGE)
+
+# D1 clamp diode, anode at BZ_COL and cathode at +5 V.
+wire(ax,[(11.5,6.45),(11.5,5.72)],GREEN,1.4)
+ax.plot([11.27,11.73],[5.72,5.72],c=GREEN,lw=1.8)
+ax.add_patch(Polygon([[11.28,5.24],[11.72,5.24],[11.5,5.59]],closed=True,facecolor="white",edgecolor=GREEN,lw=1.5))
+wire(ax,[(11.5,5.24),(11.5,4.78),(10.0,4.78)],GREEN,1.4)
+ax.text(11.8,5.48,"D1",fontsize=9,color=GREEN,fontweight="bold")
+ax.text(11.8,5.28,"катод к +5 В",fontsize=8,color=GREEN)
+
+block(ax,.9,.72,3.85,.9,"VSA1","V(SOUND_EN) = 5 · SOUND_ENABLE",PURPLE,"#F3E8FF",True)
+ax.text(5.2,.85,"* 2N3904 — функциональный аналог КТ3102ГМ.",fontsize=9,color=GREY)
+ax.text(5.2,.52,"HA1 не моделируется акустически. RBZ — только резистивный эквивалент для DC/переходного анализа.",fontsize=8.7,color=GREY)
 finish(fig,"fig05_buzzer_driver_analogue.png")
 
 # Figure 8. Timer comparison.
