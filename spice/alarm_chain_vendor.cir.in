@@ -104,6 +104,8 @@ meas tran reset_at_1000ppm FIND v(RESET) AT=1.2
 meas tran reset_clean_after FIND v(RESET) AT=3.0
 let modelled_current = -i(VCCSRC)
 meas tran i_vendor_model_peak MAX modelled_current
+let hl2_current = abs(i(R7))
+meas tran i_hl2_peak MAX hl2_current
 quit
 .endc
 .end
