@@ -3,7 +3,7 @@
 * U2 uses TI's official TLV7041 PSpice library.
 * DA1 uses TI's TLC555 PSpice model as a functional analogue to bipolar KR1006VI1.
 * KT3102GM is approximated with a generic 2N3904 SPICE model.
-* MQ-4 input is synthetic; its value is not mapped to methane ppm.
+* MQ-4 input uses a parameterized gas-resistance divider with approximate curve points.
 * HA1 is represented by a 166.7 ohm load, not a full active-buzzer model.
 
 .include "@TLV7041_LIB@"
@@ -12,15 +12,34 @@
 .title Gas alarm chain using vendor comparator and timer-analogue models
 .param SOUND_ENABLE=1
 .param C_TIMER=4.7u
+.param R0_SENSOR=20k
+.param RL_SENSOR=20k
 
 VCCSRC VCC 0 DC 5
 C3 VCC 0 47u
 C_U2 VCC 0 100n
-VSENSE S 0 PWL(0 0.30 0.20 0.30 0.80 4.50 2.20 4.50 2.40 0.30 3.50 0.30)
 
-* Sensor resistance/reference proxy node. It is a test stimulus only.
-RP1A VCC UREF 5k
-RP1B UREF 0 5k
+* Approximate MQ-4 sensing element based on the Amperka TroykaMQ library and
+* Hanwei MQ-4 curve: Rs/R0 ~= 4.4 in clean air, 1.0 at 1000ppm and 0.6 at
+* 5000ppm CH4. R0_SENSOR=20k is a scenario value within the datasheet's
+* 10k-60k range at 1000ppm. These are NOT guaranteed values for every module.
+* Gas selector code: 0=clean air, 1=1000ppm CH4, 2=5000ppm CH4.
+VSEL_AIR CTRL_AIR 0 PWL(0 1 0.7999 1 0.8 0 2.3999 0 2.4 1 4 1)
+VSEL_1000 CTRL_1000 0 PWL(0 0 0.8 1 1.5999 1 1.6 0 4 0)
+VSEL_5000 CTRL_5000 0 PWL(0 0 1.6 1 2.3999 1 2.4 0 4 0)
+.model SW_GAS SW(Ron=0.1 Roff=1e9 Vt=0.5 Vh=0.1)
+R_S_AIR VCC N_S_AIR {4.4*R0_SENSOR}
+S_AIR N_S_AIR S CTRL_AIR 0 SW_GAS
+R_S_1000 VCC N_S_1000 {R0_SENSOR}
+S_1000 N_S_1000 S CTRL_1000 0 SW_GAS
+R_S_5000 VCC N_S_5000 {0.6*R0_SENSOR}
+S_5000 N_S_5000 S CTRL_5000 0 SW_GAS
+RL_S S 0 {RL_SENSOR}
+
+* UREF approximately 2.4V nominal, then calibrated for the actual sensor.
+* With R0_SENSOR=20k, the model gives VS ~= 2.50V at the 1000ppm scenario.
+RP1A VCC UREF 5.2k
+RP1B UREF 0 4.8k
 RHYS DOUT UREF 100k
 R1 VCC DOUT 160k
 R8 VCC DOUT 2.2k
@@ -71,7 +90,7 @@ S_HL2 HL2_A 0 SOUND_EN 0 SW_ENABLE
 set noaskquit
 set wr_singlescale
 set wr_vecnames
-tran 0.1m 3.5
+tran 0.1m 4.0
 wrdata spice/vendor_model_results.dat v(S) v(UREF) v(DOUT) v(RESET) v(CT) v(OUT) v(BZ_COL)
 meas tran t_reset_rise WHEN v(RESET)=2.5 RISE=1
 meas tran t_alarm_first_rise WHEN v(OUT)=2.5 RISE=1
