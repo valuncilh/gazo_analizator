@@ -44,7 +44,8 @@ EOUT_LO_CTRL CTRL_OUT_LO 0 VALUE = {if(V(RESET)<2.5,5,V(CT)-V(VCC)/2)}
 S_OUT_LO OUT 0 CTRL_OUT_LO 0 SW_555
 .model SW_555 SW(Ron=2 Roff=1e9 Vt=0 Vh=0.833333)
 
-* Generic LED and buzzer-load proxies.
+* Generic LED and buzzer-load proxies. RBE is a 1 Mohm model aid to define the off-state,
+* not an additional fitted design component.
 R6 OUT HL1_A 220
 D_HL1 HL1_A 0 D_LED_PROXY
 .model D_LED_PROXY D(IS=1e-20 N=2 RS=2 CJO=10p)
@@ -70,7 +71,8 @@ wrdata spice_chain_results.dat v(S) v(UREF) v(DOUT) v(RESET) v(CT) v(OUT) v(BZ_C
 meas tran t_reset_rise WHEN v(RESET)=2.5 RISE=1
 meas tran t_alarm_first_rise WHEN v(OUT)=2.5 RISE=1
 meas tran t_alarm_period TRIG v(OUT) VAL=2.5 RISE=1 TARG v(OUT) VAL=2.5 RISE=2
-meas tran i_supply_peak MAX par('-i(VCCSRC)')
+let supply_current = -i(VCCSRC)
+meas tran i_supply_peak MAX supply_current
 quit
 .endc
 .end
