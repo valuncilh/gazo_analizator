@@ -6,7 +6,7 @@ set -eu
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$ROOT"
 
-WORK_DIR="\${TMPDIR:-/tmp}/gazo_analizator_vendor_models"
+WORK_DIR="${TMPDIR:-/tmp}/gazo_analizator_vendor_models"
 if [ ! -d "$WORK_DIR/ti_tlv704x_pspice" ] || [ ! -d "$WORK_DIR/ti_tlc555_pspice" ]; then
     sh spice/fetch_vendor_models.sh
 fi
