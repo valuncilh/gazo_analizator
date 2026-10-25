@@ -167,9 +167,13 @@ def main():
     missing = [r for r in ["J1","J2","J3","U2","VT1","DA1","VT2","HA1","H1","H2","H3","H4"] if r not in found]
     if missing: raise SystemExit("Missing footprint refs: " + ", ".join(missing))
     validate_pad_net_map(text)
-    if "NOT FOR FABRICATION" not in text or "NO COPPER ROUTING" not in text:
-        raise SystemExit("Missing preliminary warnings")
+    if "NOT FOR FABRICATION" not in text:
+        raise SystemExit("Missing NOT FOR FABRICATION warning")
     tracks = len(re.findall(r'\((?:segment|via)\b', text))
+    if tracks == 0 and "NO COPPER ROUTING" not in text:
+        raise SystemExit("Zero-track board must keep the NO COPPER ROUTING warning")
+    if tracks > 0 and "NO COPPER ROUTING" in text:
+        raise SystemExit("Routed board still contains a stale NO COPPER ROUTING warning")
     fp_table = ROOT / "cad/kicad/fp-lib-table"
     fp_root = ROOT / "cad/kicad/footprints/GazoPreliminary.pretty"
     fp_files = sorted(fp_root.glob("*.kicad_mod")) if fp_root.is_dir() else []
@@ -184,8 +188,14 @@ def main():
         w=csv.writer(f); w.writerow(["Reference","Value","Provisional footprint","Open verification item"]); w.writerows(PARTS)
     with (OUT/"preliminary_placements.csv").open("w", newline="", encoding="utf-8-sig") as f:
         w=csv.writer(f); w.writerow(["Reference","Value","Status"]); w.writerows([[r,v,"PRELIMINARY, verify in KiCad"] for r,v,fp,note in PARTS])
-    summary={"pcb_file":"cad/kicad/gazo_analizator_preliminary.kicad_pcb","board_size_mm":[72,50,1.6],"references_found":len(found),"bom_rows":len(PARTS),"custom_footprints":len(fp_files),"custom_footprints_with_courtyard":len(fp_files)-len(no_courtyard),"segments_and_vias":tracks,"routing_status":"UNROUTED","manufacturing_status":"NOT FOR FABRICATION","limitations":["KT3102GM pinout not manufacturer-verified","TBC passive/connector footprints remain","No KiCad schematic/ERC netlist parity","Do not issue Gerber/drill from this draft"]}
+    route_status = "UNROUTED" if tracks == 0 else "AUTOROUTED_DRAFT"
+    route_note = (
+        "Copper routing is not started; unconnected-net warnings are expected."
+        if tracks == 0 else
+        "Autoroute candidate detected. Review DRC, unconnected nets and routing quality before use."
+    )
+    summary={"pcb_file":"cad/kicad/gazo_analizator_preliminary.kicad_pcb","board_size_mm":[72,50,1.6],"references_found":len(found),"bom_rows":len(PARTS),"custom_footprints":len(fp_files),"custom_footprints_with_courtyard":len(no_courtyard),"segments_and_vias":tracks,"routing_status":route_status,"manufacturing_status":"NOT FOR FABRICATION","limitations":["KT3102GM pinout not manufacturer-verified","TBC passive/connector footprints remain","No KiCad schematic/ERC netlist parity","Do not issue Gerber/drill from this draft"]}
     (OUT/"preliminary_cad_summary.json").write_text(json.dumps(summary,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
-    (OUT/"preliminary_cad_summary.md").write_text("# CAD static check\n\n**PRELIMINARY / NOT FOR FABRICATION**\n\n"+f"- Board size: 72 x 50 x 1.6 mm\n- References found: {len(found)}\n- BOM rows: {len(PARTS)}\n- Custom footprint files: {len(fp_files)}\n- Footprints with provisional F.CrtYd: {len(fp_files)-len(no_courtyard)}\n- Copper tracks/vias: {tracks}\n- Routing is not started; DRC unconnected warnings are expected.\n- Exact footprints, pinouts and schematic parity remain open.\n",encoding="utf-8")
-    print(f"Static PCB check passed. References={len(found)}, BOM rows={len(PARTS)}, footprints={len(fp_files)}, tracks={tracks}.")
+    (OUT/"preliminary_cad_summary.md").write_text("# CAD static check\n\n**PRELIMINARY / NOT FOR FABRICATION**\n\n"+f"- Board size: 72 x 50 x 1.6 mm\n- References found: {len(found)}\n- BOM rows: {len(PARTS)}\n- Custom footprints: {len(fp_files)}\n- Footprints with provisional F.CrtYd: {len(fp_files)-len(no_courtyard)}\n- Copper tracks/vias: {tracks}\n- Routing status: {route_status}\n- {route_note}\n- Exact footprints, pinouts and schematic parity remain open.\n",encoding="utf-8")
+    print(f"Static PCB check passed. References={len(found)}, BOM rows={len(PARTS)}, footprints={len(fp_files)}, tracks/vias={tracks}, route_status={route_status}.")
 if __name__=="__main__": main()
