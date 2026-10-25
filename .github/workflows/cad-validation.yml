@@ -30,7 +30,7 @@ jobs:
           sudo apt-get install -y software-properties-common python3
           sudo add-apt-repository -y ppa:kicad/kicad-9.0-releases
           sudo apt-get update
-          sudo apt-get install -y kicad librsvg2-bin
+          sudo apt-get install -y kicad librsvg2-bin python3-pcbnew
           kicad-cli version
 
       - name: Install FreeRouting CLI 2.5.0
