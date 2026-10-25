@@ -41,7 +41,7 @@ def main() -> int:
     require("DA1" in svg and "R9 + SA1" in svg and "VT2 / HA1" in svg,
             "На функциональной топологии отсутствует один из блоков выходной цепи")
     require("VT2 base" in svg, "Не подписан путь управления базой VT2")
-    require(\'stroke-dasharray="4 2"\' not in svg,
+    require('stroke-dasharray="4 2"' not in svg,
             "Пунктирная связь может быть прочитана как прямой обход R9/SA1")
 
     # A routed KiCad board is serialized differently by pcbnew.SaveBoard():
@@ -50,8 +50,8 @@ def main() -> int:
     require(len(parts) >= 20, f"Ожидалось не менее 20 площадочных footprints, получено {len(parts)}")
     board_svg = pcb_sheet(parts)
     board_text = PCB.read_text(encoding="utf-8")
-    segment_count = len(re.findall(r"\\(segment\\b", board_text))
-    via_count = len(re.findall(r"\\(via\\b", board_text))
+    segment_count = len(re.findall(r"\(segment\b", board_text))
+    via_count = len(re.findall(r"\(via\b", board_text))
     if segment_count + via_count:
         require("Автотрассировка:" in board_svg,
                 "На чертеже платы не отражена фактическая автотрассировка")
@@ -63,7 +63,6 @@ def main() -> int:
 
     print(f"Прочитано footprints: {len(parts)}. Медные сегменты: {segment_count}; переходы: {via_count}.")
     print("Тест функциональной топологии и отражения статуса трассировки пройден.")
-    print("Тест функциональной топологии пройден: DA1 → R9/SA1 → база VT2, прямой обход отсутствует.")
     print("Ограничение: это блок-схема, а не полноценная Э3. Netlist parity и аппаратная приёмка остаются открытыми.")
     return 0
 
