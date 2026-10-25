@@ -48,6 +48,9 @@ jobs:
       - name: Test downloaded TI model compatibility with ngspice
         run: sh spice/run_vendor_model_test.sh
 
+      - name: Compare control-chain models with shared sensor stimulus
+        run: sh spice/run_model_comparison.sh
+
       - name: Run 4.7 uF and 47 uF timer scenarios
         run: sh spice/run_comparison.sh
 
@@ -109,6 +112,11 @@ jobs:
             spice/vendor_model_sound_off.log
             spice/vendor_model_results_sound_off.dat
             spice/vendor_chain_plots.png
+            spice/model_comparison_behavioral.log
+            spice/model_comparison_vendor.log
+            spice/model_comparison_behavioral.dat
+            spice/model_comparison_vendor.dat
+            spice/model_comparison_overlay.png
             spice/xschem_probe/*
             docs/figures/*.png
             docs/figures/xschem_probe/*.png
