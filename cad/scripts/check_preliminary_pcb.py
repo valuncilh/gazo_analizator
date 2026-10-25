@@ -94,7 +94,7 @@ def extract_sexpr(source, start):
         if quoted:
             if escaped:
                 escaped = False
-            elif ch == "\\\\":
+            elif ch == "\\":
                 escaped = True
             elif ch == '"':
                 quoted = False
@@ -112,20 +112,20 @@ def extract_sexpr(source, start):
 
 def extract_pad_net_map(board_text):
     result = {}
-    starts = re.finditer(r'\\(footprint "GazoPreliminary:[^"]+"', board_text)
+    starts = re.finditer(r'\(footprint "GazoPreliminary:[^"]+"', board_text)
     for start in starts:
         block = extract_sexpr(board_text, start.start())
-        reference = re.search(r'\\(property "Reference" "([^"]+)"', block)
+        reference = re.search(r'\(property "Reference" "([^"]+)"', block)
         if reference is None:
             continue
         ref = reference.group(1)
         if ref in result:
             raise SystemExit(f"Duplicate footprint reference in PCB net map: {ref}")
         pads = {}
-        for pad_start in re.finditer(r'\\(pad "([^"]+)"', block):
+        for pad_start in re.finditer(r'\(pad "([^"]+)"', block):
             pad_block = extract_sexpr(block, pad_start.start())
             number = pad_start.group(1)
-            net = re.search(r'\\(net \\d+ "([^"]+)"\\)', pad_block)
+            net = re.search(r'\(net \d+ "([^"]+)"\)', pad_block)
             pads[number] = net.group(1) if net else None
         result[ref] = pads
     return result
