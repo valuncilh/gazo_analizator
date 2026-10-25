@@ -13,6 +13,7 @@ on:
   pull_request:
     paths:
       - "spice/**"
+      - "docs/figures/**"
       - ".github/workflows/spice-validation.yml"
   workflow_dispatch:
 
@@ -64,6 +65,9 @@ jobs:
 
       - name: Evaluate xschem MQ-4 divider fragment
         run: sh spice/test_xschem_probe.sh
+
+      - name: Check figure labels and critical schematic connections
+        run: python3 docs/figures/test_figure_localization.py
 
       - name: Generate annotated PNG figures
         run: |
@@ -119,6 +123,10 @@ jobs:
             spice/model_comparison_overlay.png
             spice/model_comparison_branch_currents.png
             spice/model_comparison_branch_summary.txt
+            spice/model_comparison_behavioral_r9max.log
+            spice/model_comparison_vendor_r9max.log
+            spice/model_comparison_behavioral_r9max.dat
+            spice/model_comparison_vendor_r9max.dat
             spice/xschem_probe/*
             docs/figures/*.png
             docs/figures/xschem_probe/*.png
