@@ -1,3 +1,5 @@
+> **ARCHIVED / SUPERSEDED — НЕ ПРОДОЛЖАТЬ РАЗРАБОТКУ В ЭТОЙ ВЕТКЕ.** Единственная основная рабочая ветка: [`analysis/vendor-behavioral-reconciliation`](https://github.com/valuncilh/gazo_analizator/tree/analysis/vendor-behavioral-reconciliation). Эта ветка сохранена только как история. Не открывать из неё отдельные PR и не переносить изменения напрямую. Любые недостающие полезные изменения нужно сначала сверять и включать в основную рабочую ветку. См. [политику веток](https://github.com/valuncilh/gazo_analizator/blob/analysis/vendor-behavioral-reconciliation/docs/branch_policy.md).
+
 # gazo_analizator
 
 Курсовой проект по дисциплине «Основы конструирования и технологии производства РЭС».
