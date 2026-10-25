@@ -19,8 +19,11 @@ def main() -> int:
     # DA1 OUT must branch to HL1 and the serial R9+SA1 block. The only drawn
     # path from that block to the sounder must be labeled as the VT2 base path.
     required_paths = (
-        'ln(280,76,280,102,0.40)',
+        'ln(306,62,330,62,0.40)',
+        'ln(312,62,312,102,0.40)',
+        'ln(312,102,280,102,0.40)',
         'ln(280,102,280,118,0.40)',
+        'circ(312,62,0.9,0.25,fill="#111")',
         'ln(306,132,330,132,0.40)',
     )
     for path in required_paths:
