@@ -1,6 +1,6 @@
 > **ОСНОВНАЯ РАБОЧАЯ ВЕТКА:** [`analysis/vendor-behavioral-reconciliation`](https://github.com/valuncilh/gazo_analizator/tree/analysis/vendor-behavioral-reconciliation). Все дальнейшие изменения, проверки и чекпоинты вести здесь. Ветки `audit/russian-figures-spice-consistency` и `fix/russian-figures-electrical-audit` сохранены как исторические и помечаются `ARCHIVED / SUPERSEDED`. Настройка GitHub Default branch пока остаётся `main`, а интеграция выполняется через черновой PR №4.
 >
-> Единая политика: [`docs/branch_policy.md`](docs/branch_policy.md). Сводный статус связей блоков: [`docs/integration_readiness_audit_2026-10-25.md`](docs/integration_readiness_audit_2026-10-25.md).
+> Единая политика: [`docs/branch_policy.md`](https://github.com/valuncilh/gazo_analizator/blob/analysis/vendor-behavioral-reconciliation/docs/branch_policy.md). Сводный статус связей блоков: [`docs/integration_readiness_audit_2026-10-25.md`](https://github.com/valuncilh/gazo_analizator/blob/analysis/vendor-behavioral-reconciliation/docs/integration_readiness_audit_2026-10-25.md).
 
 # gazo_analizator
 
