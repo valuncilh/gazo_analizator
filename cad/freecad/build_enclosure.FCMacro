@@ -1,0 +1,106 @@
+"""Build a parametric preliminary enclosure with FreeCAD."""
+from pathlib import Path
+import json
+import FreeCAD as App
+import Part
+import Mesh
+
+ROOT = Path(__file__).resolve().parents[2]
+OUT = ROOT / "cad/output"
+OUT.mkdir(parents=True, exist_ok=True)
+CASE_X, CASE_Y = 120.0, 78.0
+BASE_H, LID_H, WALL, FLOOR = 40.0, 2.0, 2.5, 3.0
+PCB_X0, PCB_Y0, PCB_Z0, PCB_X, PCB_Y, PCB_T = 41.4, 14.0, 6.5, 72.0, 50.0, 1.6
+MQ_X0, MQ_Y0, MQ_Z0, MQ_SIZE = 8.0, 26.3, 6.5, 25.4
+LID_Z = BASE_H
+SOUNDER_X, SOUNDER_Y = PCB_X0 + 63.0, PCB_Y0 + 39.0
+LED_POS = [(PCB_X0+44.0, PCB_Y0+40.5), (PCB_X0+52.0, PCB_Y0+40.5)]
+SENSOR_X, SENSOR_Y = MQ_X0 + MQ_SIZE/2, MQ_Y0 + MQ_SIZE/2
+NAME = "GazoAnalizatorPreliminary"
+try: App.closeDocument(NAME)
+except Exception: pass
+doc = App.newDocument(NAME)
+
+def feature(name, label, shape, color):
+    obj = doc.addObject("PartDesign::Feature", name)
+    obj.Label = label
+    obj.Shape = shape
+    obj.ViewObject.ShapeColor = color
+    return obj
+
+outer = Part.makeBox(CASE_X,CASE_Y,BASE_H,App.Vector(0,0,0))
+inner = Part.makeBox(CASE_X-2*WALL,CASE_Y-2*WALL,BASE_H-FLOOR+1,App.Vector(WALL,WALL,FLOOR))
+base = outer.cut(inner)
+# Connector cutout is generic pending a selected XS1.
+base = base.cut(Part.makeBox(4,9,10,App.Vector(CASE_X-WALL-0.5,20.5,8)))
+for x,y in [(6,6),(114,6),(6,72),(114,72)]:
+    post=Part.makeCylinder(3.4,BASE_H-FLOOR,App.Vector(x,y,FLOOR))
+    bore=Part.makeCylinder(1.1,8,App.Vector(x,y,BASE_H-8))
+    base=base.fuse(post.cut(bore))
+for x,y in [(PCB_X0+3.5,PCB_Y0+3.5),(PCB_X0+68.5,PCB_Y0+3.5),
+            (PCB_X0+3.5,PCB_Y0+46.5),(PCB_X0+68.5,PCB_Y0+46.5)]:
+    boss=Part.makeCylinder(3,PCB_Z0-FLOOR,App.Vector(x,y,FLOOR))
+    hole=Part.makeCylinder(1.6,PCB_Z0-FLOOR+0.2,App.Vector(x,y,FLOOR))
+    base=base.fuse(boss.cut(hole))
+for x,y,w,l in [
+    (MQ_X0-1.3,MQ_Y0,1.1,7.5),(MQ_X0-1.3,MQ_Y0+MQ_SIZE-7.5,1.1,7.5),
+    (MQ_X0+MQ_SIZE+0.2,MQ_Y0,1.1,7.5),(MQ_X0+MQ_SIZE+0.2,MQ_Y0+MQ_SIZE-7.5,1.1,7.5)]:
+    base=base.fuse(Part.makeBox(w,l,3,App.Vector(x,y,MQ_Z0)))
+base_obj=feature("CaseBase","Case base - PRELIMINARY",base,(0.78,0.78,0.82))
+
+lid=Part.makeBox(CASE_X,CASE_Y,LID_H,App.Vector(0,0,LID_Z))
+for x,y in [(6,6),(114,6),(6,72),(114,72)]:
+    lid=lid.cut(Part.makeCylinder(1.6,LID_H+0.4,App.Vector(x,y,LID_Z-0.2)))
+for row in range(5):
+    for col in range(5):
+        x=SENSOR_X+(col-2)*5
+        y=SENSOR_Y+(row-2)*5
+        lid=lid.cut(Part.makeCylinder(1.25,LID_H+0.4,App.Vector(x,y,LID_Z-0.2)))
+# Acoustic port through the lid plus a provisional hollow guide down toward the sounder face.
+lid=lid.cut(Part.makeCylinder(4.25,LID_H+0.4,App.Vector(SOUNDER_X,SOUNDER_Y,LID_Z-0.2)))
+outer_tube=Part.makeCylinder(5.2,22.2,App.Vector(SOUNDER_X,SOUNDER_Y,17.8))
+inner_tube=Part.makeCylinder(4.25,22.6,App.Vector(SOUNDER_X,SOUNDER_Y,17.6))
+lid=lid.fuse(outer_tube.cut(inner_tube))
+for x,y in LED_POS:
+    lid=lid.cut(Part.makeCylinder(2.75,LID_H+0.4,App.Vector(x,y,LID_Z-0.2)))
+lid_obj=feature("CaseLid","Lid - PRELIMINARY",lid,(0.85,0.85,0.88))
+
+pcb_obj=feature("ControlPCBReference","Control PCB 72 x 50 x 1.6",
+    Part.makeBox(PCB_X,PCB_Y,PCB_T,App.Vector(PCB_X0,PCB_Y0,PCB_Z0)),(0.1,0.45,0.16))
+module_obj=feature("AmperkaModuleReference","Amperka AMP-B052 25.4mm module",
+    Part.makeBox(MQ_SIZE,MQ_SIZE,1.6,App.Vector(MQ_X0,MQ_Y0,MQ_Z0)),(0.15,0.38,0.68))
+sensor_obj=feature("SensorEnvelopeTBC","MQ-4 can placeholder, dimension TBC",
+    Part.makeCylinder(5,20,App.Vector(SENSOR_X,SENSOR_Y,MQ_Z0+1.6)),(0.72,0.72,0.75))
+buzzer_obj=feature("HCM1205XReference","JL World HCM1205X envelope 12 x 9.5mm",
+    Part.makeCylinder(6,9.5,App.Vector(SOUNDER_X,SOUNDER_Y,PCB_Z0+PCB_T)),(0.22,0.22,0.22))
+lights=[]
+for i,(x,y) in enumerate(LED_POS,1):
+    lights.append(feature(f"LEDLightPipe{i}",f"LED light pipe placeholder {i}",
+        Part.makeCylinder(2.25,LID_Z-(PCB_Z0+PCB_T),App.Vector(x,y,PCB_Z0+PCB_T)),(0.75,0.8,0.95)))
+doc.recompute()
+doc.saveAs(str(OUT/"gazo_enclosure_preliminary.FCStd"))
+Part.export([base_obj],str(OUT/"case_base_preliminary.step"))
+Part.export([lid_obj],str(OUT/"lid_preliminary.step"))
+Part.export([base_obj,lid_obj,pcb_obj,module_obj,sensor_obj,buzzer_obj]+lights,str(OUT/"gazo_preliminary_assembly.step"))
+Mesh.export([base_obj],str(OUT/"case_base_preliminary.stl"))
+Mesh.export([lid_obj],str(OUT/"lid_preliminary.stl"))
+report={"status":"PRELIMINARY / NOT FOR FABRICATION","units":"mm",
+ "case_outer_size":[CASE_X,CASE_Y,BASE_H+LID_H],"walls":WALL,"floor":FLOOR,
+ "control_pcb":{"size":[PCB_X,PCB_Y,PCB_T],"origin":[PCB_X0,PCB_Y0,PCB_Z0]},
+ "sensor_module":{"size":[MQ_SIZE,MQ_SIZE,1.6],"origin":[MQ_X0,MQ_Y0,MQ_Z0]},
+ "ventilation":{"rows":5,"columns":5,"hole_diameter":2.5,"pitch":5.0},
+ "sounder_aperture_diameter":8.5,"sounder_guide":{"outer_diameter":10.4,"inner_diameter":8.5,"length":22.2},
+ "open_issues":["MQ-4 can profile is a 10mm diameter x 20mm high placeholder.",
+ "XS1 connector body and side cutout are generic; exact connector not selected.",
+ "Physical P1 potentiometer and SA1 switch are not selected.",
+ "Module mounting rails are generic; verify actual AMP-B052 outline/pads.",
+ "Vent pattern, heat clearance, acoustic guide and light-pipes need fit review.",
+ "No thermal, gas response, vibration or ingress-protection validation is implied."],
+ "outputs":["gazo_enclosure_preliminary.FCStd","case_base_preliminary.step","lid_preliminary.step",
+ "gazo_preliminary_assembly.step","case_base_preliminary.stl","lid_preliminary.stl"]}
+(OUT/"enclosure_build_report.json").write_text(json.dumps(report,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
+print("FreeCAD model and STEP/STL exports written. PRELIMINARY / NOT FOR FABRICATION.")
+try:
+    import FreeCADGui as Gui
+    Gui.getMainWindow().close()
+except Exception: pass

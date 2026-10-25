@@ -1,0 +1,137 @@
+name: Preliminary CAD validation
+
+on:
+  pull_request:
+    paths:
+      - "cad/**"
+      - "requirements/verification_matrix.md"
+      - "requirements/project_checklist.md"
+      - ".github/workflows/cad-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cad-validation-${{ github.event_name }}
+  cancel-in-progress: true
+
+jobs:
+  kicad-check:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install KiCad 9 CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y software-properties-common python3
+          sudo add-apt-repository -y ppa:kicad/kicad-9.0-releases
+          sudo apt-get update
+          sudo apt-get install -y kicad
+          kicad-cli version
+
+      - name: Generate preliminary board and reports
+        run: |
+          set -eu
+          python3 cad/scripts/generate_preliminary_pcb.py
+          python3 cad/scripts/check_preliminary_pcb.py
+
+      - name: Parse board, collect DRC report and export SVG
+        run: |
+          set -eu
+          mkdir -p cad/output/board_svg
+          set +e
+          kicad-cli pcb drc --severity-all --output cad/output/kicad_drc_report.rpt cad/kicad/gazo_analizator_preliminary.kicad_pcb > cad/output/kicad_drc_console.log 2>&1
+          DRC_RC=$?
+          set -e
+          echo "KiCad DRC process exit code: $DRC_RC" | tee cad/output/kicad_environment.txt
+          kicad-cli version >> cad/output/kicad_environment.txt 2>&1
+          kicad-cli pcb export svg --output cad/output/board_svg --layers "F.Cu,F.SilkS,Edge.Cuts,Cmts.User" cad/kicad/gazo_analizator_preliminary.kicad_pcb
+          printf '%s\n' "NOTE: board is unrouted; unconnected-net warnings are expected and are not manufacturing acceptance." >> cad/output/preliminary_cad_summary.md
+          test -s cad/output/kicad_drc_report.rpt
+          test -n "$(find cad/output/board_svg -type f -name '*.svg' -print -quit)"
+          cat cad/output/kicad_drc_console.log
+
+      - name: Commit generated board to same-repository PR branch
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          PR_BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          set -eu
+          mkdir -p /tmp/generated-pcb
+          cp cad/kicad/gazo_analizator_preliminary.kicad_pcb /tmp/generated-pcb/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+valuncilh@users.noreply.github.com"
+          git fetch origin "$PR_BRANCH"
+          git checkout --force -B "$PR_BRANCH" "origin/$PR_BRANCH"
+          cp /tmp/generated-pcb/gazo_analizator_preliminary.kicad_pcb cad/kicad/
+          git add cad/kicad/gazo_analizator_preliminary.kicad_pcb
+          if git diff --cached --quiet; then
+            echo "Generated KiCad board already matches the PR branch."
+          else
+            git commit -m "cad: add generated preliminary KiCad board [skip ci]"
+            git push origin "HEAD:$PR_BRANCH"
+          fi
+
+      - name: Upload KiCad validation artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gazo-preliminary-kicad
+          if-no-files-found: warn
+          path: |
+            cad/kicad/*.kicad_pcb
+            cad/output/**
+
+  freecad-model:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install FreeCAD
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y software-properties-common xvfb
+          sudo add-apt-repository -y ppa:freecad-maintainers/freecad-stable
+          sudo apt-get update
+          sudo apt-get install -y freecad
+          find /usr -type f \( -iname 'freecadcmd' -o -iname 'freecadcmd*' \) -print
+
+      - name: Build parametric enclosure and export STEP/STL
+        run: |
+          set -euo pipefail
+          mkdir -p cad/output
+          FCMD="$(command -v freecadcmd || command -v FreeCADCmd || true)"
+          if [ -z "$FCMD" ]; then
+            FCMD="$(find /usr -type f \( -iname 'freecadcmd' -o -iname 'FreeCADCmd' \) -print -quit)"
+          fi
+          if [ -n "$FCMD" ]; then
+            "$FCMD" cad/freecad/build_enclosure.FCMacro 2>&1 | tee cad/output/freecad_build.log
+          else
+            timeout 180s xvfb-run -a freecad cad/freecad/build_enclosure.FCMacro 2>&1 | tee cad/output/freecad_build.log
+          fi
+          test -s cad/output/gazo_enclosure_preliminary.FCStd
+          test -s cad/output/case_base_preliminary.step
+          test -s cad/output/lid_preliminary.step
+          test -s cad/output/gazo_preliminary_assembly.step
+          test -s cad/output/case_base_preliminary.stl
+          test -s cad/output/lid_preliminary.stl
+          python3 -m json.tool cad/output/enclosure_build_report.json > /dev/null
+
+      - name: Upload FreeCAD exports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gazo-preliminary-freecad
+          if-no-files-found: warn
+          path: |
+            cad/output/*.FCStd
+            cad/output/*.step
+            cad/output/*.stl
+            cad/output/enclosure_build_report.json
+            cad/output/freecad_build.log
