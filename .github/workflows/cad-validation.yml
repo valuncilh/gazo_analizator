@@ -19,7 +19,7 @@ concurrency:
 jobs:
   kicad-check:
     runs-on: ubuntu-22.04
-    timeout-minutes: 25
+    timeout-minutes: 45
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -33,10 +33,29 @@ jobs:
           sudo apt-get install -y kicad librsvg2-bin
           kicad-cli version
 
+      - name: Install FreeRouting CLI 2.5.0
+        run: |
+          set -eu
+          mkdir -p /tmp/freerouting
+          curl -fL --retry 3 --retry-delay 2 https://github.com/freerouting/freerouting/releases/download/v2.5.0/freerouting-cli-2.5.0-linux-x64.tar.gz -o /tmp/freerouting-cli.tar.gz
+          curl -fL --retry 3 --retry-delay 2 https://github.com/freerouting/freerouting/releases/download/v2.5.0/freerouting-cli-2.5.0-checksums.txt -o /tmp/freerouting-checksums.txt
+          EXPECTED_SHA="$(awk '$2 == "freerouting-cli-2.5.0-linux-x64.tar.gz" {print $1}' /tmp/freerouting-checksums.txt)"
+          test -n "$EXPECTED_SHA"
+          echo "$EXPECTED_SHA  /tmp/freerouting-cli.tar.gz" | sha256sum -c -
+          tar -xzf /tmp/freerouting-cli.tar.gz -C /tmp/freerouting
+          ROUTER="$(find /tmp/freerouting -type f \( -name 'freeRouting' -o -name 'freerouting' -o -name 'freerouting-cli' \) -print -quit)"
+          if [ -z "$ROUTER" ]; then ROUTER="$(find /tmp/freerouting -type f -perm /111 -print -quit)"; fi
+          test -n "$ROUTER"
+          chmod +x "$ROUTER"
+          echo "FREEROUTING_BIN=$ROUTER" >> "$GITHUB_ENV"
+          echo "FreeRouting executable: $ROUTER"
+          "$ROUTER" --help > /tmp/freerouting-help.txt 2>&1 || true
+          head -n 35 /tmp/freerouting-help.txt
       - name: Generate preliminary board and reports
         run: |
           set -eu
           python3 cad/scripts/generate_preliminary_pcb.py
+          python3 cad/scripts/autoroute_preliminary_pcb.py
           python3 cad/scripts/check_preliminary_pcb.py
           python3 cad/scripts/test_electrical_trace.py
           python3 cad/drawings/generate_preliminary_drawings.py
@@ -56,13 +75,20 @@ jobs:
           echo "KiCad DRC process exit code: $DRC_RC" | tee cad/output/kicad_environment.txt
           kicad-cli version >> cad/output/kicad_environment.txt 2>&1
           kicad-cli pcb export svg --mode-multi --output cad/output/board_svg --layers "F.Cu,F.SilkS,Edge.Cuts,Cmts.User" cad/kicad/gazo_analizator_preliminary.kicad_pcb
-          printf '%s\n' "NOTE: board is unrouted; unconnected-net warnings are expected and are not manufacturing acceptance." >> cad/output/preliminary_cad_summary.md
           test -s cad/output/kicad_drc_report.rpt
+          if [ "$DRC_RC" -ne 0 ] || grep -Eq 'Found [1-9][0-9]* violations|Found [1-9][0-9]* unconnected items' cad/output/kicad_drc_console.log; then
+            echo "ROUTING_ACCEPTED=false" >> "$GITHUB_ENV"
+            echo "Autoroute remains incomplete or DRC is not clean. Candidate will be uploaded for review but not pushed to the branch."
+            printf '%s\n' "Routing acceptance: NOT ACCEPTED. Review DRC and unconnected items." >> cad/output/preliminary_cad_summary.md
+          else
+            echo "ROUTING_ACCEPTED=true" >> "$GITHUB_ENV"
+            printf '%s\n' "Routing acceptance: DRC found no geometric violations or unconnected items. Manual layout review remains mandatory." >> cad/output/preliminary_cad_summary.md
+          fi
           test -n "$(find cad/output/board_svg -type f -name '*.svg' -print -quit)"
           cat cad/output/kicad_drc_console.log
 
       - name: Commit generated board to same-repository PR branch
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && env.ROUTING_ACCEPTED == 'true'
         env:
           PR_BRANCH: ${{ github.event.pull_request.head.ref }}
         run: |
