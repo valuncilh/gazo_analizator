@@ -200,7 +200,7 @@ arrow(ax,(4.7,4.1),(6.45,4.45),"CT",BLUE)
 
 ax.text(6.25,3.35,"RESET",fontsize=8.5,color=PURPLE,ha="right",va="center")
 arrow(ax,(9.0,4.15),(10.25,4.15),"OUT",ORANGE)
-ax.text(10.4,4.15,"каскад на рисунке 5",fontsize=8.5,color=ORANGE,va="center")
+ax.text(10.4,4.15,"каскад на рисунке 7",fontsize=8.5,color=ORANGE,va="center")
 block(ax,9.7,.92,3.7,1.1,"Номинал не изменён","C1 = 4,7 мкФ → около 12,47 Гц",RED,"#FEF3F2",False)
 ax.text(.8,.45,"* 2N3904 — функциональный аналог КТ3102ГМ. 47 мкФ показан только как отдельный сравнительный сценарий.",fontsize=8.7,color=GREY)
 finish(fig,"fig04_timer_555_analogue.png")
