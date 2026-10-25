@@ -156,7 +156,7 @@ def check_board_map(board_path: Path) -> int:
     require(pad("J4", "4") == "GND" and pad("J4", "6") is None,
             "SA1 indicator pole should switch HL2 return to ground or leave it open")
 
-    return len(__import__("re").findall(r"\(segment\s", board_text))
+    return len(re.findall(r"\(segment\s", board_text))
 
 
 def main() -> int:
