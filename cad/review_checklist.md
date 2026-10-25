@@ -26,3 +26,17 @@ The current PCB is intentionally unrouted. Its DRC report is diagnostic only. No
 - [ ] Трассировка, нативная Э3/ERC и замена TBC footprints остаются обязательными до любого производственного выпуска.
 
 Эта отметка предназначена для запуска новой CAD-проверки после генерации платы, а не означает, что плата прошла производственную приёмку.
+
+
+## Актуальный статус трассировки на 25.10.2026
+
+Нижеследующее состояние заменяет устаревшую запись выше о том, что STEP/STL нового корпуса не подтверждены.
+
+- [x] В [CAD workflow #40189464876](https://github.com/valuncilh/gazo_analizator/actions/runs/40189464876) успешно завершились KiCad и FreeCAD. FreeCAD создал предварительные FCStd, STEP и STL.
+- [x] Проверка назначения сетей: 27 footprints и 72 pad assignments прошли автоматический checker.
+- [x] Геометрический KiCad DRC: 0 нарушений.
+- [ ] Электрическая трассировка медью не выполнена. В отчёте 53 unconnected items и 0 tracks. Это не готовая для производства PCB.
+- [x] Создан [аудит сквозной трассировки](electrical_trace_audit_2026-10-25.md) и regression-тест `cad/scripts/test_electrical_trace.py`, подключённый к CAD workflow.
+- [ ] Подтвердить запуск нового regression-теста на актуальном SHA. Затем создать native KiCad schematic/ERC/netlist parity, уточнить все TBC footprints и провести copper routing.
+
+Все CAD-артефакты остаются **PRELIMINARY / NOT FOR FABRICATION**. Успех создания файлов не является механической или аппаратной приёмкой.
