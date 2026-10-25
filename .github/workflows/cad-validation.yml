@@ -38,6 +38,7 @@ jobs:
           set -eu
           python3 cad/scripts/generate_preliminary_pcb.py
           python3 cad/scripts/check_preliminary_pcb.py
+          python3 cad/scripts/test_electrical_trace.py
           python3 cad/drawings/generate_preliminary_drawings.py
           python3 cad/drawings/test_preliminary_drawings.py
           for SVG in cad/drawings/exports/*.svg; do rsvg-convert --output "${SVG%.svg}.png" "$SVG"; done
