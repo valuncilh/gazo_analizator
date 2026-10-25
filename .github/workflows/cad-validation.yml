@@ -34,23 +34,21 @@ jobs:
           kicad-cli version
           python3 -c 'import pcbnew; print("KiCad pcbnew Python bindings ready")'
 
-      - name: Install FreeRouting CLI 2.5.0
+      - name: Set up Java 25
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - name: Install FreeRouting JVM JAR 2.5.0
         run: |
           set -eu
           mkdir -p /tmp/freerouting
-          curl -fL --retry 3 --retry-delay 2 https://github.com/freerouting/freerouting/releases/download/v2.5.0/freerouting-cli-2.5.0-linux-x64.tar.gz -o /tmp/freerouting-cli.tar.gz
-          curl -fL --retry 3 --retry-delay 2 https://github.com/freerouting/freerouting/releases/download/v2.5.0/freerouting-cli-2.5.0-checksums.txt -o /tmp/freerouting-checksums.txt
-          EXPECTED_SHA="$(awk '$2 == "freerouting-cli-2.5.0-linux-x64.tar.gz" {print $1}' /tmp/freerouting-checksums.txt)"
-          test -n "$EXPECTED_SHA"
-          echo "$EXPECTED_SHA  /tmp/freerouting-cli.tar.gz" | sha256sum -c -
-          tar -xzf /tmp/freerouting-cli.tar.gz -C /tmp/freerouting
-          ROUTER="$(find /tmp/freerouting -type f \( -name 'freeRouting' -o -name 'freerouting' -o -name 'freerouting-cli' \) -print -quit)"
-          if [ -z "$ROUTER" ]; then ROUTER="$(find /tmp/freerouting -type f -perm /111 -print -quit)"; fi
-          test -n "$ROUTER"
-          chmod +x "$ROUTER"
-          echo "FREEROUTING_BIN=$ROUTER" >> "$GITHUB_ENV"
-          echo "FreeRouting executable: $ROUTER"
-          "$ROUTER" --help > /tmp/freerouting-help.txt 2>&1 || true
+          curl -fL --retry 3 --retry-delay 2 https://github.com/freerouting/freerouting/releases/download/v2.5.0/freerouting-2.5.0.jar -o /tmp/freerouting/freerouting-2.5.0.jar
+          echo "f6f51bb02245e8e717f9359bd260cc9c5c0b1bc0acc8b7cb2cd5b8ffeb5de3c7  /tmp/freerouting/freerouting-2.5.0.jar" | sha256sum -c -
+          echo "FREEROUTING_JAR=/tmp/freerouting/freerouting-2.5.0.jar" >> "$GITHUB_ENV"
+          java --version
+          java -jar /tmp/freerouting/freerouting-2.5.0.jar --help > /tmp/freerouting-help.txt 2>&1 || true
           head -n 35 /tmp/freerouting-help.txt
       - name: Generate preliminary board and reports
         run: |
