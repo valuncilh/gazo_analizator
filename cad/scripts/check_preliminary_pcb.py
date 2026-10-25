@@ -50,6 +50,115 @@ def balanced(text):
             elif ch == ")": d -= 1
             if d < 0: return False
     return d == 0 and not quoted
+EXPECTED_PAD_NETS = {
+    "J1": {"1": "+5V", "2": "GND"},
+    "J2": {"1": "SENSE", "2": "+5V", "3": "GND"},
+    "J3": {"1": "+5V", "2": "+5V", "3": "GND"},
+    "U2": {"1": "DOUT", "2": "GND", "3": "UREF", "4": "SENSE", "5": "+5V"},
+    "R1": {"1": "+5V", "2": "DOUT"},
+    "R2": {"1": "DOUT", "2": "VT1_BASE"},
+    "R3": {"1": "+5V", "2": "RESET"},
+    "R4": {"1": "+5V", "2": "TIMER_DISCH"},
+    "R5": {"1": "TIMER_DISCH", "2": "TIMER_CT"},
+    "R6": {"1": "OUT", "2": "HL1_A"},
+    "R7": {"1": "+5V", "2": "HL2_A"},
+    "R8": {"1": "+5V", "2": "DOUT"},
+    "RHYS": {"1": "DOUT", "2": "UREF"},
+    "R9": {"1": "SOUND_CTL", "2": "VT2_BASE"},
+    "VT1": {"1": "RESET", "2": "VT1_BASE", "3": "GND"},
+    "VT2": {"1": "BUZZ_COL", "2": "VT2_BASE", "3": "GND"},
+    "DA1": {
+        "1": "GND", "2": "TIMER_CT", "3": "OUT", "4": "RESET",
+        "5": "TIMER_CTRL", "6": "TIMER_CT", "7": "TIMER_DISCH", "8": "+5V",
+    },
+    "C1": {"1": "TIMER_CT", "2": "GND"},
+    "C2": {"1": "TIMER_CTRL", "2": "GND"},
+    "C3": {"1": "+5V", "2": "GND"},
+    "C4": {"1": "+5V", "2": "GND"},
+    "HL1": {"1": "HL1_A", "2": "GND"},
+    "HL2": {"1": "HL2_A", "2": "SA1_LED_RETURN"},
+    "J4": {
+        "1": "SOUND_CTL", "2": "OUT", "3": None,
+        "4": "GND", "5": "SA1_LED_RETURN", "6": None,
+    },
+    "VD1": {"1": "BUZZ_COL", "2": "+5V"},
+    "HA1": {"1": "+5V", "2": "BUZZ_COL"},
+    "P1": {"1": "+5V", "2": "UREF", "3": "GND"},
+}
+
+
+def extract_sexpr(source, start):
+    depth, quoted, escaped = 0, False, False
+    for index in range(start, len(source)):
+        ch = source[index]
+        if quoted:
+            if escaped:
+                escaped = False
+            elif ch == "\\\\":
+                escaped = True
+            elif ch == '"':
+                quoted = False
+        else:
+            if ch == '"':
+                quoted = True
+            elif ch == "(":
+                depth += 1
+            elif ch == ")":
+                depth -= 1
+                if depth == 0:
+                    return source[start:index + 1]
+    raise ValueError(f"Unterminated S-expression at offset {start}")
+
+
+def extract_pad_net_map(board_text):
+    result = {}
+    starts = re.finditer(r'\\(footprint "GazoPreliminary:[^"]+"', board_text)
+    for start in starts:
+        block = extract_sexpr(board_text, start.start())
+        reference = re.search(r'\\(property "Reference" "([^"]+)"', block)
+        if reference is None:
+            continue
+        ref = reference.group(1)
+        if ref in result:
+            raise SystemExit(f"Duplicate footprint reference in PCB net map: {ref}")
+        pads = {}
+        for pad_start in re.finditer(r'\\(pad "([^"]+)"', block):
+            pad_block = extract_sexpr(block, pad_start.start())
+            number = pad_start.group(1)
+            net = re.search(r'\\(net \\d+ "([^"]+)"\\)', pad_block)
+            pads[number] = net.group(1) if net else None
+        result[ref] = pads
+    return result
+
+
+def validate_pad_net_map(board_text):
+    observed = extract_pad_net_map(board_text)
+    errors = []
+    for ref, expected_pads in EXPECTED_PAD_NETS.items():
+        actual_pads = observed.get(ref)
+        if actual_pads is None:
+            errors.append(f"{ref}: footprint missing")
+            continue
+        if actual_pads.keys() != expected_pads.keys():
+            errors.append(
+                f"{ref}: pad numbers expected {sorted(expected_pads)}, got {sorted(actual_pads)}"
+            )
+            continue
+        for pad_number, expected_net in expected_pads.items():
+            actual_net = actual_pads[pad_number]
+            if actual_net != expected_net:
+                errors.append(
+                    f"{ref}.{pad_number}: expected net {expected_net!r}, got {actual_net!r}"
+                )
+    if errors:
+        raise SystemExit("PCB pad-net connectivity check failed:\\n- " + "\\n- ".join(errors))
+    checked_pads = sum(len(pads) for pads in EXPECTED_PAD_NETS.values())
+    print(
+        f"Pad-net connectivity check passed: {len(EXPECTED_PAD_NETS)} footprints, "
+        f"{checked_pads} pad assignments checked."
+    )
+
+
 def main():
     if not PCB.is_file(): raise SystemExit(f"PCB file not found: {PCB}")
     text = PCB.read_text(encoding="utf-8")
@@ -57,6 +166,7 @@ def main():
     found = re.findall(r'\(property "Reference" "([^"]+)"', text)
     missing = [r for r in ["J1","J2","J3","U2","VT1","DA1","VT2","HA1","H1","H2","H3","H4"] if r not in found]
     if missing: raise SystemExit("Missing footprint refs: " + ", ".join(missing))
+    validate_pad_net_map(text)
     if "NOT FOR FABRICATION" not in text or "NO COPPER ROUTING" not in text:
         raise SystemExit("Missing preliminary warnings")
     tracks = len(re.findall(r'\((?:segment|via)\b', text))
