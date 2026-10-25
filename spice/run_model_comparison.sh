@@ -151,12 +151,32 @@ HOME="$WORK_DIR" ngspice -b "$VENDOR_NETLIST" > spice/model_comparison_vendor.lo
 test -s spice/model_comparison_vendor.dat
 
 echo "[3/3] Check common input, state sequence, timing and current averages"
-python3 - <<'PY' | tee spice/model_comparison_branch_summary.txt
+python3 - <<'PY'
 from pathlib import Path
+import builtins
 import math
 import re
 import sys
 import numpy as np
+
+summary_stream = Path("spice/model_comparison_branch_summary.txt").open("w", encoding="utf-8")
+
+
+class StdoutTee:
+    def __init__(self, *streams):
+        self.streams = streams
+
+    def write(self, value):
+        for stream in self.streams:
+            stream.write(value)
+        return len(value)
+
+    def flush(self):
+        for stream in self.streams:
+            stream.flush()
+
+
+sys.stdout = StdoutTee(sys.__stdout__, summary_stream)
 
 logs = {
     "behavioral": Path("spice/model_comparison_behavioral.log").read_text(errors="replace"),
@@ -317,6 +337,9 @@ for branch_name in ("HL1_R6", "VT2_base_R9", "RBZ_load"):
     print(f"Alarm branch {branch_name}: behavioral={1000*b:.4f} mA, vendor={1000*v:.4f} mA")
 
 print("Shared-input model comparison passed. Branch currents are derived from simulated node voltages, not hardware measurements.")
+sys.stdout.flush()
+summary_stream.flush()
+summary_stream.close()
 PY
 
 python3 spice/plot_model_comparison.py
