@@ -338,6 +338,7 @@ for branch_name in ("HL1_R6", "VT2_base_R9", "RBZ_load"):
 
 print("Shared-input model comparison passed. Branch currents are derived from simulated node voltages, not hardware measurements.")
 sys.stdout.flush()
+sys.stdout = sys.__stdout__
 summary_stream.flush()
 summary_stream.close()
 PY
