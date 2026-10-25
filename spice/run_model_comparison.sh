@@ -146,11 +146,41 @@ echo "[1/3] Run behavioral control-chain model with shared S input"
 ngspice -b "$BEHAVIORAL_NETLIST" > spice/model_comparison_behavioral.log 2>&1
 test -s spice/model_comparison_behavioral.dat
 
-echo "[2/3] Run vendor control-chain model with the same S input"
+echo "[2/4] Run vendor control-chain model with the same S input"
 HOME="$WORK_DIR" ngspice -b "$VENDOR_NETLIST" > spice/model_comparison_vendor.log 2>&1
 test -s spice/model_comparison_vendor.dat
 
-echo "[3/3] Check common input, state sequence, timing and current averages"
+# Run a second physical corner rather than dividing a 560-ohm simulation's
+# voltage drop by 588 ohms. Changing the actual resistor changes both load and OUT.
+R9MAX_BEHAVIORAL_NETLIST="$WORK_DIR/alarm_chain_behavioral_comparison_r9max.cir"
+R9MAX_VENDOR_NETLIST="$WORK_DIR/alarm_chain_vendor_comparison_r9max.cir"
+python3 - "$BEHAVIORAL_NETLIST" "$VENDOR_NETLIST" "$R9MAX_BEHAVIORAL_NETLIST" "$R9MAX_VENDOR_NETLIST" <<'PYR9'
+from pathlib import Path
+import sys
+
+for source, target, data_old, data_new in (
+    (sys.argv[1], sys.argv[3], "spice/model_comparison_behavioral.dat",
+     "spice/model_comparison_behavioral_r9max.dat"),
+    (sys.argv[2], sys.argv[4], "spice/model_comparison_vendor.dat",
+     "spice/model_comparison_vendor_r9max.dat"),
+):
+    content = Path(source).read_text()
+    if content.count("R9 OUT R9_N 560") != 1:
+        raise SystemExit(f"Expected exactly one 560-ohm R9 declaration in {source}")
+    if content.count(data_old) != 1:
+        raise SystemExit(f"Expected exactly one output trace path {data_old} in {source}")
+    content = content.replace("R9 OUT R9_N 560", "R9 OUT R9_N 588", 1)
+    content = content.replace(data_old, data_new, 1)
+    Path(target).write_text(content)
+PYR9
+
+echo "[3/4] Re-run both models at R9 = 588 ohms"
+ngspice -b "$R9MAX_BEHAVIORAL_NETLIST" > spice/model_comparison_behavioral_r9max.log 2>&1
+test -s spice/model_comparison_behavioral_r9max.dat
+HOME="$WORK_DIR" ngspice -b "$R9MAX_VENDOR_NETLIST" > spice/model_comparison_vendor_r9max.log 2>&1
+test -s spice/model_comparison_vendor_r9max.dat
+
+echo "[4/4] Check common input, state sequence, timing and current averages"
 python3 - <<'PY'
 from pathlib import Path
 import builtins
@@ -322,19 +352,9 @@ for model, filename in {
         raise SystemExit(f"ERROR: {model} insufficient high-OUT samples in alarm window")
     high_out = conditional_mean(data, 6, 6, 1.0, 1.5, 2.5)
     high_out_min = float(np.min(high_samples[:, 6]))
-    # Conservative resistor corner. The node R9_N in the generated trace is
-    # the lower side of R9. Using R9,max gives a conservative current estimate
-    # when the recorded resistor drop is positive.
-    ib_samples = np.maximum(0.0, (high_samples[:, 6] - high_samples[:, 10]) / 588.0)
-    ib_min = float(np.min(ib_samples))
-    under_uoh = int(np.count_nonzero(high_samples[:, 6] < 2.564))
     print(f"{model} mean OUT while high: {high_out:.6f} V")
-    print(f"{model} minimum sampled OUT while high (1.0–1.5 s): {high_out_min:.6f} V")
-    print(f"{model} minimum sampled base-branch current using R9,max=588 Ohm: {1000*ib_min:.4f} mA")
-    print(f"{model} high-OUT samples below UOH criterion 2.564 V: {under_uoh}/{high_samples.shape[0]}")
+    print(f"{model} minimum sampled OUT while high (R9=560 Ohm, 1.0–1.5 s): {high_out_min:.6f} V")
     branch_results[model]["out_high_min"] = high_out_min
-    branch_results[model]["base_current_min_corner"] = ib_min
-    branch_results[model]["samples_below_uoh"] = under_uoh
     for branch_name, current in currents.items():
         data_with_current = np.column_stack((data, current))
         column = data_with_current.shape[1] - 1
@@ -346,6 +366,34 @@ for model, filename in {
             raise SystemExit(f"ERROR: {model} {branch_name} never conducts")
     branch_results[model]["out_high_mean"] = high_out
 
+# Worst-case base-current check uses a separate transient simulation with the
+# actual R9 value set to 588 ohms. It does not reuse a voltage drop simulated
+# with the nominal 560-ohm component.
+for model, filename in {
+    "behavioral": "spice/model_comparison_behavioral_r9max.dat",
+    "vendor": "spice/model_comparison_vendor_r9max.dat",
+}.items():
+    data = np.loadtxt(filename, skiprows=1)
+    if data.ndim != 2 or data.shape[1] < 12:
+        raise SystemExit(f"ERROR: {filename} has unexpected shape {data.shape}")
+    if not np.isfinite(data[:, :12]).all():
+        raise SystemExit(f"ERROR: {filename} contains non-finite data")
+    mask = (data[:, 0] >= 1.0) & (data[:, 0] <= 1.5) & (data[:, 6] > 2.5)
+    high_samples = data[mask]
+    if high_samples.shape[0] < 2:
+        raise SystemExit(f"ERROR: {model}: insufficient high-OUT samples with R9=588 Ohm")
+    out_min = float(np.min(high_samples[:, 6]))
+    ib = np.maximum(0.0, (high_samples[:, 6] - high_samples[:, 10]) / 588.0)
+    ib_min = float(np.min(ib))
+    below_uoh = int(np.count_nonzero(high_samples[:, 6] < 2.564))
+    print(f"{model} R9=588 Ohm minimum sampled OUT while high: {out_min:.6f} V")
+    print(f"{model} R9=588 Ohm minimum simulated base-branch current: {1000*ib_min:.4f} mA")
+    print(f"{model} R9=588 Ohm high-OUT samples below UOH criterion 2.564 V: {below_uoh}/{high_samples.shape[0]}")
+    if out_min < 2.564:
+        raise SystemExit(f"ERROR: {model}: sampled OUT minimum {out_min:.6f} V is below 2.564 V criterion")
+    if ib_min < 0.003:
+        raise SystemExit(f"ERROR: {model}: minimum simulated base current {1000*ib_min:.4f} mA is below 3 mA criterion")
+
 out_difference = abs(branch_results["behavioral"]["out_high_mean"] - branch_results["vendor"]["out_high_mean"])
 print(f"Loaded high-level OUT difference: {out_difference:.6f} V")
 for branch_name in ("HL1_R6", "VT2_base_R9", "RBZ_load"):
@@ -354,7 +402,7 @@ for branch_name in ("HL1_R6", "VT2_base_R9", "RBZ_load"):
     print(f"Alarm branch {branch_name}: behavioral={1000*b:.4f} mA, vendor={1000*v:.4f} mA")
 
 print("Shared-input model comparison passed. Branch currents and high-state minima are derived from simulated node voltages, not hardware measurements.")
-print("The UOH=2.564 V criterion uses the stated design assumptions (UBE,max=0.8 V, IB,req=3 mA, R9,max=588 Ohm); it is not a datasheet guarantee for KR1006VI1.")
+print("The UOH=2.564 V criterion and R9=588-ohm simulations use the stated design assumptions (UBE,max=0.8 V, IB,req=3 mA); they are not datasheet guarantees for KR1006VI1 or KT3102GM.")
 sys.stdout.flush()
 sys.stdout = sys.__stdout__
 summary_stream.flush()
