@@ -88,10 +88,11 @@ branch_fig, branch_axes = plt.subplots(3, 1, figsize=(10.5, 8.5), sharex=True)
 branch_fig.suptitle("Токи отдельных нагрузочных ветвей", fontsize=13)
 
 for axis, name in zip(branch_axes, b_currents):
-    axis.plot(behavioral[:, 0], b_currents[name], label=f"{name}, поведенческая модель")
-    axis.plot(vendor[:, 0], v_currents[name], "--", label=f"{name}, vendor-модель")
+    axis.plot(behavioral[:, 0], b_currents[name], label="Поведенческая модель")
+    axis.plot(vendor[:, 0], v_currents[name], "--", label="Vendor-модель")
+    axis.set_title(name, loc="left", fontsize=10)
     axis.set_ylabel("Ток, мА")
-    axis.legend(loc="best")
+    axis.legend(loc="upper right", ncol=2, fontsize=8)
     axis.grid(True, alpha=0.3)
 
 for axis in branch_axes:
