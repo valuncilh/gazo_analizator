@@ -1,4 +1,4 @@
-(footprint "LED_D5.0mm_P2.54_TBC" (layer "F.Cu") (uuid "076009c5-06a5-55a4-97c9-6fdc6a9b1725") (at 143 140.5 0)
+(footprint "LED_D5.0mm_P2.54_TBC" (layer "F.Cu") (uuid "076009c5-06a5-55a4-97c9-6fdc6a9b1725") (at 141.5 140.5 0)
  (property "Reference" "REF**" (at 0 -3.6 0) (layer "F.SilkS") (uuid "93aaea3c-85c6-5c54-b21e-040aad589002") (effects (font (size 1 1) (thickness 0.15))))
  (property "Value" "LED_D5.0mm_P2.54_TBC" (at 0 3.6 0) (layer "F.Fab") (uuid "dc364b98-54e3-5bac-ad6a-0b2428c0b87a") (effects (font (size 1 1) (thickness 0.15))))
  (property "Description" "5mm LED placeholder. Verify exact KIPD42B package and polarity." (at 0 0 0) (unlocked yes) (layer "F.Fab") (hide yes) (uuid "58e8a896-eff2-5394-ad1f-48d9164140fb") (effects (font (size 1.27 1.27) (thickness 0.15))))

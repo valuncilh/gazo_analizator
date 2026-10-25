@@ -1,5 +1,5 @@
 (footprint "Diode_Axial_P7.62_TBC" (layer "F.Cu") (uuid "26744d45-dde0-58e1-b368-5ed1eb0ecaee") (at 149.6 136.2 0)
- (property "Reference" "REF**" (at 0 -2.2 0) (layer "F.SilkS") (uuid "56ea1a73-9ae1-51e5-b102-f538da1fa860") (effects (font (size 1 1) (thickness 0.15))))
+ (property "Reference" "REF**" (at -1.5 1.5 0) (layer "F.SilkS") (uuid "56ea1a73-9ae1-51e5-b102-f538da1fa860") (effects (font (size 1 1) (thickness 0.15))))
  (property "Value" "Diode_Axial_P7.62_TBC" (at 0 2.2 0) (layer "F.Fab") (uuid "7cbeaf06-e76d-5bb3-97f5-9ec64dd60ca8") (effects (font (size 1 1) (thickness 0.15))))
  (property "Description" "KD510A package and polarity marking TBC." (at 0 0 0) (unlocked yes) (layer "F.Fab") (hide yes) (uuid "bee78ba0-ff86-560d-87d3-31502177c6f3") (effects (font (size 1.27 1.27) (thickness 0.15))))
  (attr through_hole)
