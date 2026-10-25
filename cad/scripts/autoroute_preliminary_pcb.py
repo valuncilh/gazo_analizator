@@ -36,19 +36,21 @@ def main() -> int:
     if not PCB.is_file():
         raise SystemExit(f"Generated PCB not found: {PCB}")
 
+    try:
+        import pcbnew
+    except Exception as exc:
+        raise SystemExit(f"Cannot import KiCad pcbnew bindings for DSN export and SES import: {exc}")
+
+    board = pcbnew.LoadBoard(str(PCB))
+    if board is None:
+        raise SystemExit(f"KiCad could not load generated board: {PCB}")
+
     with LOG.open("w", encoding="utf-8") as log:
         log.write(f"Router binary: {router}\n")
         log.write(f"Input board: {PCB}\n")
         log.flush()
-        export = subprocess.run(
-            ["kicad-cli", "pcb", "export", "specctra", "--output", str(DSN), str(PCB)],
-            cwd=ROOT,
-            text=True,
-            stdout=log,
-            stderr=subprocess.STDOUT,
-            check=False,
-        )
-        if export.returncode != 0 or not DSN.is_file() or DSN.stat().st_size == 0:
+        exported = pcbnew.ExportSpecctraDSN(board, str(DSN))
+        if not exported or not DSN.is_file() or DSN.stat().st_size == 0:
             raise SystemExit(f"KiCad Specctra DSN export failed. See {LOG}")
         log.write(f"\nRunning autorouter: {router} --autoroute {DSN}\n")
         log.flush()
@@ -75,14 +77,6 @@ def main() -> int:
     if session is None:
         raise SystemExit(f"FreeRouting created no non-empty SES session. See {LOG}")
 
-    try:
-        import pcbnew
-    except Exception as exc:
-        raise SystemExit(f"Cannot import KiCad pcbnew bindings for SES import: {exc}")
-
-    board = pcbnew.LoadBoard(str(PCB))
-    if board is None:
-        raise SystemExit(f"KiCad could not load generated board: {PCB}")
     imported = pcbnew.ImportSpecctraSES(board, str(session))
     if not imported:
         raise SystemExit(f"KiCad failed to import FreeRouting session: {session}")
