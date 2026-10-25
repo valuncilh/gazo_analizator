@@ -5,6 +5,7 @@ This proves declared topology and net assignments only. It does not prove copper
 continuity, transistor package pinout, component fit, or hardware behaviour.
 """
 from pathlib import Path
+import re
 import sys
 
 from check_preliminary_pcb import (
@@ -132,9 +133,6 @@ def check_board_map(board_path: Path) -> int:
             "R4/R5/DA1 discharge net is broken in the pad-net map")
     require(pad("R5", "2") == pad("C1", "1") == pad("DA1", "2") == pad("DA1", "6") == "TIMER_CT",
             "R5/C1/THRES/TRIG node is broken in the pad-net map")
-    require(pad("R6", "1") == pad("DA1", "3") == pad("R9", "1") if False else True,
-            "Internal assertion placeholder")  # PCB switch is placed before R9, unlike SPICE.
-
     # Board switch pole precedes R9, but the electrical series path is equivalent:
     # DA1.OUT -> SA1 pole -> R9 -> VT2 base. No alternate throw is assigned.
     require(pad("DA1", "3") == pad("J4", "2") == "OUT",
