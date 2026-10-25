@@ -122,3 +122,11 @@
 
 
 | 2026-10-25 14:36:00+03:00 | Повторная сверка статусов CI | [SPICE workflow #244](https://github.com/valuncilh/gazo_analizator/actions/runs/40189204915) успешно завершился на SHA `761e1afde6cce5405bab5a1ae51aeb5bb0a8333d`. [CAD workflow #50](https://github.com/valuncilh/gazo_analizator/actions/runs/40189204875) завершился cancelled на том же SHA. | SPICE: PASS для двух моделей, worst-case R9=588 Ом и статических проверок. CAD: KiCad предыдущего run #46 прошёл с 0 DRC geometric violations, но 53 unconnected items. FreeCAD job не дошёл до сборки/экспорта. Последующие коммиты меняли только аудит и журнал, не исходники моделей или CAD. | SPICE PASS, CAD CANCELLED/PARTIAL |
+
+
+| 2026-10-25 | Повторная трассировка от датчика до выходных каскадов | Сопоставлены исходная схема, `data/initial_data.md`, оба SPICE netlist и ожидаемая карта площадок KiCad. Создан `cad/electrical_trace_audit_2026-10-25.md`. | Прослежены A1.S → U2 → R2/VT1 → RESET DA1 → OUT → R6/HL1 и OUT → SA1 → R9 → VT2 → HA1. Проверены pin map TLV7041, стандартные выводы 555, узлы R4/R5/C1, питание U2, полярность VD1 и отдельный полюс SA1 для HL2. | PASS по логике соединений и назначенным сетям. Не доказывает физическую непрерывность дорожек. |
+
+| 2026-10-25 | Подтверждение CAD-экспорта и аудит PCB | Перечитан полный лог [CAD workflow #40189464876](https://github.com/valuncilh/gazo_analizator/actions/runs/40189464876). | KiCad checker подтвердил 27 footprints и 72 назначения площадок. Геометрический DRC дал 0 нарушений, но 53 unconnected items и 0 медных сегментов. FreeCAD успешно создал FCStd, STEP и STL. | CAD build PASS, PCB PRELIMINARY / UNROUTED, корпус PRELIMINARY. |
+
+| 2026-10-25 | Автоматизация межслойной проверки | Добавлен `cad/scripts/test_electrical_trace.py` и вызов этого теста в `.github/workflows/cad-validation.yml`. | Скрипт проверяет, что ключевые узлы двух SPICE netlist и pad-net map предварительной PCB согласованы по датчику, компаратору, инверсии, RESET, таймеру 555, SA1, LED, транзистору VT2, HA1 и VD1. Добавлена проверка числа медных сегментов для явного отображения unrouted состояния. | Код включён. Результат нового CAD CI нужно сверить по текущему SHA до отметки PASS. |
+
