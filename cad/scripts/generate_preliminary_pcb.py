@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generate an explicitly preliminary, unrouted KiCad 9 PCB placement draft."""
 from pathlib import Path
+import re
 import uuid
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -143,7 +144,7 @@ def build_board():
         resistor("R8", "2.2k", 120.5, 114.5, "+5V", "DOUT"),
         resistor("RHYS", "100k", 124, 119, "DOUT", "UREF"),
         resistor("R2", "10k", 126.5, 114.5, "DOUT", "VT1_BASE"),
-        transistor("Q1", "KT3102GM / VT1", 132, 115.5, "RESET", "VT1_BASE", "GND", "RESET control"),
+        transistor("VT1", "KT3102GM / VT1", 132, 115.5, "RESET", "VT1_BASE", "GND", "RESET control"),
         resistor("R3", "2k", 137, 114.5, "+5V", "RESET"),
         header("P1", "10k POT TBC", 114, 135.5, ["+5V", "UREF", "GND"],
                "External potentiometer pad header. The physical potentiometer is not selected."),
@@ -196,7 +197,7 @@ def build_board():
         description="External DPDT switch header. Physical switch and pin map TBC."))
     parts += [
         resistor("R9", "560R", 158.5, 126.5, "SOUND_CTL", "VT2_BASE"),
-        transistor("Q2", "KT3102GM / VT2", 164.5, 129.5, "BUZZ_COL", "VT2_BASE", "GND", "buzzer driver"),
+        transistor("VT2", "KT3102GM / VT2", 164.5, 129.5, "BUZZ_COL", "VT2_BASE", "GND", "buzzer driver"),
         footprint("GazoPreliminary:Diode_Axial_P7.62_TBC", "VD1", "KD510A TBC", 153, 130,
             [pth("1", -3.81, 0, "BUZZ_COL", "rect"), pth("2", 3.81, 0, "+5V")],
             rect(-2.7, -1, 2.7, 1, "F.Fab", "VD1") +
@@ -321,7 +322,7 @@ def main():
             elif ch == ")": depth -= 1
             if depth < 0: raise SystemExit("Unbalanced S-expression: negative depth")
     if depth != 0 or quoted: raise SystemExit(f"Unbalanced S-expression: depth={depth}")
-    for ref in ["J1","J2","J3","U2","Q1","DA1","Q2","HA1","H1","H2","H3","H4"]:
+    for ref in ["J1","J2","J3","U2","VT1","DA1","VT2","HA1","H1","H2","H3","H4"]:
         if f'(property "Reference" "{ref}"' not in board:
             raise SystemExit(f"Missing footprint reference {ref}")
     OUT.write_text(board, encoding="utf-8")

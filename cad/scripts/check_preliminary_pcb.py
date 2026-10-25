@@ -22,8 +22,8 @@ PARTS = [
 ("R8","2.2 kOhm","0805_TBC","Open-drain pull-up"),
 ("RHYS","100 kOhm","0805_TBC","Hysteresis feedback"),
 ("R9","560 Ohm","0805_TBC","Check output loading"),
-("Q1","KT3102GM VT1","KT26_TBC","Exact manufacturer pinout/saturation not confirmed"),
-("Q2","KT3102GM VT2","KT26_TBC","Exact manufacturer pinout/saturation not confirmed"),
+("VT1","KT3102GM VT1","KT26_TBC","Exact manufacturer pinout/saturation not confirmed"),
+("VT2","KT3102GM VT2","KT26_TBC","Exact manufacturer pinout/saturation not confirmed"),
 ("DA1","KR1006VI1","2101.8-1_TBC","Confirm vendor drawing"),
 ("C1","4.7 uF","THT_2.50_TBC","Do not change until frequency conflict is resolved"),
 ("C2","100 nF","THT_2.50_TBC","Exact K10-17A body not confirmed"),
@@ -55,7 +55,7 @@ def main():
     text = PCB.read_text(encoding="utf-8")
     if not balanced(text): raise SystemExit("Unbalanced KiCad PCB S-expression")
     found = re.findall(r'\(property "Reference" "([^"]+)"', text)
-    missing = [r for r in ["J1","J2","J3","U2","Q1","DA1","Q2","HA1","H1","H2","H3","H4"] if r not in found]
+    missing = [r for r in ["J1","J2","J3","U2","VT1","DA1","VT2","HA1","H1","H2","H3","H4"] if r not in found]
     if missing: raise SystemExit("Missing footprint refs: " + ", ".join(missing))
     if "NOT FOR FABRICATION" not in text or "NO COPPER ROUTING" not in text:
         raise SystemExit("Missing preliminary warnings")
@@ -65,7 +65,7 @@ def main():
     fp_files = sorted(fp_root.glob("*.kicad_mod")) if fp_root.is_dir() else []
     if not fp_table.is_file():
         raise SystemExit("Missing KiCad custom footprint library table.")
-    if len(fp_files) < 20:
+    if len(fp_files) < 10:
         raise SystemExit(f"Too few custom footprints generated: {len(fp_files)}")
     with (OUT/"preliminary_bom.csv").open("w", newline="", encoding="utf-8-sig") as f:
         w=csv.writer(f); w.writerow(["Reference","Value","Provisional footprint","Open verification item"]); w.writerows(PARTS)

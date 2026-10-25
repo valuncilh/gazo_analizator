@@ -13,7 +13,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: cad-validation-${{ github.event_name }}
+  group: cad-validation-${{ github.event_name }}-${{ github.event.pull_request.head.sha || github.sha }}
   cancel-in-progress: true
 
 jobs:
@@ -89,6 +89,7 @@ jobs:
           if-no-files-found: warn
           path: |
             cad/kicad/*.kicad_pcb
+            cad/kicad/*.kicad_pro
             cad/kicad/fp-lib-table
             cad/kicad/footprints/GazoPreliminary.pretty/*.kicad_mod
             cad/output/**
