@@ -117,6 +117,8 @@ jobs:
             spice/model_comparison_behavioral.dat
             spice/model_comparison_vendor.dat
             spice/model_comparison_overlay.png
+            spice/model_comparison_branch_currents.png
+            spice/model_comparison_branch_summary.txt
             spice/xschem_probe/*
             docs/figures/*.png
             docs/figures/xschem_probe/*.png
