@@ -13,7 +13,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: cad-validation-${{ github.event_name }}-${{ github.event.pull_request.head.sha || github.sha }}
+  group: cad-validation-${{ github.event_name }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
