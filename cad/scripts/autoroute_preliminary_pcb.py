@@ -52,11 +52,11 @@ def main() -> int:
         exported = pcbnew.ExportSpecctraDSN(board, str(DSN))
         if not exported or not DSN.is_file() or DSN.stat().st_size == 0:
             raise SystemExit(f"KiCad Specctra DSN export failed. See {LOG}")
-        log.write(f"\nRunning autorouter: {router} --autoroute {DSN}\n")
+        log.write(f"\nRunning autorouter: {router} -de {DSN} -do {SES} -mp 12 -mt 2 -l en\n")
         log.flush()
         try:
             routed = subprocess.run(
-                [router, "--autoroute", str(DSN)],
+                [router, "-de", str(DSN), "-do", str(SES), "-mp", "12", "-mt", "2", "-l", "en"],
                 cwd=OUT,
                 text=True,
                 stdout=log,
