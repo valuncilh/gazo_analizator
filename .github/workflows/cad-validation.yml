@@ -63,12 +63,17 @@ jobs:
           set -eu
           mkdir -p /tmp/generated-pcb
           cp cad/kicad/gazo_analizator_preliminary.kicad_pcb /tmp/generated-pcb/
+          cp cad/kicad/fp-lib-table /tmp/generated-pcb/
+          cp -a cad/kicad/footprints /tmp/generated-pcb/
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin "$PR_BRANCH"
           git checkout --force -B "$PR_BRANCH" "origin/$PR_BRANCH"
           cp /tmp/generated-pcb/gazo_analizator_preliminary.kicad_pcb cad/kicad/
-          git add cad/kicad/gazo_analizator_preliminary.kicad_pcb
+          cp /tmp/generated-pcb/fp-lib-table cad/kicad/
+          mkdir -p cad/kicad/footprints
+          cp -a /tmp/generated-pcb/footprints/GazoPreliminary.pretty cad/kicad/footprints/
+          git add cad/kicad/gazo_analizator_preliminary.kicad_pcb cad/kicad/fp-lib-table cad/kicad/footprints/GazoPreliminary.pretty
           if git diff --cached --quiet; then
             echo "Generated KiCad board already matches the PR branch."
           else
@@ -84,6 +89,8 @@ jobs:
           if-no-files-found: warn
           path: |
             cad/kicad/*.kicad_pcb
+            cad/kicad/fp-lib-table
+            cad/kicad/footprints/GazoPreliminary.pretty/*.kicad_mod
             cad/output/**
 
   freecad-model:

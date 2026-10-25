@@ -8,7 +8,7 @@ OUT = ROOT / "cad/kicad/gazo_analizator_preliminary.kicad_pcb"
 NS = uuid.UUID("e2afedc9-48ec-45c2-8a88-7d2c3c42e77b")
 COUNTER = 0
 NETS = ["", "GND", "+5V", "SENSE", "UREF", "DOUT", "RESET", "VT1_BASE",
-        "TIMER_CT", "TIMER_DISCH", "TIMER_CTRL", "OUT", "HL1_A", "HL2_A",
+        "VT2_BASE", "TIMER_CT", "TIMER_DISCH", "TIMER_CTRL", "OUT", "HL1_A", "HL2_A",
         "SOUND_CTL", "SA1_LED_RETURN", "BUZZ_COL"]
 NETNO = {name: i for i, name in enumerate(NETS)}
 
@@ -196,7 +196,7 @@ def build_board():
         description="External DPDT switch header. Physical switch and pin map TBC."))
     parts += [
         resistor("R9", "560R", 158.5, 126.5, "SOUND_CTL", "VT2_BASE"),
-        transistor("Q2", "KT3102GM / VT2", 163, 128, "BUZZ_COL", "VT2_BASE", "GND", "buzzer driver"),
+        transistor("Q2", "KT3102GM / VT2", 164.5, 129.5, "BUZZ_COL", "VT2_BASE", "GND", "buzzer driver"),
         footprint("GazoPreliminary:Diode_Axial_P7.62_TBC", "VD1", "KD510A TBC", 153, 130,
             [pth("1", -3.81, 0, "BUZZ_COL", "rect"), pth("2", 3.81, 0, "+5V")],
             rect(-2.7, -1, 2.7, 1, "F.Fab", "VD1") +
@@ -243,6 +243,69 @@ def build_board():
     out.append(")")
     return "\n".join(out) + "\n"
 
+def extract_sexpr(text, start):
+    depth, quoted, escaped = 0, False, False
+    for index in range(start, len(text)):
+        ch = text[index]
+        if quoted:
+            if escaped:
+                escaped = False
+            elif ch == "\\":
+                escaped = True
+            elif ch == '"':
+                quoted = False
+        else:
+            if ch == '"':
+                quoted = True
+            elif ch == "(":
+                depth += 1
+            elif ch == ")":
+                depth -= 1
+                if depth == 0:
+                    return text[start:index + 1]
+    raise ValueError(f"Unterminated footprint S-expression at {start}")
+
+
+def write_footprint_library(board):
+    library_root = OUT.parent / "footprints" / "GazoPreliminary.pretty"
+    library_root.mkdir(parents=True, exist_ok=True)
+    matches = list(re.finditer(r'\(footprint "GazoPreliminary:([^"]+)"', board))
+    seen = set()
+    for match in matches:
+        lib_name = match.group(1)
+        if lib_name in seen:
+            continue
+        seen.add(lib_name)
+        block = extract_sexpr(board, match.start())
+        old_header = f'(footprint "GazoPreliminary:{lib_name}"'
+        new_header = f'(footprint "{lib_name}"'
+        if old_header not in block:
+            raise ValueError(f"Footprint header mismatch for {lib_name}")
+        block = block.replace(old_header, new_header, 1)
+        # Board-only pad net assignments are not legal library footprint data.
+        block = re.sub(r'\s+\(net \d+ "[^"]*"\)', "", block)
+        block = re.sub(r'(\(property "Reference" )"[^"]+"',
+                       r'\1"REF**"', block, count=1)
+        block = re.sub(r'(\(property "Value" )"[^"]+"',
+                       lambda m: m.group(1) + q(lib_name), block, count=1)
+        (library_root / f"{lib_name}.kicad_mod").write_text(block + "\n", encoding="utf-8")
+    if not seen:
+        raise RuntimeError("No GazoPreliminary footprints found in generated PCB")
+    dollar = chr(36)
+    uri = dollar + "{KIPRJMOD}/footprints/GazoPreliminary.pretty"
+    table = OUT.parent / "fp-lib-table"
+    table.write_text(
+        '(fp_lib_table\n'
+        '  (version 7)\n'
+        f'  (lib (name "GazoPreliminary")(type "KiCad")(uri "{uri}")'
+        '(options "")(descr "Preliminary custom footprints; verify TBC dimensions"))\n'
+        ')\n',
+        encoding="utf-8"
+    )
+    print(f"Generated KiCad custom library with {len(seen)} footprints: {library_root}")
+    return len(seen)
+
+
 def main():
     OUT.parent.mkdir(parents=True, exist_ok=True)
     board = build_board()
@@ -262,6 +325,8 @@ def main():
         if f'(property "Reference" "{ref}"' not in board:
             raise SystemExit(f"Missing footprint reference {ref}")
     OUT.write_text(board, encoding="utf-8")
-    print(f"Generated {OUT} ({len(board)} chars). PRELIMINARY / UNROUTED / NOT FOR FABRICATION.")
+    footprint_count = write_footprint_library(board)
+    print(f"Generated {OUT} ({len(board)} chars).")
+    print(f"Generated {footprint_count} custom footprints. PRELIMINARY / UNROUTED / NOT FOR FABRICATION.")
 
 if __name__ == "__main__": main()
