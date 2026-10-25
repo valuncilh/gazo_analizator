@@ -1,4 +1,4 @@
-(footprint "Buzzer_HCM1205X_P7.6_TBC" (layer "F.Cu") (uuid "a25d5229-bc7a-5dd4-9556-b2935ab34159") (at 163 139 0)
+(footprint "Buzzer_HCM1205X_P7.6_TBC" (layer "F.Cu") (uuid "a25d5229-bc7a-5dd4-9556-b2935ab34159") (at 161.2 139 0)
  (property "Reference" "REF**" (at 0 -7.2 0) (layer "F.SilkS") (uuid "529ca4f7-cadd-59a6-8f47-41227f46dbe0") (effects (font (size 1 1) (thickness 0.15))))
  (property "Value" "Buzzer_HCM1205X_P7.6_TBC" (at 0 7.2 0) (layer "F.Fab") (uuid "89c1835d-6051-5afa-954b-d25da4e81447") (effects (font (size 1 1) (thickness 0.15))))
  (property "Description" "JL World HCM1205X OD12x9.5mm, pitch7.6mm, lead dia0.6mm." (at 0 0 0) (unlocked yes) (layer "F.Fab") (hide yes) (uuid "0576af02-c3a3-56b7-a767-dd735ab8aa18") (effects (font (size 1.27 1.27) (thickness 0.15))))

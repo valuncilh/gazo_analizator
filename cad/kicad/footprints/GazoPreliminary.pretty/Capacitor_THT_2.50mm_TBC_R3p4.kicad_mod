@@ -1,4 +1,4 @@
-(footprint "Capacitor_THT_2.50mm_TBC_R3p4" (layer "F.Cu") (uuid "b1316b22-80b4-5742-8f1d-d29aaf7bbff4") (at 161 119 0)
+(footprint "Capacitor_THT_2.50mm_TBC_R3p4" (layer "F.Cu") (uuid "b1316b22-80b4-5742-8f1d-d29aaf7bbff4") (at 163.5 119 0)
  (property "Reference" "REF**" (at 0 -4.4 0) (layer "F.SilkS") (uuid "28660e51-dc82-5197-9fc3-9cea891353a6") (effects (font (size 1 1) (thickness 0.15))))
  (property "Value" "Capacitor_THT_2.50mm_TBC_R3p4" (at 0 4.4 0) (layer "F.Fab") (uuid "284e17e2-da90-57c7-b8e7-2b9510011f6c") (effects (font (size 1 1) (thickness 0.15))))
  (property "Description" "K50-35 exact body/voltage/pitch not confirmed." (at 0 0 0) (unlocked yes) (layer "F.Fab") (hide yes) (uuid "f98f48a9-784b-5ceb-bb67-4cec4228b181") (effects (font (size 1.27 1.27) (thickness 0.15))))

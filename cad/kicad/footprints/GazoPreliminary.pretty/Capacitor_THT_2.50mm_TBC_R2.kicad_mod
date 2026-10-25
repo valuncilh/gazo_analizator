@@ -1,4 +1,4 @@
-(footprint "Capacitor_THT_2.50mm_TBC_R2" (layer "F.Cu") (uuid "235edef9-2d06-5977-ab75-103ebf1c92f8") (at 146.5 132.5 0)
+(footprint "Capacitor_THT_2.50mm_TBC_R2" (layer "F.Cu") (uuid "235edef9-2d06-5977-ab75-103ebf1c92f8") (at 147.2 132.5 0)
  (property "Reference" "REF**" (at 0 -3 0) (layer "F.SilkS") (uuid "b074b5ba-7461-53db-a213-86924af05549") (effects (font (size 1 1) (thickness 0.15))))
  (property "Value" "Capacitor_THT_2.50mm_TBC_R2" (at 0 3 0) (layer "F.Fab") (uuid "6228bb2b-e2da-5a71-a1cc-a78ea9113ff8") (effects (font (size 1 1) (thickness 0.15))))
  (property "Description" "K10-17A exact package not confirmed." (at 0 0 0) (unlocked yes) (layer "F.Fab") (hide yes) (uuid "b942c4de-838a-5f05-a612-c4a7070b0e8b") (effects (font (size 1.27 1.27) (thickness 0.15))))
