@@ -62,11 +62,11 @@ def pad(p):
     return result
 
 def footprint(lib, ref, value, x, y, pads, lines, *, attr="through_hole",
-              ref_y=-2.5, val_y=2.5, description=""):
+              ref_y=-2.5, ref_x=0, val_y=2.5, description=""):
     k = "fp-" + ref
     out = [
         f'(footprint {q(lib)} (layer "F.Cu") (uuid {q(str(uuid.uuid5(NS, k)))}) (at {x:g} {y:g} 0)',
-        f' (property "Reference" {q(ref)} (at 0 {ref_y:g} 0) (layer "F.SilkS") '
+        f' (property "Reference" {q(ref)} (at {ref_x:g} {ref_y:g} 0) (layer "F.SilkS") '
         f'(uuid {q(ident("ref-"+ref))}) (effects (font (size 1 1) (thickness 0.15))))',
         f' (property "Value" {q(value)} (at 0 {val_y:g} 0) (layer "F.Fab") '
         f'(uuid {q(ident("val-"+ref))}) (effects (font (size 1 1) (thickness 0.15))))',
@@ -133,11 +133,11 @@ def cap(ref, value, x, y, radius, n1, n2, description):
          line(-radius*.7, -radius*.7, -radius*.2, -radius*.7, "F.SilkS", ref)],
         ref_y=-radius-1, val_y=radius+1, description=description)
 
-def led(ref, value, x, y, na, nk):
+def led(ref, value, x, y, na, nk, *, ref_y=-3.6):
     return footprint("GazoPreliminary:LED_D5.0mm_P2.54_TBC", ref, value, x, y,
         [pth("1", -1.27, 0, na, "rect"), pth("2", 1.27, 0, nk)],
         [circle(2.5, "F.SilkS", ref), line(-2.5, 0, -1.7, 0, "F.Fab", ref)],
-        ref_y=-3.6, val_y=3.6,
+        ref_y=ref_y, val_y=3.6,
         description="5mm LED placeholder. Verify exact KIPD42B package and polarity.")
 
 def transistor(ref, value, x, y, nc, nb, ne, role):
@@ -207,10 +207,10 @@ def build_board():
             [smd("1", -.95, 0, "+5V"), smd("2", .95, 0, "GND")],
             rect(-1, -.62, 1, .62, "F.Fab", "C4"), attr="smd",
             ref_y=-1.65, val_y=1.65, description="U2 local bypass. Verify dielectric and tolerance."),
-        resistor("R6", "220R", 143, 134.5, "OUT", "HL1_A"),
-        led("HL1", "RED 5mm TBC", 143, 140.5, "HL1_A", "GND"),
+        resistor("R6", "220R", 141.5, 134.5, "OUT", "HL1_A"),
+        led("HL1", "RED 5mm TBC", 141.5, 140.5, "HL1_A", "GND"),
         resistor("R7", "220R", 152, 132.5, "+5V", "HL2_A"),
-        led("HL2", "GREEN 5mm TBC", 152, 140.5, "HL2_A", "SA1_LED_RETURN"),
+        led("HL2", "GREEN 5mm TBC", 152, 140.5, "HL2_A", "SA1_LED_RETURN", ref_y=4.5),
     ]
     sa_pads = [
         pth("1", -1.27, -2.54, "SOUND_CTL", "rect"),
@@ -231,7 +231,7 @@ def build_board():
             [pth("1", -3.81, 0, "BUZZ_COL", "rect"), pth("2", 3.81, 0, "+5V")],
             rect(-2.7, -1, 2.7, 1, "F.Fab", "VD1") +
             [line(1.2, -1, 1.2, 1, "F.SilkS", "VD1", .15)],
-            ref_y=-2.2, val_y=2.2, description="KD510A package and polarity marking TBC."),
+            ref_x=-1.5, ref_y=1.5, val_y=2.2, description="KD510A package and polarity marking TBC."),
         footprint("GazoPreliminary:Buzzer_HCM1205X_P7.6_TBC", "HA1", "JL WORLD HCM1205X", 161.2, 139,
             [pth("1", -3.8, 0, "+5V", "rect", 1.7, .9), pth("2", 3.8, 0, "BUZZ_COL", "circle", 1.7, .9)],
             [circle(6, "F.SilkS", "HA1", .15), circle(4, "F.Fab", "HA1")],
