@@ -209,7 +209,7 @@ def build_board():
             ref_y=-1.65, val_y=1.65, description="U2 local bypass. Verify dielectric and tolerance."),
         resistor("R6", "220R", 143, 134.5, "OUT", "HL1_A"),
         led("HL1", "RED 5mm TBC", 143, 140.5, "HL1_A", "GND"),
-        resistor("R7", "220R", 152, 134.5, "+5V", "HL2_A"),
+        resistor("R7", "220R", 152, 132.5, "+5V", "HL2_A"),
         led("HL2", "GREEN 5mm TBC", 152, 140.5, "HL2_A", "SA1_LED_RETURN"),
     ]
     sa_pads = [
@@ -220,14 +220,14 @@ def build_board():
         pth("5", 1.27, 0, "SA1_LED_RETURN"),
         pth("6", 1.27, 2.54, None),
     ]
-    parts.append(footprint("GazoPreliminary:SA1_DPDT_2Pole_2.54_TBC", "J4", "SA1 DPDT SWITCH", 168.2, 127.5,
+    parts.append(footprint("GazoPreliminary:SA1_DPDT_2Pole_2.54_TBC", "J4", "SA1 DPDT SWITCH", 108.0, 135.0,
         sa_pads, rect(-3.1, -4, 3.1, 4, "F.SilkS", "J4"),
         ref_y=-5.2, val_y=5.2,
         description="External DPDT switch header. Physical switch and pin map TBC."))
     parts += [
         resistor("R9", "560R", 158.5, 126.5, "SOUND_CTL", "VT2_BASE"),
         transistor("VT2", "KT3102GM / VT2", 164.5, 129.5, "BUZZ_COL", "VT2_BASE", "GND", "buzzer driver"),
-        footprint("GazoPreliminary:Diode_Axial_P7.62_TBC", "VD1", "KD510A TBC", 152.5, 128,
+        footprint("GazoPreliminary:Diode_Axial_P7.62_TBC", "VD1", "KD510A TBC", 149.6, 136.2,
             [pth("1", -3.81, 0, "BUZZ_COL", "rect"), pth("2", 3.81, 0, "+5V")],
             rect(-2.7, -1, 2.7, 1, "F.Fab", "VD1") +
             [line(1.2, -1, 1.2, 1, "F.SilkS", "VD1", .15)],
