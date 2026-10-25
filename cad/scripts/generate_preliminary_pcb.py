@@ -120,7 +120,7 @@ def transistor(ref, value, x, y, nc, nb, ne, role):
         ref_y=-3.2, val_y=3.2,
         description=f"KT-26 placeholder for {role}. Pin order C/B/E is provisional, verify exact manufacturer's drawing.")
 
-def main():
+def build_board():
     parts = [
         header("J2", "A1 SIGNAL S/V/G", 104.5, 113, ["SENSE", "+5V", "GND"],
                "Amperka AMP-B052 signal-side pads S/V/G."),
