@@ -199,9 +199,9 @@ def build_board():
         resistor("R5", "8.2k", 149, 117, "TIMER_DISCH", "TIMER_CT"),
         cap("C1", "4.7uF TBC", 155, 115, 3, "TIMER_CT", "GND",
             "Timing cap conflicts with source text stating 1-2Hz. Package and polarity TBC."),
-        cap("C2", "100nF TBC", 146.5, 132.5, 2, "TIMER_CTRL", "GND",
+        cap("C2", "100nF TBC", 147.2, 132.5, 2, "TIMER_CTRL", "GND",
             "K10-17A exact package not confirmed."),
-        cap("C3", "47uF TBC", 161, 119, 3.4, "+5V", "GND",
+        cap("C3", "47uF TBC", 163.5, 119, 3.4, "+5V", "GND",
             "K50-35 exact body/voltage/pitch not confirmed."),
         footprint("GazoPreliminary:C_0805_TBC", "C4", "100nF U2 bypass", 119.1, 118,
             [smd("1", -.95, 0, "+5V"), smd("2", .95, 0, "GND")],
@@ -227,17 +227,17 @@ def build_board():
     parts += [
         resistor("R9", "560R", 158.5, 126.5, "SOUND_CTL", "VT2_BASE"),
         transistor("VT2", "KT3102GM / VT2", 164.5, 129.5, "BUZZ_COL", "VT2_BASE", "GND", "buzzer driver"),
-        footprint("GazoPreliminary:Diode_Axial_P7.62_TBC", "VD1", "KD510A TBC", 153, 128,
+        footprint("GazoPreliminary:Diode_Axial_P7.62_TBC", "VD1", "KD510A TBC", 151.5, 128,
             [pth("1", -3.81, 0, "BUZZ_COL", "rect"), pth("2", 3.81, 0, "+5V")],
             rect(-2.7, -1, 2.7, 1, "F.Fab", "VD1") +
             [line(1.2, -1, 1.2, 1, "F.SilkS", "VD1", .15)],
             ref_y=-2.2, val_y=2.2, description="KD510A package and polarity marking TBC."),
-        footprint("GazoPreliminary:Buzzer_HCM1205X_P7.6_TBC", "HA1", "JL WORLD HCM1205X", 163, 139,
+        footprint("GazoPreliminary:Buzzer_HCM1205X_P7.6_TBC", "HA1", "JL WORLD HCM1205X", 161.2, 139,
             [pth("1", -3.8, 0, "+5V", "rect", 1.7, .9), pth("2", 3.8, 0, "BUZZ_COL", "circle", 1.7, .9)],
             [circle(6, "F.SilkS", "HA1", .15), circle(4, "F.Fab", "HA1")],
             ref_y=-7.2, val_y=7.2, description="JL World HCM1205X OD12x9.5mm, pitch7.6mm, lead dia0.6mm."),
     ]
-    for ref, x, y in [("H1",103.5,103.5),("H2",168.5,103.5),("H3",103.5,146.5),("H4",168.5,146.5)]:
+    for ref, x, y in [("H1",103.5,103.5),("H2",168.5,103.5),("H3",103.5,146.5),("H4",169.5,147.0)]:
         parts.append(footprint("GazoPreliminary:MountingHole_M3_TBC",ref,"M3_CLR",x,y,
             [pth("",0,0,None,"circle",3.2,3.2,"np_thru_hole")],
             [circle(1.6,"F.Fab",ref)],attr="through_hole exclude_from_bom exclude_from_pos_files",

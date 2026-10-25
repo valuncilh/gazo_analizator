@@ -13,7 +13,7 @@ BASE_H, LID_H, WALL, FLOOR = 40.0, 2.0, 2.5, 3.0
 PCB_X0, PCB_Y0, PCB_Z0, PCB_X, PCB_Y, PCB_T = 41.4, 14.0, 6.5, 72.0, 50.0, 1.6
 MQ_X0, MQ_Y0, MQ_Z0, MQ_SIZE = 8.0, 26.3, 6.5, 25.4
 LID_Z = BASE_H
-SOUNDER_X, SOUNDER_Y = PCB_X0 + 63.0, PCB_Y0 + 39.0
+SOUNDER_X, SOUNDER_Y = PCB_X0 + 61.2, PCB_Y0 + 39.0
 LED_POS = [(PCB_X0+44.0, PCB_Y0+40.5), (PCB_X0+52.0, PCB_Y0+40.5)]
 SENSOR_X, SENSOR_Y = MQ_X0 + MQ_SIZE/2, MQ_Y0 + MQ_SIZE/2
 NAME = "GazoAnalizatorPreliminary"
@@ -45,7 +45,7 @@ for x,y in [(6,6),(114,6),(6,72),(114,72)]:
     bore=Part.makeCylinder(1.1,8,App.Vector(x,y,BASE_H-8))
     base=base.fuse(post.cut(bore))
 for x,y in [(PCB_X0+3.5,PCB_Y0+3.5),(PCB_X0+68.5,PCB_Y0+3.5),
-            (PCB_X0+3.5,PCB_Y0+46.5),(PCB_X0+68.5,PCB_Y0+46.5)]:
+            (PCB_X0+3.5,PCB_Y0+46.5),(PCB_X0+69.5,PCB_Y0+47.0)]:
     boss=Part.makeCylinder(3,PCB_Z0-FLOOR,App.Vector(x,y,FLOOR))
     hole=Part.makeCylinder(1.6,PCB_Z0-FLOOR+0.2,App.Vector(x,y,FLOOR))
     base=base.fuse(boss.cut(hole))

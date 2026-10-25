@@ -276,7 +276,7 @@ def overall_view_sheet():
         for col in range(5):
             out.append(circ(cx+(col-2)*5*s,cy+(row-2)*5*s,1.25*s,0.18))
     # Sound aperture and indicators.
-    out.append(circ(ox+104.4*s,oy+53*s,4.25*s,0.25))
+    out.append(circ(ox+102.6*s,oy+53*s,4.25*s,0.25))
     out.append(circ(ox+85.4*s,oy+54.5*s,2.75*s,0.18))
     out.append(circ(ox+93.4*s,oy+54.5*s,2.75*s,0.18))
     for x,y in [(6,6),(114,6),(6,72),(114,72)]:
@@ -314,7 +314,7 @@ def assembly_sheet(parts):
     for row in range(5):
         for col in range(5):
             out.append(circ(x+(20.7+(col-2)*5)*s,y+(39+(row-2)*5)*s,1.25*s,0.15))
-    out.append(circ(x+104.4*s,y+53*s,4.25*s,0.20))
+    out.append(circ(x+102.6*s,y+53*s,4.25*s,0.20))
     out.append(circ(x+85.4*s,y+54.5*s,2.75*s,0.15))
     out.append(circ(x+93.4*s,y+54.5*s,2.75*s,0.15))
     # Guide lines indicate separation, not actual fasteners.
@@ -327,7 +327,7 @@ def assembly_sheet(parts):
     out.append(txt(pcbx+6,pcby+15,"A1",2.5,weight="bold"))
     out.append(circ(pcbx+63*ps,pcby+39*ps,6*ps,0.20))
     out.append(txt(pcbx+63*ps+3.6,pcby+39*ps,"HA1",2.0,weight="bold"))
-    for h in [(3.5,3.5),(68.5,3.5),(3.5,46.5),(68.5,46.5)]:
+    for h in [(3.5,3.5),(68.5,3.5),(3.5,46.5),(69.5,47.0)]:
         out.append(circ(pcbx+h[0]*ps,pcby+h[1]*ps,1.6*ps,0.18))
     out.append(ln(95,pcby+50*ps+4,95,141,0.25,"4 2"))
     out.append(ln(112,pcby+50*ps+4,112,141,0.25,"4 2"))
