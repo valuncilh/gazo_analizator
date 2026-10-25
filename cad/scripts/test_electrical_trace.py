@@ -89,7 +89,12 @@ def check_spice_chain(path: Path, vendor: bool) -> None:
 
     # Both poles of SA1 must control the sounder path and the green indicator.
     expect_prefix(net, "R7", ["R7", "VCC", "HL2_A", "220"])
-    expect_prefix(net, "D_HL2", ["D_HL2", "HL2_A", "HL2_K", "D_LED_PROXY"])
+    if vendor:
+        # The vendor netlist inserts a zero-volt current-sense source in series.
+        expect_prefix(net, "VHL2_SENSE", ["VHL2_SENSE", "HL2_A", "HL2_DIN", "0"])
+        expect_prefix(net, "D_HL2", ["D_HL2", "HL2_DIN", "HL2_K", "D_LED_PROXY"])
+    else:
+        expect_prefix(net, "D_HL2", ["D_HL2", "HL2_A", "HL2_K", "D_LED_PROXY"])
     expect_prefix(net, "S_HL2", ["S_HL2", "HL2_K", "0", "SOUND_EN", "0", "SW_ENABLE"])
     expect_prefix(net, "VSA1", ["VSA1", "SOUND_EN", "0", "DC", "{5*SOUND_ENABLE}"])
 
