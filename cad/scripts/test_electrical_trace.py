@@ -27,6 +27,9 @@ def declarations(path: Path) -> dict[str, list[str]]:
     result: dict[str, list[str]] = {}
     for raw in path.read_text(encoding="utf-8").splitlines():
         line = raw.strip()
+        # SPICE control commands (let/meas/plot) are not circuit elements.
+        if line.lower() == ".control":
+            break
         if not line or line.startswith(("*", ".")):
             continue
         fields = line.split()
