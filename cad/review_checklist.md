@@ -15,3 +15,13 @@
 - [ ] Generate Gerber/drill and assembly documentation only after design-review gate.
 
 The current PCB is intentionally unrouted. Its DRC report is diagnostic only. No manufacture release is implied.
+
+
+## Свежая проверка статуса на 25.10.2026
+
+- [x] Единственная рабочая ветка зафиксирована в `docs/branch_policy.md`.
+- [x] SPICE workflow #239 прошёл на SHA `3200a16b4bff37683accab8ec97797c71e020649`.
+- [ ] Проверить CAD workflow на текущей вершине после регенерации платы KiCad в коммите `a1dd0de6f68c81ceabd8caae75a5c4eada450e36`.
+- [ ] Трассировка, нативная Э3/ERC и замена TBC footprints остаются обязательными до любого производственного выпуска.
+
+Эта отметка предназначена для запуска новой CAD-проверки после генерации платы, а не означает, что плата прошла производственную приёмку.
