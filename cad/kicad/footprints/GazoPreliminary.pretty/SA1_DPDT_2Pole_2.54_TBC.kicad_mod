@@ -1,4 +1,4 @@
-(footprint "SA1_DPDT_2Pole_2.54_TBC" (layer "F.Cu") (uuid "cc94be0b-c28a-5d57-a00b-5bafa4b8a2d8") (at 168.2 127.5 0)
+(footprint "SA1_DPDT_2Pole_2.54_TBC" (layer "F.Cu") (uuid "cc94be0b-c28a-5d57-a00b-5bafa4b8a2d8") (at 108 135 0)
  (property "Reference" "REF**" (at 0 -5.2 0) (layer "F.SilkS") (uuid "9f25b581-58b4-5137-a2e0-48ccd6cf1ae5") (effects (font (size 1 1) (thickness 0.15))))
  (property "Value" "SA1_DPDT_2Pole_2.54_TBC" (at 0 5.2 0) (layer "F.Fab") (uuid "870e1975-d013-5e75-be51-04a8a005979a") (effects (font (size 1 1) (thickness 0.15))))
  (property "Description" "External DPDT switch header. Physical switch and pin map TBC." (at 0 0 0) (unlocked yes) (layer "F.Fab") (hide yes) (uuid "d294ad0f-2569-5b18-bd39-481b6c47ff85") (effects (font (size 1.27 1.27) (thickness 0.15))))
