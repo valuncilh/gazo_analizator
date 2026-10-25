@@ -49,7 +49,7 @@ jobs:
           set -e
           echo "KiCad DRC process exit code: $DRC_RC" | tee cad/output/kicad_environment.txt
           kicad-cli version >> cad/output/kicad_environment.txt 2>&1
-          kicad-cli pcb export svg --output cad/output/board_svg --layers "F.Cu,F.SilkS,Edge.Cuts,Cmts.User" cad/kicad/gazo_analizator_preliminary.kicad_pcb
+          kicad-cli pcb export svg --mode-multi --output cad/output/board_svg --layers "F.Cu,F.SilkS,Edge.Cuts,Cmts.User" cad/kicad/gazo_analizator_preliminary.kicad_pcb
           printf '%s\n' "NOTE: board is unrouted; unconnected-net warnings are expected and are not manufacturing acceptance." >> cad/output/preliminary_cad_summary.md
           test -s cad/output/kicad_drc_report.rpt
           test -n "$(find cad/output/board_svg -type f -name '*.svg' -print -quit)"

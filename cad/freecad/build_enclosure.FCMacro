@@ -25,7 +25,14 @@ def feature(name, label, shape, color):
     obj = doc.addObject("PartDesign::Feature", name)
     obj.Label = label
     obj.Shape = shape
-    obj.ViewObject.ShapeColor = color
+    # FreeCADCmd/headless builds may create no ViewObject. Geometry generation
+    # must not depend on an available GUI view provider.
+    try:
+        view = obj.ViewObject
+        if view is not None and hasattr(view, "ShapeColor"):
+            view.ShapeColor = color
+    except Exception:
+        pass
     return obj
 
 outer = Part.makeBox(CASE_X,CASE_Y,BASE_H,App.Vector(0,0,0))
