@@ -225,11 +225,6 @@ def main():
       (31 "F.CrtYd" user "F.Courtyard") (29 "B.CrtYd" user "B.Courtyard")
       (35 "F.Fab" user) (33 "B.Fab" user)
     )'''
-    rules = ['(net_class "Default" "Preliminary rules, 2-layer FR4"',
-             ' (clearance 0.25) (trace_width 0.30) (via_dia 0.80) (via_drill 0.40)',
-             ' (uvia_dia 0.30) (uvia_drill 0.10) (diff_pair_width 0.20) (diff_pair_gap 0.25)']
-    rules.extend(f" (add_net {q(n)})" for n in NETS[1:])
-    rules.append(")")
     out = [
         "(kicad_pcb", '(version 20241229)', '(generator "gazo_preliminary_generator")',
         '(generator_version "9.0")', '(general (thickness 1.6) (legacy_teardrops no))',
@@ -238,7 +233,6 @@ def main():
         layers, '(setup (pad_to_mask_clearance 0) (allow_soldermask_bridges_in_footprints no) (tenting front back))'
     ]
     out.extend(f"(net {i} {q(name)})" for i, name in enumerate(NETS))
-    out.extend(rules)
     out.extend(parts)
     edges = [("bottom",(100,100),(172,100)),("right",(172,100),(172,150)),
              ("top",(172,150),(100,150)),("left",(100,150),(100,100))]

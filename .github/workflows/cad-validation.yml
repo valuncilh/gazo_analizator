@@ -64,7 +64,7 @@ jobs:
           mkdir -p /tmp/generated-pcb
           cp cad/kicad/gazo_analizator_preliminary.kicad_pcb /tmp/generated-pcb/
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+valuncilh@users.noreply.github.com"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin "$PR_BRANCH"
           git checkout --force -B "$PR_BRANCH" "origin/$PR_BRANCH"
           cp /tmp/generated-pcb/gazo_analizator_preliminary.kicad_pcb cad/kicad/
