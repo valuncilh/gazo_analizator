@@ -220,14 +220,14 @@ def build_board():
         pth("5", 1.27, 0, "SA1_LED_RETURN"),
         pth("6", 1.27, 2.54, None),
     ]
-    parts.append(footprint("GazoPreliminary:SA1_DPDT_2Pole_2.54_TBC", "J4", "SA1 DPDT SWITCH", 168.2, 121,
+    parts.append(footprint("GazoPreliminary:SA1_DPDT_2Pole_2.54_TBC", "J4", "SA1 DPDT SWITCH", 168.2, 127.5,
         sa_pads, rect(-3.1, -4, 3.1, 4, "F.SilkS", "J4"),
         ref_y=-5.2, val_y=5.2,
         description="External DPDT switch header. Physical switch and pin map TBC."))
     parts += [
         resistor("R9", "560R", 158.5, 126.5, "SOUND_CTL", "VT2_BASE"),
         transistor("VT2", "KT3102GM / VT2", 164.5, 129.5, "BUZZ_COL", "VT2_BASE", "GND", "buzzer driver"),
-        footprint("GazoPreliminary:Diode_Axial_P7.62_TBC", "VD1", "KD510A TBC", 151.5, 128,
+        footprint("GazoPreliminary:Diode_Axial_P7.62_TBC", "VD1", "KD510A TBC", 152.5, 128,
             [pth("1", -3.81, 0, "BUZZ_COL", "rect"), pth("2", 3.81, 0, "+5V")],
             rect(-2.7, -1, 2.7, 1, "F.Fab", "VD1") +
             [line(1.2, -1, 1.2, 1, "F.SilkS", "VD1", .15)],
