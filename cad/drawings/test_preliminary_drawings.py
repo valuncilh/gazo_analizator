@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Регрессионная проверка функциональной топологии предварительного Э3."""
 from pathlib import Path
+import re
 import sys
 
-from generate_preliminary_drawings import electrical_topology_sheet
+from generate_preliminary_drawings import PCB, electrical_topology_sheet, pcb_sheet, read_footprints
 
 HERE = Path(__file__).resolve().parent
 SOURCE = (HERE / "generate_preliminary_drawings.py").read_text(encoding="utf-8")
@@ -40,9 +41,28 @@ def main() -> int:
     require("DA1" in svg and "R9 + SA1" in svg and "VT2 / HA1" in svg,
             "На функциональной топологии отсутствует один из блоков выходной цепи")
     require("VT2 base" in svg, "Не подписан путь управления базой VT2")
-    require('stroke-dasharray="4 2"' not in svg,
+    require(\'stroke-dasharray="4 2"\' not in svg,
             "Пунктирная связь может быть прочитана как прямой обход R9/SA1")
 
+    # A routed KiCad board is serialized differently by pcbnew.SaveBoard():
+    # footprint positions may be on a separate line instead of the header.
+    parts = read_footprints()
+    require(len(parts) >= 20, f"Ожидалось не менее 20 площадочных footprints, получено {len(parts)}")
+    board_svg = pcb_sheet(parts)
+    board_text = PCB.read_text(encoding="utf-8")
+    segment_count = len(re.findall(r"\\(segment\\b", board_text))
+    via_count = len(re.findall(r"\\(via\\b", board_text))
+    if segment_count + via_count:
+        require("Автотрассировка:" in board_svg,
+                "На чертеже платы не отражена фактическая автотрассировка")
+        require("Проверить DRC, связность и маршрут вручную." in board_svg,
+                "На чертеже платы отсутствует предупреждение о проверке маршрута")
+    else:
+        require("Плата не трассирована." in board_svg,
+                "Для платы без меди чертёж должен явно сообщать, что она не трассирована")
+
+    print(f"Прочитано footprints: {len(parts)}. Медные сегменты: {segment_count}; переходы: {via_count}.")
+    print("Тест функциональной топологии и отражения статуса трассировки пройден.")
     print("Тест функциональной топологии пройден: DA1 → R9/SA1 → база VT2, прямой обход отсутствует.")
     print("Ограничение: это блок-схема, а не полноценная Э3. Netlist parity и аппаратная приёмка остаются открытыми.")
     return 0
