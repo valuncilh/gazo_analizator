@@ -6,7 +6,7 @@ set -eu
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$ROOT"
 
-WORK_DIR="\${TMPDIR:-/tmp}/gazo_analizator_vendor_models"
+WORK_DIR="${TMPDIR:-/tmp}/gazo_analizator_vendor_models"
 LOG_PATH="spice/vendor_model_probe.log"
 mkdir -p "$WORK_DIR"
 : > "$LOG_PATH"
