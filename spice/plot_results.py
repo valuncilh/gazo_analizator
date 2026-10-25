@@ -93,8 +93,9 @@ axes[2].grid(True, alpha=0.3)
 fig.suptitle(
     "Переходный процесс расчётной модели. Не результаты измерения реального устройства",
     fontsize=11,
+    y=.985,
 )
-fig.tight_layout()
+fig.tight_layout(rect=(0.02, 0.055, 0.98, 0.91), pad=1.2)
 PLOT_PATH.parent.mkdir(parents=True, exist_ok=True)
-fig.savefig(PLOT_PATH, dpi=160)
+fig.savefig(PLOT_PATH, dpi=180, bbox_inches="tight", pad_inches=.18)
 print(f"Графики сохранены: {PLOT_PATH}")

@@ -64,8 +64,8 @@ def ground(ax,x,y):
     ax.plot([x-.06,x+.06],[y-.28,y-.28],c=INK,lw=1.5)
 
 def finish(fig,name):
-    fig.tight_layout(pad=.5)
-    fig.savefig(OUT/name,dpi=180,bbox_inches="tight",facecolor="white")
+    fig.tight_layout(pad=.7)
+    fig.savefig(OUT/name,dpi=180,bbox_inches="tight",pad_inches=.18,facecolor="white")
     plt.close(fig)
 
 # Figure 1. Architecture diagram.
@@ -201,8 +201,8 @@ arrow(ax,(4.7,4.1),(6.45,4.45),"CT",BLUE)
 ax.text(6.25,3.35,"RESET",fontsize=8.5,color=PURPLE,ha="right",va="center")
 arrow(ax,(9.0,4.15),(10.25,4.15),"OUT",ORANGE)
 ax.text(10.4,4.15,"каскад на рисунке 5",fontsize=8.5,color=ORANGE,va="center")
-block(ax,9.7,.55,3.7,1.1,"Номинал не изменён","C1 = 4,7 мкФ → около 12,47 Гц",RED,"#FEF3F2",False)
-ax.text(.8,.4,"* 2N3904 — функциональный аналог КТ3102ГМ. 47 мкФ показан только как отдельный сравнительный сценарий.",fontsize=8.7,color=GREY)
+block(ax,9.7,.92,3.7,1.1,"Номинал не изменён","C1 = 4,7 мкФ → около 12,47 Гц",RED,"#FEF3F2",False)
+ax.text(.8,.45,"* 2N3904 — функциональный аналог КТ3102ГМ. 47 мкФ показан только как отдельный сравнительный сценарий.",fontsize=8.7,color=GREY)
 finish(fig,"fig04_timer_555_analogue.png")
 
 # Figure 5. Electrical output stage approximation.
@@ -294,11 +294,11 @@ fig.suptitle("Рисунок 8 — сравнение расчётного пе�
 labels=["C1 = 4,7 мкФ\nисходный номинал","C1 = 47 мкФ\nсравнительный вариант"]
 period=[80.20065,801.6786]
 bars=ax.bar(labels,period,color=[BLUE,ORANGE],width=.55)
-ax.set_ylabel("Период OUT, мс"); ax.set_ylim(0,900); ax.grid(axis="y",alpha=.25)
+ax.set_ylabel("Период OUT, мс"); ax.set_ylim(0,1000); ax.grid(axis="y",alpha=.25)
 for b,v in zip(bars,period):
     ax.text(b.get_x()+b.get_width()/2,v+18,f"{v:.2f} мс\n{1000/v:.2f} Гц",ha="center",va="bottom",fontweight="bold",color=INK)
-ax.text(.02,-.18,"ngspice 42, поведенческая модель. 47 мкФ не утверждён как новый номинал схемы.",transform=ax.transAxes,fontsize=9,color=GREY)
-fig.tight_layout(rect=[0,.05,1,.92]); fig.savefig(OUT/"fig08_timer_period_comparison.png",dpi=180,bbox_inches="tight",facecolor="white"); plt.close(fig)
+ax.text(.02,-.19,"ngspice 42, поведенческая модель. 47 мкФ не утверждён как новый номинал схемы.",transform=ax.transAxes,fontsize=9,color=GREY)
+fig.tight_layout(rect=[0,.15,1,.88]); fig.savefig(OUT/"fig08_timer_period_comparison.png",dpi=180,bbox_inches="tight",pad_inches=.22,facecolor="white"); plt.close(fig)
 # Add numbered Russian captions to the charts produced by ngspice.
 from PIL import Image, ImageDraw, ImageFont
 
@@ -308,14 +308,20 @@ def caption_plot(source, destination, title, subtitle):
         raise FileNotFoundError(f"Expected ngspice plot is missing: {source}")
     im = Image.open(source).convert("RGB")
     w, h = im.size
-    band = 108
-    canvas = Image.new("RGB", (w, h + band), "white")
-    canvas.paste(im, (0, band))
+    # Reserve a clean matte around the plot so its first/last axes and labels
+    # stay visible when the picture is embedded in a narrower A4 text column.
+    top_band, bottom_band, side_pad = 108, 38, 42
+    canvas = Image.new("RGB", (w + 2*side_pad, h + top_band + bottom_band), "white")
+    canvas.paste(im, (side_pad, top_band))
     draw = ImageDraw.Draw(canvas)
     font_title = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 30)
     font_sub = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 18)
-    draw.text((42, 12), title, fill=INK, font=font_title)
-    draw.text((44, 62), subtitle, fill=GREY, font=font_sub)
+    draw.text((side_pad + 42, 12), title, fill=INK, font=font_title)
+    draw.text((side_pad + 44, 62), subtitle, fill=GREY, font=font_sub)
+    draw.text((side_pad + 42, top_band + h + 8),
+              "Все оси и подписи приведены целиком. График отражает только расчётную модель.",
+              fill=GREY,
+              font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 15))
     canvas.save(destination, optimize=True)
 
 # Preserve the published reference schematic as a separately attributed figure.
