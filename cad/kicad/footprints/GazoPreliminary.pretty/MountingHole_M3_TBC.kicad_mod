@@ -1,0 +1,8 @@
+(footprint "MountingHole_M3_TBC" (layer "F.Cu") (uuid "52618d38-376a-55de-8a4a-a0e2ddbf47de") (at 103.5 103.5 0)
+ (property "Reference" "REF**" (at 0 -2.3 0) (layer "F.SilkS") (uuid "c29b6ec8-cfc0-54f4-81b0-6d2151cdd83b") (effects (font (size 1 1) (thickness 0.15))))
+ (property "Value" "MountingHole_M3_TBC" (at 0 2.3 0) (layer "F.Fab") (uuid "a2455c17-b110-5851-9aa9-b6735ca06d9e") (effects (font (size 1 1) (thickness 0.15))))
+ (property "Description" "M3 clearance placeholder; confirm screw/boss tolerances." (at 0 0 0) (unlocked yes) (layer "F.Fab") (hide yes) (uuid "f1d4f282-331c-5388-806a-d756597c8cfc") (effects (font (size 1.27 1.27) (thickness 0.15))))
+ (attr through_hole exclude_from_bom exclude_from_pos_files)
+ (fp_circle (center 0 0) (end 1.6 0) (stroke (width 0.12) (type default)) (fill none) (layer "F.Fab") (uuid "1bfe0e81-fcce-5c37-98b5-931bc0dfbf28"))
+ (pad "" np_thru_hole circle (at 0 0) (size 3.2 3.2) (drill 3.2) (layers "*.Cu" "*.Mask"))
+)
