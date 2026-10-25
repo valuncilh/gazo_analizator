@@ -52,7 +52,7 @@ old_wrdata = (
 new_wrdata = (
     "let supply_current = -i(VCCSRC)\n"
     "wrdata spice/model_comparison_behavioral.dat "
-    "v(S) v(UREF) v(DOUT) v(RESET) v(CT) v(OUT) v(BZ_COL) supply_current"
+    "v(S) v(UREF) v(DOUT) v(RESET) v(CT) v(OUT) v(BZ_COL) supply_current v(HL1_A) v(R9_N) v(VT2_B)"
 )
 if old_wrdata not in behavioral:
     raise SystemExit("Could not find the expected behavioral wrdata line")
@@ -108,7 +108,7 @@ old_wrdata_vendor = (
 new_wrdata_vendor = (
     "let modelled_current = -i(VCCSRC)\n"
     "wrdata spice/model_comparison_vendor.dat "
-    "v(S) v(UREF) v(DOUT) v(RESET) v(CT) v(OUT) v(BZ_COL) modelled_current"
+    "v(S) v(UREF) v(DOUT) v(RESET) v(CT) v(OUT) v(BZ_COL) modelled_current v(HL1_A) v(R9_N) v(VT2_B)"
 )
 if old_wrdata_vendor not in vendor:
     raise SystemExit("Could not find the expected vendor wrdata line")
@@ -156,6 +156,7 @@ from pathlib import Path
 import math
 import re
 import sys
+import numpy as np
 
 logs = {
     "behavioral": Path("spice/model_comparison_behavioral.log").read_text(errors="replace"),
@@ -248,7 +249,74 @@ for model, names in {
             raise SystemExit(f"ERROR: {model} {name} is not positive: {value:.6g} A")
         print(f"{model} {name}: {value*1000:.4f} mA")
 
-print("Shared-input model comparison passed. Current figures remain simulation-only estimates.")
+# Attribute stable-window current differences to the three major output branches.
+# Data vector order: t, S, UREF, DOUT, RESET, CT, OUT, BZ_COL, supply current,
+# HL1_A, R9_N, VT2_B.
+def weighted_mean(data, column, lo, hi):
+    t = data[:, 0]
+    mask = (t >= lo) & (t <= hi)
+    x = t[mask]
+    y = data[mask, column]
+    if len(x) < 2 or x[-1] <= x[0]:
+        raise SystemExit(f"ERROR: insufficient samples for {lo}-{hi} s window")
+    return float(np.sum((y[:-1] + y[1:]) * 0.5 * np.diff(x)) / (x[-1] - x[0]))
+
+def conditional_mean(data, value_column, condition_column, lo, hi, threshold):
+    t = data[:, 0]
+    mask = (t >= lo) & (t <= hi)
+    x = t[mask]
+    y = data[mask, value_column]
+    c = data[mask, condition_column] > threshold
+    if len(x) < 2:
+        raise SystemExit(f"ERROR: insufficient samples for conditional mean {lo}-{hi} s")
+    dt = np.diff(x)
+    valid = c[:-1] & c[1:]
+    duration = float(np.sum(dt[valid]))
+    if duration <= 0:
+        raise SystemExit("ERROR: no high-output interval was found for output level calculation")
+    return float(np.sum((y[:-1][valid] + y[1:][valid]) * 0.5 * dt[valid]) / duration)
+
+branch_results = {}
+for model, filename in {
+    "behavioral": "spice/model_comparison_behavioral.dat",
+    "vendor": "spice/model_comparison_vendor.dat",
+}.items():
+    data = np.loadtxt(filename, skiprows=1)
+    if data.ndim != 2 or data.shape[1] < 12:
+        raise SystemExit(f"ERROR: {filename} has {data.shape[1]} columns, expected at least 12")
+    if not np.isfinite(data[:, :12]).all():
+        raise SystemExit(f"ERROR: {filename} contains non-finite data")
+    out = data[:, 6]
+    bz_col = data[:, 7]
+    hl1_a = data[:, 9]
+    r9_n = data[:, 10]
+    currents = {
+        "HL1_R6": (out - hl1_a) / 220.0,
+        "VT2_base_R9": (out - r9_n) / 560.0,
+        "RBZ_load": (5.0 - bz_col) / 166.7,
+    }
+    branch_results[model] = {}
+    high_out = conditional_mean(data, 6, 6, 1.0, 1.5, 2.5)
+    print(f"{model} mean OUT while high: {high_out:.6f} V")
+    for branch_name, current in currents.items():
+        data_with_current = np.column_stack((data, current))
+        column = data_with_current.shape[1] - 1
+        for label, lo, hi in (("alarm", 1.0, 1.5), ("gas_5000ppm", 1.8, 2.3)):
+            value = weighted_mean(data_with_current, column, lo, hi)
+            branch_results[model][f"{branch_name}_{label}"] = value
+            print(f"{model} {branch_name} mean {label}: {1000*value:.4f} mA")
+        if np.max(current) <= 0:
+            raise SystemExit(f"ERROR: {model} {branch_name} never conducts")
+    branch_results[model]["out_high_mean"] = high_out
+
+out_difference = abs(branch_results["behavioral"]["out_high_mean"] - branch_results["vendor"]["out_high_mean"])
+print(f"Loaded high-level OUT difference: {out_difference:.6f} V")
+for branch_name in ("HL1_R6", "VT2_base_R9", "RBZ_load"):
+    b = branch_results["behavioral"][f"{branch_name}_alarm"]
+    v = branch_results["vendor"][f"{branch_name}_alarm"]
+    print(f"Alarm branch {branch_name}: behavioral={1000*b:.4f} mA, vendor={1000*v:.4f} mA")
+
+print("Shared-input model comparison passed. Branch currents are derived from simulated node voltages, not hardware measurements.")
 PY
 
 python3 spice/plot_model_comparison.py
