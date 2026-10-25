@@ -151,7 +151,7 @@ HOME="$WORK_DIR" ngspice -b "$VENDOR_NETLIST" > spice/model_comparison_vendor.lo
 test -s spice/model_comparison_vendor.dat
 
 echo "[3/3] Check common input, state sequence, timing and current averages"
-python3 - <<'PY'
+python3 - <<'PY' | tee spice/model_comparison_branch_summary.txt
 from pathlib import Path
 import math
 import re
