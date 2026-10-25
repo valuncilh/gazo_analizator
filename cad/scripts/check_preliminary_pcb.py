@@ -67,12 +67,15 @@ def main():
         raise SystemExit("Missing KiCad custom footprint library table.")
     if len(fp_files) < 10:
         raise SystemExit(f"Too few custom footprints generated: {len(fp_files)}")
+    no_courtyard = [p.name for p in fp_files if '(layer "F.CrtYd")' not in p.read_text(encoding="utf-8")]
+    if no_courtyard:
+        raise SystemExit("Custom footprints missing provisional courtyard: " + ", ".join(no_courtyard))
     with (OUT/"preliminary_bom.csv").open("w", newline="", encoding="utf-8-sig") as f:
         w=csv.writer(f); w.writerow(["Reference","Value","Provisional footprint","Open verification item"]); w.writerows(PARTS)
     with (OUT/"preliminary_placements.csv").open("w", newline="", encoding="utf-8-sig") as f:
         w=csv.writer(f); w.writerow(["Reference","Value","Status"]); w.writerows([[r,v,"PRELIMINARY, verify in KiCad"] for r,v,fp,note in PARTS])
-    summary={"pcb_file":"cad/kicad/gazo_analizator_preliminary.kicad_pcb","board_size_mm":[72,50,1.6],"references_found":len(found),"bom_rows":len(PARTS),"custom_footprints":len(fp_files),"segments_and_vias":tracks,"routing_status":"UNROUTED","manufacturing_status":"NOT FOR FABRICATION","limitations":["KT3102GM pinout not manufacturer-verified","TBC passive/connector footprints remain","No KiCad schematic/ERC netlist parity","Do not issue Gerber/drill from this draft"]}
+    summary={"pcb_file":"cad/kicad/gazo_analizator_preliminary.kicad_pcb","board_size_mm":[72,50,1.6],"references_found":len(found),"bom_rows":len(PARTS),"custom_footprints":len(fp_files),"custom_footprints_with_courtyard":len(fp_files)-len(no_courtyard),"segments_and_vias":tracks,"routing_status":"UNROUTED","manufacturing_status":"NOT FOR FABRICATION","limitations":["KT3102GM pinout not manufacturer-verified","TBC passive/connector footprints remain","No KiCad schematic/ERC netlist parity","Do not issue Gerber/drill from this draft"]}
     (OUT/"preliminary_cad_summary.json").write_text(json.dumps(summary,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
-    (OUT/"preliminary_cad_summary.md").write_text("# CAD static check\n\n**PRELIMINARY / NOT FOR FABRICATION**\n\n"+f"- Board size: 72 x 50 x 1.6 mm\n- References found: {len(found)}\n- BOM rows: {len(PARTS)}\n- Custom footprint files: {len(fp_files)}\n- Copper tracks/vias: {tracks}\n- Routing is not started; DRC unconnected warnings are expected.\n- Exact footprints, pinouts and schematic parity remain open.\n",encoding="utf-8")
-    print(f"Static PCB check passed. References={len(found)}, BOM rows={len(PARTS)}, tracks={tracks}.")
+    (OUT/"preliminary_cad_summary.md").write_text("# CAD static check\n\n**PRELIMINARY / NOT FOR FABRICATION**\n\n"+f"- Board size: 72 x 50 x 1.6 mm\n- References found: {len(found)}\n- BOM rows: {len(PARTS)}\n- Custom footprint files: {len(fp_files)}\n- Footprints with provisional F.CrtYd: {len(fp_files)-len(no_courtyard)}\n- Copper tracks/vias: {tracks}\n- Routing is not started; DRC unconnected warnings are expected.\n- Exact footprints, pinouts and schematic parity remain open.\n",encoding="utf-8")
+    print(f"Static PCB check passed. References={len(found)}, BOM rows={len(PARTS)}, footprints={len(fp_files)}, tracks={tracks}.")
 if __name__=="__main__": main()

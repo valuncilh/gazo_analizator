@@ -307,7 +307,7 @@ def overall_view_sheet():
 def assembly_sheet(parts):
     out = sheet_open("Сборочная компоновка — взрыв-схема", "СБ?", "эскиз")
     # Simplified exploded top views, not yet a fully dimensioned assembly drawing.
-    x, y, s = 54.0, 35.0, 0.72
+    x, y, s = 54.0, 33.0, 0.55
     # Lid
     out.append(txt(38,30,"1 — крышка корпуса",3.0,weight="bold"))
     out.append(rect(x,y,120*s,78*s,0.32))
@@ -320,19 +320,19 @@ def assembly_sheet(parts):
     # Guide lines indicate separation, not actual fasteners.
     out.extend([ln(95, y+78*s+3, 95, 92, 0.25, "4 2"),
                 ln(112, y+78*s+3, 112, 92, 0.25, "4 2")])
-    out.append(txt(38,101,"2 — плата управления и индикаторы",3.0,weight="bold"))
-    pcbx, pcby, ps = 66.0, 107.0, 0.72
+    out.append(txt(38,84,"2 — плата управления и индикаторы",3.0,weight="bold"))
+    pcbx, pcby, ps = 66.0, 91.0, 0.55
     out.append(rect(pcbx,pcby,72*ps,50*ps,0.30))
     out.append(rect(pcbx+(8/72)*72*ps,pcby+(12/50)*50*ps,25.4*ps,25.4*ps,0.20,dash="2 1"))
     out.append(txt(pcbx+6,pcby+15,"A1",2.5,weight="bold"))
     out.append(circ(pcbx+63*ps,pcby+39*ps,6*ps,0.20))
-    out.append(txt(pcbx+63*ps+5,pcby+39*ps,"HA1",2.0,weight="bold"))
+    out.append(txt(pcbx+63*ps+3.6,pcby+39*ps,"HA1",2.0,weight="bold"))
     for h in [(3.5,3.5),(68.5,3.5),(3.5,46.5),(68.5,46.5)]:
         out.append(circ(pcbx+h[0]*ps,pcby+h[1]*ps,1.6*ps,0.18))
-    out.append(ln(95,pcby+50*ps+4,95,164,0.25,"4 2"))
-    out.append(ln(112,pcby+50*ps+4,112,164,0.25,"4 2"))
-    out.append(txt(38,173,"3 — основание корпуса с опорами",3.0,weight="bold"))
-    basex, basey, bs=54.0,178.0,0.72
+    out.append(ln(95,pcby+50*ps+4,95,141,0.25,"4 2"))
+    out.append(ln(112,pcby+50*ps+4,112,141,0.25,"4 2"))
+    out.append(txt(38,137,"3 — основание корпуса с опорами",3.0,weight="bold"))
+    basex, basey, bs=54.0,145.0,0.55
     out.append(rect(basex,basey,120*bs,78*bs,0.35))
     out.append(rect(basex+2.5*bs,basey+2.5*bs,115*bs,73*bs,0.18,dash="2 1"))
     for hx,hy in [(6,6),(114,6),(6,72),(114,72)]:
@@ -349,7 +349,7 @@ def assembly_sheet(parts):
         txt(225,100,"акустический канал и зазоры TBC.",2.3),
         txt(225,115,"Эта взрыв-схема не заменяет утверждённый",2.3),
         txt(225,121,"сборочный чертёж и спецификацию.",2.3),
-        txt(38,225,"Размеры и позиции основаны на CAD-концепте. Проверить столкновения и порядок сборки перед выпуском.",2.35),
+        txt(38,204,"Размеры и позиции основаны на CAD-концепте. Проверить столкновения и порядок сборки перед выпуском.",2.35),
     ])
     out.append("</svg>")
     return "".join(out)

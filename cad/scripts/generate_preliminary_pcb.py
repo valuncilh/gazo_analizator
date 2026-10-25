@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generate an explicitly preliminary, unrouted KiCad 9 PCB placement draft."""
 from pathlib import Path
+import math
 import re
 import uuid
 
@@ -77,6 +78,32 @@ def footprint(lib, ref, value, x, y, pads, lines, *, attr="through_hole",
             '(effects (font (size 1.27 1.27) (thickness 0.15))))'
         )
     out.append(f' (attr {attr})')
+    # Provisional courtyard includes pad extents and package outlines.
+    # Geometry remains TBC and must be verified against the selected data sheets.
+    ext_x, ext_y = [], []
+    for p in pads:
+        ext_x.extend([p["x"] - p["w"] / 2, p["x"] + p["w"] / 2])
+        ext_y.extend([p["y"] - p["h"] / 2, p["y"] + p["h"] / 2])
+    for primitive in lines:
+        if "(fp_circle" in primitive:
+            center = re.search(r'\(center\s+([-0-9.]+)\s+([-0-9.]+)\)', primitive)
+            end = re.search(r'\(end\s+([-0-9.]+)\s+([-0-9.]+)\)', primitive)
+            if center and end:
+                cx, cy = float(center.group(1)), float(center.group(2))
+                radius = math.hypot(float(end.group(1)) - cx, float(end.group(2)) - cy)
+                ext_x.extend([cx - radius, cx + radius])
+                ext_y.extend([cy - radius, cy + radius])
+        else:
+            for coord in re.finditer(r'\((?:start|end)\s+([-0-9.]+)\s+([-0-9.]+)\)', primitive):
+                ext_x.append(float(coord.group(1)))
+                ext_y.append(float(coord.group(2)))
+    if ext_x and ext_y:
+        margin = 0.25
+        out.extend(" " + item for item in rect(
+            min(ext_x) - margin, min(ext_y) - margin,
+            max(ext_x) + margin, max(ext_y) + margin,
+            "F.CrtYd", "courtyard-" + ref, 0.05
+        ))
     out.extend(" " + ln for ln in lines)
     out.extend(" " + pad(p) for p in pads)
     out.append(")")
@@ -98,7 +125,9 @@ def header(ref, value, x, y, nets, description):
         ref_y=-half-1, val_y=half+1, description=description)
 
 def cap(ref, value, x, y, radius, n1, n2, description):
-    return footprint("GazoPreliminary:Capacitor_THT_2.50mm_TBC", ref, value, x, y,
+    size_tag = f"{radius:g}".replace(".", "p")
+    library_name = f"GazoPreliminary:Capacitor_THT_2.50mm_TBC_R{size_tag}"
+    return footprint(library_name, ref, value, x, y,
         [pth("1", -1.25, 0, n1, "rect"), pth("2", 1.25, 0, n2)],
         [circle(radius, "F.Fab", ref),
          line(-radius*.7, -radius*.7, -radius*.2, -radius*.7, "F.SilkS", ref)],
@@ -132,11 +161,11 @@ def build_board():
             rect(-3, -4, 3, 4, "F.SilkS", "J1"), ref_y=-5.2, val_y=5.2,
             description="Connector body, pin pitch and current rating TBC."),
         footprint("GazoPreliminary:TLV7041Q_SOT23-5_TBC", "U2", "TLV7041-Q1", 115.5, 115,
-            [smd("1", -1.15, -.95, "DOUT", .95, .65),
-             smd("2", -1.15, 0, "GND", .95, .65),
-             smd("3", -1.15, .95, "UREF", .95, .65),
-             smd("4", 1.15, .95, "SENSE", .95, .65),
-             smd("5", 1.15, -.95, "+5V", .95, .65)],
+            [smd("1", -1.15, -.95, "DOUT", .95, .50),
+             smd("2", -1.15, 0, "GND", .95, .50),
+             smd("3", -1.15, .95, "UREF", .95, .50),
+             smd("4", 1.15, .95, "SENSE", .95, .50),
+             smd("5", 1.15, -.95, "+5V", .95, .50)],
             rect(-1.5, -1, 1.5, 1, "F.Fab", "U2"), attr="smd",
             ref_y=-2.15, val_y=2.15,
             description="SOT-23-5 TBC. Pin map 1 OUT,2 GND,3 UREF,4 S,5 VCC; verify TI land pattern."),
@@ -145,7 +174,7 @@ def build_board():
         resistor("RHYS", "100k", 124, 119, "DOUT", "UREF"),
         resistor("R2", "10k", 126.5, 114.5, "DOUT", "VT1_BASE"),
         transistor("VT1", "KT3102GM / VT1", 132, 115.5, "RESET", "VT1_BASE", "GND", "RESET control"),
-        resistor("R3", "2k", 137, 114.5, "+5V", "RESET"),
+        resistor("R3", "2k", 138.5, 114.5, "+5V", "RESET"),
         header("P1", "10k POT TBC", 114, 135.5, ["+5V", "UREF", "GND"],
                "External potentiometer pad header. The physical potentiometer is not selected."),
     ]
@@ -198,7 +227,7 @@ def build_board():
     parts += [
         resistor("R9", "560R", 158.5, 126.5, "SOUND_CTL", "VT2_BASE"),
         transistor("VT2", "KT3102GM / VT2", 164.5, 129.5, "BUZZ_COL", "VT2_BASE", "GND", "buzzer driver"),
-        footprint("GazoPreliminary:Diode_Axial_P7.62_TBC", "VD1", "KD510A TBC", 153, 130,
+        footprint("GazoPreliminary:Diode_Axial_P7.62_TBC", "VD1", "KD510A TBC", 153, 128,
             [pth("1", -3.81, 0, "BUZZ_COL", "rect"), pth("2", 3.81, 0, "+5V")],
             rect(-2.7, -1, 2.7, 1, "F.Fab", "VD1") +
             [line(1.2, -1, 1.2, 1, "F.SilkS", "VD1", .15)],
