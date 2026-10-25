@@ -183,8 +183,9 @@ def read_footprints():
             break
         block = extract_expr(board, match.start())
         cursor = match.start() + len(block)
-        header = block[:block.find("\n")]
-        pos = re.search(r'\(at\s+([-0-9.]+)\s+([-0-9.]+)\s+([-0-9.]+)\)', header)
+        # KiCad may serialize the footprint position on a later line after pcbnew.SaveBoard().
+        # Search the balanced footprint block rather than only the first line.
+        pos = re.search(r'\(at\s+([-0-9.]+)\s+([-0-9.]+)\s+([-0-9.]+)\)', block)
         ref = re.search(r'\(property "Reference" "([^"]+)"', block)
         value = re.search(r'\(property "Value" "([^"]+)"', block)
         if not pos or not ref:
@@ -200,10 +201,24 @@ def read_footprints():
     return result
 
 
+def copper_item_counts():
+    """Count routed copper records from the current KiCad board file."""
+    board_text = PCB.read_text(encoding="utf-8")
+    segments = len(re.findall(r"\(segment\b", board_text))
+    vias = len(re.findall(r"\(via\b", board_text))
+    return segments, vias
+
 def pcb_sheet(parts):
     out = sheet_open("Чертёж печатной платы — предварительная компоновка", "ПП?", "2:1")
     scale, ox, oy = 1.8, 42.0, 45.0
     board_x, board_y, board_w, board_h = 100.0, 100.0, 72.0, 50.0
+    segments, vias = copper_item_counts()
+    if segments + vias:
+        route_label = f"Автотрассировка: {segments} сегм., {vias} via."
+        route_detail = "Проверить DRC, связность и маршрут вручную."
+    else:
+        route_label = "Плата не трассирована."
+        route_detail = "Проверить nets по завершённой схеме Э3."
     X = lambda x: ox+(x-board_x)*scale
     Y = lambda y: oy+(y-board_y)*scale
     out.append(rect(X(100),Y(100),board_w*scale,board_h*scale,0.35))
@@ -247,8 +262,8 @@ def pcb_sheet(parts):
         txt(220,49,"Контур платы: 72 × 50 мм",2.6),
         txt(220,55,"Толщина FR-4: 1,6 мм, предварительное допущение",2.3),
         txt(220,65,"Четыре отверстия: Ø3,2 мм, монтаж M3 — TBC",2.3),
-        txt(220,75,"Плата не трассирована. Номера nets и footprints",2.3),
-        txt(220,80,"пока не проверены по завершённой схеме Э3.",2.3),
+        txt(220,75,route_label,2.3),
+        txt(220,80,route_detail,2.3),
         txt(220,90,"Не выпускать Gerber для производства.",2.3,weight="bold",fill="#922"),
         txt(220,104,"Критичные открытые вопросы",3.1,weight="bold"),
         txt(220,111,"• распиновка конкретного КТ3102ГМ для VT1/VT2",2.3),
