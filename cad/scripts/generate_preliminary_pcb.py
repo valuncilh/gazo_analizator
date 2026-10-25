@@ -299,6 +299,10 @@ def extract_sexpr(text, start):
 def write_footprint_library(board):
     library_root = OUT.parent / "footprints" / "GazoPreliminary.pretty"
     library_root.mkdir(parents=True, exist_ok=True)
+    # Remove old generated files first. Package-specific IDs can change between
+    # generator revisions, and stale library files must not survive a rebuild.
+    for stale in library_root.glob("*.kicad_mod"):
+        stale.unlink()
     matches = list(re.finditer(r'\(footprint "GazoPreliminary:([^"]+)"', board))
     seen = set()
     for match in matches:
