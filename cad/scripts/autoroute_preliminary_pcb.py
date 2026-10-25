@@ -24,15 +24,27 @@ REPORT = OUT / "autoroute_report.json"
 
 def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
+    router_jar = os.environ.get("FREEROUTING_JAR")
     router = os.environ.get("FREEROUTING_BIN")
-    if not router:
-        for candidate in ("freeRouting", "freerouting", "freerouting-cli"):
-            found = shutil.which(candidate)
-            if found:
-                router = found
-                break
-    if not router or not Path(router).is_file():
-        raise SystemExit("FreeRouting CLI binary was not supplied by the CAD workflow.")
+    if router_jar:
+        if not Path(router_jar).is_file():
+            raise SystemExit(f"FreeRouting JAR does not exist: {router_jar}")
+        java = shutil.which("java")
+        if not java:
+            raise SystemExit("Java runtime was not supplied by the CAD workflow.")
+        command_prefix = [java, "-jar", router_jar]
+        router_label = Path(router_jar).name
+    else:
+        if not router:
+            for candidate in ("freeRouting", "freerouting", "freerouting-cli"):
+                found = shutil.which(candidate)
+                if found:
+                    router = found
+                    break
+        if not router or not Path(router).is_file():
+            raise SystemExit("FreeRouting CLI binary or JAR was not supplied by the CAD workflow.")
+        command_prefix = [router]
+        router_label = Path(router).name
     if not PCB.is_file():
         raise SystemExit(f"Generated PCB not found: {PCB}")
 
@@ -46,26 +58,28 @@ def main() -> int:
         raise SystemExit(f"KiCad could not load generated board: {PCB}")
 
     with LOG.open("w", encoding="utf-8") as log:
-        log.write(f"Router binary: {router}\n")
+        log.write(f"Router: {router_label}\n")
         log.write(f"Input board: {PCB}\n")
         log.flush()
         exported = pcbnew.ExportSpecctraDSN(board, str(DSN))
         if not exported or not DSN.is_file() or DSN.stat().st_size == 0:
             raise SystemExit(f"KiCad Specctra DSN export failed. See {LOG}")
-        log.write(f"\nRunning autorouter: {router} -de {DSN} -do {SES} -mp 12 -mt 2 -l en\n")
+        log.write(f"\nRunning autorouter: {command_prefix} -de {DSN} -do {SES} -mp 6 -mt 2 -l en\n")
         log.flush()
         try:
             routed = subprocess.run(
-                [router, "-de", str(DSN), "-do", str(SES), "-mp", "12", "-mt", "2", "-l", "en"],
+                command_prefix + ["-de", str(DSN), "-do", str(SES), "-mp", "6", "-mt", "2", "-l", "en"],
                 cwd=OUT,
                 text=True,
                 stdout=log,
                 stderr=subprocess.STDOUT,
-                timeout=1200,
+                timeout=300,
                 check=False,
             )
         except subprocess.TimeoutExpired:
-            raise SystemExit(f"FreeRouting exceeded 20 minutes. See {LOG}")
+            tail = LOG.read_text(encoding="utf-8", errors="replace")[-12000:]
+            print(tail, file=sys.stderr)
+            raise SystemExit(f"FreeRouting exceeded 5 minutes. See {LOG}")
         log.write(f"\nFreeRouting exit code: {routed.returncode}\n")
         log.flush()
 
@@ -73,8 +87,10 @@ def main() -> int:
     candidates.extend(sorted(OUT.glob("*.ses")))
     session = next((p for p in candidates if p.is_file() and p.stat().st_size > 0), None)
     if routed.returncode != 0:
+        print(LOG.read_text(encoding="utf-8", errors="replace")[-12000:], file=sys.stderr)
         raise SystemExit(f"FreeRouting failed with exit code {routed.returncode}. See {LOG}")
     if session is None:
+        print(LOG.read_text(encoding="utf-8", errors="replace")[-12000:], file=sys.stderr)
         raise SystemExit(f"FreeRouting created no non-empty SES session. See {LOG}")
 
     imported = pcbnew.ImportSpecctraSES(board, str(session))
@@ -98,7 +114,7 @@ def main() -> int:
     report = {
         "status": "AUTOROUTED PRELIMINARY DRAFT",
         "manufacturing_status": "NOT FOR FABRICATION",
-        "router": Path(router).name,
+        "router": router_label,
         "specctra_input": str(DSN.relative_to(ROOT)),
         "session_file": str(session.relative_to(ROOT)),
         "imported_copper_items": len(copper_items),
