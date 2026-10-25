@@ -69,7 +69,7 @@ def finish(fig,name):
     plt.close(fig)
 
 # Figure 1. Architecture diagram.
-fig,ax=canvas("Рисунок 1 — функциональная схема сигнализатора",
+fig,ax=canvas("Рисунок 2 — функциональная схема сигнализатора",
  "Сводная архитектура. Пунктирная рамка означает аналоговую или поведенческую модель, а не точную принципиальную схему.",(15,8))
 wire(ax,[(.7,6.25),(13.2,6.25)],ORANGE,2); ax.text(.7,6.48,"+5 В, стабилизированное питание",color=ORANGE,fontweight="bold")
 items=[
@@ -90,7 +90,7 @@ ax.text(.75,.55,"Метки «аналог» и пунктир показыва�
 finish(fig,"fig01_system_architecture.png")
 
 # Figure 2. MQ-4 divider.
-fig,ax=canvas("Рисунок 2 — приближённая электрическая модель MQ-4",
+fig,ax=canvas("Рисунок 3 — приближённая электрическая модель MQ-4",
  "Однорезисторный электрический эквивалент. В SPICE Rs выбирается между тремя сценарными ветвями через управляемые ключи.",(15,7.8))
 ax.text(1.0,6.1,"+5 В",ha="center",fontsize=11,fontweight="bold",color=ORANGE)
 wire(ax,[(1,5.9),(1,5.45)],ORANGE,1.7); resistor_v(ax,1,5.45,3.7,"Rs(CH₄)",TEAL)
@@ -113,7 +113,7 @@ ax.text(.7,.42,"График нужен для проверки направле
 finish(fig,"fig02_mq4_equivalent.png")
 
 # Figure 3. Comparator with feedback.
-fig,ax=canvas("Рисунок 3 — приближённая схема компаратора с гистерезисом",
+fig,ax=canvas("Рисунок 4 — приближённая схема компаратора с гистерезисом",
  "В netlist выход называется DOUT, на исходной схеме — DOUT′. RP1A и RP1B — фиксированные резисторы делителя UREF.",(15,8))
 wire(ax,[(.8,6.35),(13.0,6.35)],ORANGE,1.8); ax.text(.8,6.57,"+5 В",color=ORANGE,fontweight="bold")
 wire(ax,[(1.55,6.35),(1.55,5.85)],ORANGE); resistor_v(ax,1.55,5.85,4.85,"RP1A = 5,2 кОм",ORANGE)
@@ -141,7 +141,7 @@ ax.text(.8,.45,"Порог и ширина гистерезиса зависят
 finish(fig,"fig03_comparator_hysteresis.png")
 
 # Figure 4. 555 timer electrical schematic approximation.
-fig,ax=canvas("Рисунок 4 — электрическая схема таймера 555 и сброса",
+fig,ax=canvas("Рисунок 6 — электрическая схема таймера 555 и сброса",
  "TLC555 — функциональный SPICE-аналог КР1006ВИ1. Внешние соединения и номиналы сверены с netlist.",(15,7.8))
 wire(ax,[(.9,6.3),(9.0,6.3)],ORANGE,1.8)
 ax.text(.9,6.53,"+5 В",color=ORANGE,fontweight="bold")
@@ -206,7 +206,7 @@ ax.text(.8,.45,"* 2N3904 — функциональный аналог КТ3102�
 finish(fig,"fig04_timer_555_analogue.png")
 
 # Figure 5. Electrical output stage approximation.
-fig,ax=canvas("Рисунок 5 — приближённая электрическая схема выходного каскада",
+fig,ax=canvas("Рисунок 7 — приближённая электрическая схема выходного каскада",
  "RBZ заменяет активный зуммер только резистивной нагрузкой. Управляемый ключ S_SA1 моделирует сигнал разрешения SOUND_ENABLE.",(15,8))
 wire(ax,[(.65,6.45),(13.35,6.45)],ORANGE,1.8)
 ax.text(.7,6.66,"+5 В",color=ORANGE,fontweight="bold")
@@ -290,7 +290,7 @@ finish(fig,"fig05_buzzer_driver_analogue.png")
 
 # Figure 8. Timer comparison.
 fig,ax=plt.subplots(figsize=(12,6),dpi=150)
-fig.suptitle("Рисунок 8 — сравнение расчётного периода таймера",fontsize=17,fontweight="bold",color=INK,y=.97)
+fig.suptitle("Рисунок 5 — сравнение расчётного периода таймера",fontsize=17,fontweight="bold",color=INK,y=.97)
 labels=["C1 = 4,7 мкФ\nисходный номинал","C1 = 47 мкФ\nсравнительный вариант"]
 period=[80.20065,801.6786]
 bars=ax.bar(labels,period,color=[BLUE,ORANGE],width=.55)
@@ -337,7 +337,7 @@ if source_scheme.is_file():
     source_draw = ImageDraw.Draw(source_canvas)
     source_draw.text(
         (42, 12),
-        "Рисунок 0 — исходная схема из публикации С. Кузнецова",
+        "Рисунок 1 — исходная схема из публикации С. Кузнецова",
         fill=INK,
         font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 29),
     )
@@ -358,13 +358,13 @@ if source_scheme.is_file():
 caption_plot(
     "spice/bode_linearized.png",
     OUT / "fig06_bode_linearized_submodels.png",
-    "Рисунок 6 — АЧХ и ФЧХ линейных подсистем",
+    "Рисунок 9 — АЧХ и ФЧХ линейных подсистем",
     "MQ-4 — условная аппроксимация. RC-состояния таймера показаны отдельно.",
 )
 caption_plot(
     "spice/vendor_chain_plots.png",
     OUT / "fig07_transient_vendor_model.png",
-    "Рисунок 7 — переходные процессы тестовой цепочки",
+    "Рисунок 8 — переходные процессы тестовой цепочки",
     "TI TLV7041/TLC555, аналог 2N3904 вместо КТ3102ГМ, сценарный делитель MQ-4.",
 )
 
