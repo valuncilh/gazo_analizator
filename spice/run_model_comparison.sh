@@ -316,8 +316,25 @@ for model, filename in {
         "RBZ_load": (5.0 - bz_col) / 166.7,
     }
     branch_results[model] = {}
+    high_mask = (data[:, 0] >= 1.0) & (data[:, 0] <= 1.5) & (data[:, 6] > 2.5)
+    high_samples = data[high_mask]
+    if high_samples.shape[0] < 2:
+        raise SystemExit(f"ERROR: {model} insufficient high-OUT samples in alarm window")
     high_out = conditional_mean(data, 6, 6, 1.0, 1.5, 2.5)
+    high_out_min = float(np.min(high_samples[:, 6]))
+    # Conservative resistor corner. The node R9_N in the generated trace is
+    # the lower side of R9. Using R9,max gives a conservative current estimate
+    # when the recorded resistor drop is positive.
+    ib_samples = np.maximum(0.0, (high_samples[:, 6] - high_samples[:, 10]) / 588.0)
+    ib_min = float(np.min(ib_samples))
+    under_uoh = int(np.count_nonzero(high_samples[:, 6] < 2.564))
     print(f"{model} mean OUT while high: {high_out:.6f} V")
+    print(f"{model} minimum sampled OUT while high (1.0–1.5 s): {high_out_min:.6f} V")
+    print(f"{model} minimum sampled base-branch current using R9,max=588 Ohm: {1000*ib_min:.4f} mA")
+    print(f"{model} high-OUT samples below UOH criterion 2.564 V: {under_uoh}/{high_samples.shape[0]}")
+    branch_results[model]["out_high_min"] = high_out_min
+    branch_results[model]["base_current_min_corner"] = ib_min
+    branch_results[model]["samples_below_uoh"] = under_uoh
     for branch_name, current in currents.items():
         data_with_current = np.column_stack((data, current))
         column = data_with_current.shape[1] - 1
@@ -336,7 +353,8 @@ for branch_name in ("HL1_R6", "VT2_base_R9", "RBZ_load"):
     v = branch_results["vendor"][f"{branch_name}_alarm"]
     print(f"Alarm branch {branch_name}: behavioral={1000*b:.4f} mA, vendor={1000*v:.4f} mA")
 
-print("Shared-input model comparison passed. Branch currents are derived from simulated node voltages, not hardware measurements.")
+print("Shared-input model comparison passed. Branch currents and high-state minima are derived from simulated node voltages, not hardware measurements.")
+print("The UOH=2.564 V criterion uses the stated design assumptions (UBE,max=0.8 V, IB,req=3 mA, R9,max=588 Ohm); it is not a datasheet guarantee for KR1006VI1.")
 sys.stdout.flush()
 sys.stdout = sys.__stdout__
 summary_stream.flush()
