@@ -31,7 +31,7 @@ def main() -> int:
             raise SystemExit(f"FreeRouting JAR does not exist: {router_jar}")
         java = shutil.which("java")
         if not java:
-            raise SystemExit("Java runtime was not supplied by the CAD workflow.")
+            raise SystemExit("Java runtime was not found. Install Java and retry.")
         command_prefix = [java, "-jar", router_jar]
         router_label = Path(router_jar).name
     else:
@@ -42,7 +42,7 @@ def main() -> int:
                     router = found
                     break
         if not router or not Path(router).is_file():
-            raise SystemExit("FreeRouting CLI binary or JAR was not supplied by the CAD workflow.")
+            raise SystemExit("FreeRouting CLI binary or JAR was not found. Set FREEROUTING_BIN or FREEROUTING_JAR and retry.")
         command_prefix = [router]
         router_label = Path(router).name
     if not PCB.is_file():
