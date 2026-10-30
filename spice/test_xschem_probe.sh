@@ -8,7 +8,7 @@ SCH=docs/figures/xschem_probe/mq4_divider.sch
 mkdir -p "$OUT"
 : > "$OUT/xschem.log"
 
-# Ubuntu installs the generic symbols here. Use a dedicated rc so the runner's
+# Ubuntu installs the generic symbols here. Use a dedicated rc so the local environment's
 # generated ~/.xschem/xschemrc cannot point at a nonexistent user library.
 test -d /usr/share/xschem/xschem_library/devices
 test -s /usr/share/xschem/xschem_library/devices/res.sym
