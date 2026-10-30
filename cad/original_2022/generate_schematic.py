@@ -18,6 +18,11 @@ ROOT = Path(__file__).resolve().parent
 KICAD_SYMBOLS = Path("/usr/share/kicad/symbols")
 PROJECT = "original_2022"
 ROOT_UUID = str(uuid.uuid4())
+WIRED_NETS = {
+    "DOUT", "VT1_B", "RESET", "DISCH", "CT", "CTRL", "OUT",
+    "HL1_A", "HA1_P", "HA1_N", "HL2_K",
+}
+PIN_POINTS: dict[tuple[str, str], tuple[float, float]] = {}
 
 
 def uid() -> str:
@@ -204,6 +209,9 @@ def placement(
         if net_name is None:
             lines.append(no_connect(gx, gy))
             continue
+        if net_name in WIRED_NETS:
+            PIN_POINTS[(reference, pin_number)] = (gx, gy)
+            continue
         # A short wire stub plus a local label makes each connection visible and
         # keeps this transcription independent of guessed internal A1 circuitry.
         if abs(px) > abs(py):
@@ -229,54 +237,91 @@ def add(*args, **kwargs) -> None:
     OBJECTS.extend(placement(*args, **kwargs))
 
 
+# Arrange the signal path from the sensor through RESET, timer, then indicators.
 # Original gas module interface. The AOUT pin is explicitly left unused.
-add("A1", "Connector_Generic:Conn_01x04", "MQ-4 module (model unknown)", 25, 65,
+add("A1", "Connector_Generic:Conn_01x04", "MQ-4 module (model unknown)", 34, 67.38,
     {"1": "VCC", "2": "DOUT", "3": None, "4": "GND"})
-add("R1", "Device:R", "160 kΩ", 57, 42, {"1": "VCC", "2": "DOUT"})
-add("R2", "Device:R", "13 kΩ", 77, 65, {"1": "DOUT", "2": "VT1_B"})
-add("VT1", "Transistor_BJT:Q_NPN_BCE", "КТ3102Б", 105, 65,
+add("R1", "Device:R", "160 kΩ", 55, 63.57, {"1": "VCC", "2": "DOUT"})
+add("R2", "Device:R", "13 kΩ", 85, 71.19, {"1": "DOUT", "2": "VT1_B"})
+add("VT1", "Transistor_BJT:Q_NPN_BCE", "КТ3102Б", 108, 75,
     {"1": "VT1_B", "2": "RESET", "3": "GND"})
-add("R3", "Device:R", "2 kΩ", 124, 42, {"1": "VCC", "2": "RESET"})
+add("R3", "Device:R", "2 kΩ", 125, 66.11, {"1": "VCC", "2": "RESET"})
 
 # Original NE555N astable timer and component values.
-add("DA1", "Timer:NE555D", "NE555N", 157, 65,
+add("DA1", "Timer:NE555D", "NE555N", 140, 75,
     {"1": "GND", "2": "CT", "3": "OUT", "4": "RESET",
      "5": "CTRL", "6": "CT", "7": "DISCH", "8": "VCC"},
     datasheet="http://www.ti.com/lit/ds/symlink/ne555.pdf")
-add("R4", "Device:R", "8.2 kΩ", 191, 35, {"1": "VCC", "2": "DISCH"})
-add("R5", "Device:R", "8.2 kΩ", 215, 55, {"1": "DISCH", "2": "CT"})
-add("C1", "Device:C_Polarized", "4.7 µF 16 V", 244, 65,
+add("R4", "Device:R", "8.2 kΩ", 185, 68.65, {"1": "VCC", "2": "DISCH"})
+add("R5", "Device:R", "8.2 kΩ", 185, 76.27, {"1": "DISCH", "2": "CT"})
+add("C1", "Device:C_Polarized", "4.7 µF 16 V", 207, 83.89,
     {"1": "CT", "2": "GND"})
-add("C2", "Device:C", "100 n (as printed)", 158, 105,
-    {"1": "CTRL", "2": "GND"})
-add("C3", "Device:C_Polarized", "47 µF 16 V", 268, 35,
+add("C2", "Device:C", "100 n (as printed)", 140, 61.03,
+    {"1": "CTRL", "2": "GND"}, angle=180)
+add("C3", "Device:C_Polarized", "47 µF 16 V", 245, 45,
     {"1": "VCC", "2": "GND"})
 
 # Original direct output stage: no added VT2/R9 driver.
-add("R6", "Device:R", "220 Ω", 150, 140, {"1": "OUT", "2": "HL1_A"})
-add("HL1", "Device:LED", "Red LED", 177, 140, {"1": "GND", "2": "HL1_A"})
-add("VD1", "Device:D", "КД510А", 211, 122, {"1": "HA1_P", "2": "OUT"})
-add("HA1", "Connector_Generic:Conn_01x02", "HCM1206X or equivalent", 244, 110,
+add("R6", "Device:R", "220 Ω", 162, 75,
+    {"1": "OUT", "2": "HL1_A"}, angle=90)
+add("HL1", "Device:LED", "Red LED", 174, 75,
+    {"1": "GND", "2": "HL1_A"}, angle=180)
+add("VD1", "Device:D", "КД510А", 184, 100, {"1": "HA1_P", "2": "OUT"})
+add("HA1", "Connector_Generic:Conn_01x02", "HCM1206X or equivalent", 220, 100,
     {"1": "HA1_P", "2": "HA1_N"})
-add("SA1", "Switch:SW_SPST", "Sound enable", 255, 150,
+add("SA1", "Switch:SW_SPST", "Sound enable", 235, 102.54,
     {"1": "HA1_N", "2": "GND"})
-add("HL2", "Device:LED", "Green LED", 208, 150,
+add("HL2", "Device:LED", "Green LED", 185, 130,
     {"1": "HL2_K", "2": "VCC"})
-add("R7", "Device:R", "220 Ω", 237, 150,
-    {"1": "HA1_N", "2": "HL2_K"})
-add("XS1", "Connector_Generic:Conn_01x02", "5 V input", 25, 155,
+add("R7", "Device:R", "220 Ω", 165, 130,
+    {"1": "HA1_N", "2": "HL2_K"}, angle=90)
+add("XS1", "Connector_Generic:Conn_01x02", "5 V input", 34, 137,
     {"1": "VCC", "2": "GND"})
-add("#FLG01", "power:PWR_FLAG", "PWR_FLAG", 45, 155, {"1": "VCC"})
-add("#FLG02", "power:PWR_FLAG", "PWR_FLAG", 45, 165, {"1": "GND"})
+add("#FLG01", "power:PWR_FLAG", "PWR_FLAG", 52, 137, {"1": "VCC"})
+add("#FLG02", "power:PWR_FLAG", "PWR_FLAG", 52, 147, {"1": "GND"})
+
+
+def pin_point(reference: str, number: str) -> tuple[float, float]:
+    return PIN_POINTS[(reference, number)]
+
+
+def route(*points: tuple[float, float]) -> None:
+    for (x1, y1), (x2, y2) in zip(points, points[1:]):
+        if x1 != x2 and y1 != y2:
+            raise ValueError(f"Non-orthogonal wire path: {(x1, y1)} -> {(x2, y2)}")
+        OBJECTS.append(wire(x1, y1, x2, y2))
+
+
+# Explicit source-signal wiring. VCC/GND remain named power labels.
+route(pin_point("A1", "2"), pin_point("R1", "2"), pin_point("R2", "1"))
+route(pin_point("R2", "2"), pin_point("VT1", "1"))
+route(pin_point("VT1", "2"), pin_point("R3", "2"), pin_point("DA1", "4"))
+route(pin_point("DA1", "7"), pin_point("R4", "2"))
+route(pin_point("R5", "1"), pin_point("R4", "2"))
+route(pin_point("DA1", "6"), pin_point("DA1", "2"),
+      pin_point("R5", "2"), pin_point("C1", "1"))
+route(pin_point("DA1", "5"), pin_point("C2", "1"))
+route(pin_point("DA1", "3"), pin_point("R6", "1"))
+route(pin_point("R6", "2"), pin_point("HL1", "2"))
+out_x, out_y = pin_point("DA1", "3")
+sound_x, sound_y = pin_point("VD1", "2")
+route((out_x, out_y), (out_x, sound_y), (sound_x, sound_y))
+route(pin_point("VD1", "1"), pin_point("HA1", "1"))
+route(pin_point("HA1", "2"), pin_point("SA1", "1"))
+ha1_n_x, ha1_n_y = pin_point("HA1", "2")
+r7_n_x, r7_n_y = pin_point("R7", "1")
+route(pin_point("HA1", "2"), (ha1_n_x, r7_n_y - 5.08),
+      (r7_n_x, r7_n_y - 5.08), pin_point("R7", "1"))
+route(pin_point("R7", "2"), pin_point("HL2", "1"))
 
 
 TEXTS = [
     '''\t(text "SOURCE TRANSCRIPTION: Kuznetsov, Radio 11/2022, pp. 46–48. A1 internals unknown; AOUT unused."
-\t\t(at 38 12 0) (effects (font (size 1.27 1.27))) (uuid "{}"))'''.format(uid()),
+\t\t(at 14 170 0) (effects (font (size 1.27 1.27)) (justify left)) (uuid "{}"))'''.format(uid()),
     '''\t(text "C2 is marked ‘100 н’ in the reproduced drawing; unit remains unverified."
-\t\t(at 38 18 0) (effects (font (size 1.27 1.27))) (uuid "{}"))'''.format(uid()),
+\t\t(at 14 176 0) (effects (font (size 1.27 1.27)) (justify left)) (uuid "{}"))'''.format(uid()),
     '''\t(text "NE555 estimate: 12.47 Hz from printed values; article states 1–2 Hz. Original values unchanged."
-\t\t(at 38 24 0) (effects (font (size 1.27 1.27))) (uuid "{}"))'''.format(uid()),
+\t\t(at 14 182 0) (effects (font (size 1.27 1.27)) (justify left)) (uuid "{}"))'''.format(uid()),
 ]
 
 
