@@ -15,14 +15,18 @@
 
 ## Публичные нормативные источники
 
+- ГОСТ Р 2.105-2019: https://protect.gost.ru/gost/details/0dd3cdfa-c15a-47b3-9e3b-4a90a43005c8
 - ГОСТ Р 2.104-2023: https://protect.gost.ru/gost/details/69d422a2-3c0e-4561-a521-0c99f9cf4417
 - ГОСТ Р 2.102-2023: https://protect.gost.ru/gost/details/3742b2a6-b776-412e-95ed-2a2a4471cca4
 - ГОСТ Р 2.109-2023: https://protect.gost.ru/gost/details/b88d9f1e-79f8-43ec-ba93-23fb5696d1bb
 - ГОСТ Р 2.106-2019: https://protect.gost.ru/gost/details/a65c2b20-2cfb-4326-abd5-3aad62db747c
+- Изменение № 1 к ГОСТ Р 2.106-2019: https://protect.gost.ru/gost/changesdetails/bd5a6af7-d1c4-4fd6-98fc-4d6bf90a3103
 - ГОСТ Р 2.201-2023: https://protect.gost.ru/gost/details/b62e1df9-57a5-4e54-85c1-e27376e06648
 - ГОСТ 2.701-2008: https://protect.gost.ru/gost/details/87f1f382-a055-48b7-ae80-f359ff5e1f4e
 - ГОСТ 2.702-2011: https://protect.gost.ru/gost/details/d9c1c334-2a90-45cb-ac00-c31da92d706b
 - ГОСТ 2.417-91: https://protect.gost.ru/gost/details/1fdcd27c-286f-4cdf-a668-a3cf7924caca
+
+Для текста ПЗ применять формы 9/9а по ГОСТ Р 2.106-2019 с изменением № 1. Общие требования к текстовым документам устанавливает ГОСТ Р 2.105-2019 с актуальными изменениями и поправками. ГОСТ Р 2.104-2023 регулирует основные надписи и дополнительные графы. ГОСТ 7.32-2017 не используется как основной стандарт оформления РПЗ и сохраняется только как вспомогательная ссылка в предусмотренных случаях.
 
 ## Поиск аналогов
 
