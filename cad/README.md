@@ -38,13 +38,13 @@ Create a native KiCad schematic and validate its pin mapping before routing. Rep
 
 See [end-to-end electrical trace audit](electrical_trace_audit_2026-10-25.md) for the chain from the Amperka A1.S output through the external comparator, reset transistor, timer, LED and sounder driver.
 
-The CAD workflow runs `cad/scripts/test_electrical_trace.py` to compare declared SPICE nodes against the provisional PCB pad-net map. This is a topology regression check, not a measurement of copper continuity.
+Run `python3 cad/scripts/test_electrical_trace.py` locally to compare declared SPICE nodes against the provisional PCB pad-net map. This is a topology consistency check, not a measurement of copper continuity.
 
 Latest completed physical-layout checks before the trace regression was added:
 
 - KiCad pad-net map: 27 expected footprints and 72 pad assignments matched.
 - KiCad DRC: 0 geometry violations, but 53 unconnected items.
 - Copper tracks: 0. The PCB is still **UNROUTED**.
-- FreeCAD preliminary FCStd, STEP and STL exports were generated successfully by [CAD workflow #40189464876](https://github.com/valuncilh/gazo_analizator/actions/runs/40189464876).
+- Preliminary FreeCAD FCStd, STEP and STL exports were generated in an earlier model build. Their geometry and fit still require manual review against the selected components.
 
 Do not generate manufacturing files from this draft. The native schematic/ERC/netlist parity, exact component pinouts and footprints, copper routing and physical fit checks remain open.
