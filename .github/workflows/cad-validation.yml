@@ -59,9 +59,14 @@ jobs:
           python3 cad/scripts/test_electrical_trace.py
           python3 cad/drawings/generate_preliminary_drawings.py
           python3 cad/drawings/test_preliminary_drawings.py
-          for SVG in cad/drawings/exports/*.svg; do rsvg-convert --output "${SVG%.svg}.png" "$SVG"; done
-          test -s cad/drawings/exports/PP_preliminary.png
-          test -s cad/drawings/exports/VO_preliminary.png
+          PREVIEW_DIR="cad/output/drawing_previews"
+          mkdir -p "$PREVIEW_DIR"
+          for SVG in cad/drawings/exports/*.svg; do
+            NAME="$(basename "${SVG%.svg}")"
+            rsvg-convert --output "$PREVIEW_DIR/${NAME}.png" "$SVG"
+          done
+          test -s "$PREVIEW_DIR/PP_preliminary.png"
+          test -s "$PREVIEW_DIR/VO_preliminary.png"
 
       - name: Parse board, collect DRC report and export SVG
         run: |
