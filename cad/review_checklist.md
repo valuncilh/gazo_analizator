@@ -5,7 +5,7 @@
 - [x] Add a static checker and preliminary BOM/placement reports.
 - [x] Add a parameter-driven FreeCAD enclosure script and STEP/STL/FCStd output rules.
 - [x] Add explicit PRELIMINARY / NOT FOR FABRICATION warnings.
-- [ ] Create a native KiCad schematic and verify pin mapping through ERC/netlist.
+- [x] Create separate native KiCad schematics for Original 2022 and the preliminary project modification; run ERC and full component/pin/netlist comparisons. Physical Joy-IT pin mapping remains unconfirmed.
 - [ ] Confirm exact KT3102GM variant, package drawing, and C-B-E ordering.
 - [ ] Select physical potentiometer P1, switch SA1, power connector XS1.
 - [ ] Replace every TBC footprint with manufacturer dimensions.
@@ -27,7 +27,7 @@ The current PCB is intentionally unrouted. Its DRC report is diagnostic only. No
 - [ ] Выполнить локальную проверку в KiCad: назначение сетей, DRC, незамкнутые соединения и визуальный осмотр платы.
 - [ ] Выполнить локальную проверку FreeCAD-модели и экспортов после уточнения размеров реальных компонентов.
 - [x] Создана самостоятельная KiCad-транскрипция Original 2022; DA1 и окружающие подписи визуально разнесены, netlist сверяется по сетям/компонентам/выводам. ERC 10.0.7: 0 ошибок, 17 предупреждений только по пустым footprint-полям; игнорируемых категорий нет. Это ещё не проектная Э3 и не готовая Э3 по ЕСКД.
-- [ ] Создать проектную схему KiCad и подтвердить её электрические сети/netlist до утверждения схемы.
+- [x] Создана отдельная предварительная KiCad-схема проектной модификации; ERC/netlist и полный список сетей, компонентов, выводов проверены. Электрическое утверждение, физический pinout A1 и калибровка 1000 ppm остаются открытыми.
 - [ ] После утверждения проектной схемы выполнить трассировку PCB, затем DRC, проверить незамкнутые сети и визуальную геометрию платы.
 
 ## Результат последнего диагностического маршрута

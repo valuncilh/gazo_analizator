@@ -1,6 +1,6 @@
 # Предварительные электрические расчёты
 
-**Статус документа:** рабочая расчётная запись. Числа, полученные из временных допущений, не считать паспортными гарантиями. Выбранная плата A1 — Amperka Troyka MQ-4 AMP-B052 с аналоговым выходом S. Расчёты прямого интерфейса DOUT из исходной статьи ниже сохранены как справочный анализ старой схемы и не применяются к S напрямую. Адаптация через U2 описана в `calculations/amperka_mq4_integration.md`.
+**Статус документа:** рабочая расчётная запись с несколькими самостоятельными ветками. Текущий предварительный кандидат A1 проектной версии — Joy-IT SEN-MQ4 V1 с DOUT; точная ревизия, выходной каскад и полный ток остаются неподтверждёнными. Расчёты прямого интерфейса DOUT из статьи являются сценарными и не подтверждают совместимость с Joy-IT без данных его выхода. Расчёты Amperka AMP-B052 с аналоговым S и внешним U2 — отдельная альтернатива в `calculations/amperka_mq4_integration.md`. Номиналы исходной схемы отдельно зафиксированы в `data/original_scheme_reference.md`; проектная схема — в `cad/project_modification/`.
 
 ## 1. Исходные данные и допущения
 
@@ -23,7 +23,7 @@
 | Номинальная мощность R1–R7 | 0,125 Вт | Предварительно принят кандидат Р1-12-0,125 типоразмера 0805 для обеспечения запаса по мощности R6/R7. | 
 | Минимальное прямое напряжение светодиода | 1,8 В | Временная граница для оценки максимального тока, требует проверки по конкретному LED |
 | DA1 | NE555N или КР1006ВИ1 | В расчётном примере рассматривается КР1006ВИ1 |
-| A1 | Модуль с датчиком MQ-4 | Конкретная плата пока не выбрана |
+| A1 | Joy-IT SEN-MQ4 V1, предварительно | DOUT/питание 5 В и предел тока нагревателя указаны в документации; физический pinout, выходной каскад и полный ток конкретной ревизии не подтверждены |
 
 Допуски резисторов и конденсаторов в таблице применены для оценки наихудших сочетаний. Перед утверждением спецификации требуется проверить точные исполнения компонентов и их температурные характеристики.
 
@@ -344,3 +344,19 @@ I_{alarm,H} \approx 204{,}1 + 6 + 30 + 15{,}8 + 15{,}8 + 2{,}684 + 0{,}034
 8. Amperka. «Датчик природного газа MQ-4 (Troyka-модуль)», AMP-B052: https://amperka.ru/product/troyka-mq4-gas-sensor.
 9. Amperka, библиотека TroykaMQ: https://github.com/amperka/TroykaMQ.
 10. Адаптация выхода S и расчёт компараторного интерфейса: `calculations/amperka_mq4_integration.md`.
+
+## 13. Project modification: timer and DOUT interface estimate
+
+This calculation applies only to `cad/project_modification/`; it does not alter the Original 2022 reference. The project keeps R4=R5=8.2 kΩ and uses C1=47 µF as a separate design choice to target the article's stated 1–2 Hz range.
+
+For an ideal 555 astable estimate:
+
+\[
+T\approx0.693(R_4+2R_5)C_1=0.693(8.2+2\cdot8.2)\,\mathrm{k\Omega}\cdot47\,\mathrm{\mu F}\approx0.801\,\mathrm{s},\quad f\approx1.248\,\mathrm{Hz}.
+\]
+
+If the provisional calculation tolerances are R4/R5 ±5 % and C1 ±20 %, the corner estimate is approximately 0.991…1.642 Hz (T≈0.610…1.010 s). The exact capacitor has not been selected, so ±20 % is a scenario assumption, not a component guarantee. These equations omit threshold errors, leakage, output loading and startup behavior; SPICE comparison and exact part selection remain due.
+
+The schematic retains the Original's R1=160 kΩ, R2=13 kΩ and VT1 interface only provisionally. If DOUT is a push-pull HIGH at the 4.9…5.1 V supply rails and UBE=0.6…0.8 V (assumption), current through R2=13 kΩ ±5 % is about 0.300…0.364 mA. With R3=2 kΩ ±5 % and VCE(sat)=0.2 V (also assumed), worst-case RESET pull-up sink current is about 2.58 mA; a forced beta of 10 would require about 0.258 mA base current. The push-pull scenario meets that preliminary arithmetic, but the Joy-IT V1 output's source capability has not been documented.
+
+If DOUT is open collector, its internal pull-up and topology are unknown. The external 160 kΩ R1 alone would provide only roughly `(4.9−0.8)/(168 kΩ+13.65 kΩ)≈22.6 µA` through the base path in the weakest assumed corner, far below that 0.258 mA design target. Therefore, the current schematic interface is **not electrically accepted**: obtain revision-specific output data or replace the low-impedance base load with a high-impedance interface after review. This uncertainty does not change the provisional netlist's connectivity result.

@@ -27,7 +27,7 @@ Thus the enabled ERC categories produced no electrical-rule errors, but the resu
 
 ## Visual review and limits
 
-DA1, C2, R4/R5, C1 and C3 fields were repositioned to separate designators/values from pin names and wire paths. The displayed netlist, reference table and Original values remain unchanged. The SVG is a readable connectivity drawing, not a facsimile of the article or a released E3 sheet; final title-block and ESKD formatting remain future work.
+DA1, C2, R4/R5, C1, C3 and A1 fields were positioned to separate designators/values from pin names, wires and the page edge. The displayed netlist, reference table and Original values remain unchanged. The SVG is a readable connectivity drawing, not a facsimile of the article or a released E3 sheet; final title-block and ESKD formatting remain future work.
 
 A1.1=VCC, A1.2=DOUT, A1.3=AOUT/NC, and A1.4=GND are conditional **KiCad connector-symbol pin numbers only**. They do not establish the physical pin order of the unidentified module. `PWR_FLAG` symbols support ERC and are not physical BOM components. No footprints, board, exact A1 module, physical behavior, or gas calibration are verified.
 

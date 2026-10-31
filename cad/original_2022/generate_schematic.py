@@ -245,8 +245,9 @@ def add(*args, **kwargs) -> None:
 
 # Arrange the signal path from the sensor through RESET, timer, then indicators.
 # Original gas module interface. The AOUT pin is explicitly left unused.
-add("A1", "Connector_Generic:Conn_01x04", "MQ-4 module (model unknown)", 34, 67.38,
-    {"1": "VCC", "2": "DOUT", "3": None, "4": "GND"})
+add("A1", "Connector_Generic:Conn_01x04", "MQ-4 module, unknown", 34, 67.38,
+    {"1": "VCC", "2": "DOUT", "3": None, "4": "GND"},
+    reference_position=(34, 57), value_position=(39, 82))
 add("R1", "Device:R", "160 kΩ", 55, 63.57, {"1": "VCC", "2": "DOUT"})
 add("R2", "Device:R", "13 kΩ", 85, 71.19, {"1": "DOUT", "2": "VT1_B"})
 add("VT1", "Transistor_BJT:Q_NPN_BCE", "КТ3102Б", 108, 75,

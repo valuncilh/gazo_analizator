@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/home/samovar/projects/gazo_analizator/cad/original_2022/original_2022.kicad_sch</source>
-    <date>2026-10-31T03:00:00</date>
+    <date>2026-10-31T03:13:43</date>
     <tool>Eeschema 10.0.7</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -25,7 +25,7 @@
   </design>
   <components>
     <comp ref="A1">
-      <value>MQ-4 module (model unknown)</value>
+      <value>MQ-4 module, unknown</value>
       <fields>
         <field name="Footprint"/>
         <field name="Datasheet"/>
@@ -37,7 +37,7 @@
       <property name="ki_keywords" value="connector"/>
       <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>6a639ad2-1e02-487e-964d-59db0faf5b51</tstamps>
+      <tstamps>678e29db-8df3-47c1-98ce-ca8113873d4d</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -62,7 +62,7 @@
       <property name="ki_keywords" value="cap capacitor"/>
       <property name="ki_fp_filters" value="CP_*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>b23dde48-9e5b-4db7-a184-bfe17f54e17a</tstamps>
+      <tstamps>0d84ef2f-040f-42cb-8cf4-34c10b031fb4</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -85,7 +85,7 @@
       <property name="ki_keywords" value="cap capacitor"/>
       <property name="ki_fp_filters" value="C_*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>9c34a937-27e5-40f1-bbe3-20f1a9963d04</tstamps>
+      <tstamps>ca1b6340-9d78-4594-a97c-eb3723398e09</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -108,7 +108,7 @@
       <property name="ki_keywords" value="cap capacitor"/>
       <property name="ki_fp_filters" value="CP_*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>377cbe84-3970-4a09-bd0c-44b49f359367</tstamps>
+      <tstamps>332a1730-f672-45f2-b0ee-8221baafef4d</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -132,7 +132,7 @@
       <property name="ki_keywords" value="single timer 555"/>
       <property name="ki_fp_filters" value="SOIC*3.9x4.9mm*P1.27mm*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>d2c308bd-0489-40d4-8d1a-9fabd5c98fbe</tstamps>
+      <tstamps>433ea002-525e-4e7e-b0f9-36ef1a7a8e31</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -161,7 +161,7 @@
       <property name="ki_keywords" value="connector"/>
       <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>3ff2746b-daff-40f7-9204-e7c68fe03a0c</tstamps>
+      <tstamps>608afb4c-dd1c-4a48-9838-b658878c5fb8</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -184,7 +184,7 @@
       <property name="ki_keywords" value="LED diode"/>
       <property name="ki_fp_filters" value="LED* LED_SMD:* LED_THT:*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>032477c5-7ba1-4b3b-8c71-4f693d8820df</tstamps>
+      <tstamps>3073527f-893a-4956-943e-a23b16541b78</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -207,7 +207,7 @@
       <property name="ki_keywords" value="LED diode"/>
       <property name="ki_fp_filters" value="LED* LED_SMD:* LED_THT:*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>76a822eb-2eae-4bea-9b29-51a6019df5e3</tstamps>
+      <tstamps>1339f9c4-58fb-41d0-a30b-6ed73a134dcb</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -230,7 +230,7 @@
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>23b1de99-7157-493e-8059-24b60b76e4e6</tstamps>
+      <tstamps>37eb0d1c-36e8-476a-8c10-47c46ad3a3c6</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -253,7 +253,7 @@
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>e75d3a28-1d32-4e74-b631-364995f00e4e</tstamps>
+      <tstamps>866bc20a-cae2-4b55-aaf5-df8f9258f95c</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -276,7 +276,7 @@
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>d20fc179-4af0-40a8-b40a-c2e9541bf389</tstamps>
+      <tstamps>218e86b9-b63f-4ca4-862d-41a8ecf8adc1</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -299,7 +299,7 @@
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>8c468502-9729-4bf3-9eb3-b0c06bc17fcb</tstamps>
+      <tstamps>5498582c-17bd-4589-b5f6-3d9e41892426</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -322,7 +322,7 @@
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>b14d3937-1626-431c-88ea-4f4b69a3ad51</tstamps>
+      <tstamps>f284a9a1-6c14-41a9-9122-fb1e85f49b81</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -345,7 +345,7 @@
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>d505fdc5-9da9-42e9-ae05-66869dfaf47c</tstamps>
+      <tstamps>c892fa67-45ea-40c7-9934-f7fc968135f2</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -368,7 +368,7 @@
       <property name="ki_keywords" value="R res resistor"/>
       <property name="ki_fp_filters" value="R_*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>a0f930a3-e028-4a8e-a222-ffe30feaa76a</tstamps>
+      <tstamps>9f24c638-6699-4429-8348-867adf8c789c</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -390,7 +390,7 @@
       <property name="Sheetfile" value="original_2022.kicad_sch"/>
       <property name="ki_keywords" value="switch lever"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>7342a24c-5261-4792-8462-5c80458f8615</tstamps>
+      <tstamps>0ecb6029-3b92-4dff-bc79-c1ecd3ab2c14</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -413,7 +413,7 @@
       <property name="ki_keywords" value="diode"/>
       <property name="ki_fp_filters" value="TO-???* *_Diode_* *SingleDiode* D_*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>97f4594c-1fc2-4faf-9974-d93daa79459f</tstamps>
+      <tstamps>b1f36fca-2a84-4d42-8889-e0854e81e416</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -435,7 +435,7 @@
       <property name="Sheetfile" value="original_2022.kicad_sch"/>
       <property name="ki_keywords" value="BJT"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>b7665886-f515-47e5-8504-b1782deefaad</tstamps>
+      <tstamps>82c8007c-3465-432d-a13a-fa833478f37d</tstamps>
       <units>
         <unit name="A">
           <pins>
@@ -459,7 +459,7 @@
       <property name="ki_keywords" value="connector"/>
       <property name="ki_fp_filters" value="Connector*:*_1x??_*"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>c7e203a7-a939-4a4e-a5b1-4778efa6a4dd</tstamps>
+      <tstamps>7650978c-cb0f-4b58-96a3-e8273ecc20dc</tstamps>
       <units>
         <unit name="A">
           <pins>

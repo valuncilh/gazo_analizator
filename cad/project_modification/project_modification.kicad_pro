@@ -1,0 +1,20 @@
+{
+  "board": {},
+  "erc": {
+    "erc_exclusions": [],
+    "meta": {
+      "version": 0
+    },
+    "rule_severities": {
+      "footprint_filter": "warning",
+      "four_way_junction": "warning",
+      "simulation_model_issue": "error",
+      "single_global_label": "warning"
+    }
+  },
+  "meta": {
+    "filename": "project_modification.kicad_pro",
+    "version": 1
+  },
+  "schematic": {}
+}
