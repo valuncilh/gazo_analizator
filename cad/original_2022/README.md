@@ -2,7 +2,9 @@
 
 This directory contains a standalone KiCad transcription of the published external circuit. It preserves the printed values and uses named net labels to represent the connections documented in [`data/original_scheme_reference.md`](../../data/original_scheme_reference.md). The A1 symbol is only a connector: its internal circuitry, exact module, output stage, and footprint are unknown. AOUT is intentionally unconnected.
 
-The A1 pin numbers are conditional KiCad symbol numbers only; they do not establish the physical pin order of the unidentified module. The SVG is a connectivity drawing for this transcription, not a graphical facsimile of the published figure. Further graphic refinement remains open.
+The A1 pin numbers are conditional KiCad symbol numbers only; they do not establish the physical pin order of the unidentified module. DA1 and the surrounding timing components were arranged to separate their references, values, pin names and wires. The SVG is a readable connectivity drawing for this transcription, not a graphical facsimile of the published figure or a finished E3 sheet.
+
+The project explicitly enables all four ERC checks that were previously ignored by the KiCad defaults. Current KiCad 10.0.7 result: 0 errors, 17 footprint-filter warnings because no footprints are assigned, and no ignored categories. The full netlist checker matches all 19 component references, their 47 pins, all 13 connected nets, and the intentional NC A1.3. See the dated verification report for details and limits.
 
 The drawing is based on the online reproduction listed as S1 in [`data/source_register.md`](../../data/source_register.md); it has not been checked against a scan of the printed pages. The 1–2 Hz statement conflicts with the frequency calculated from the printed R4, R5, and C1 values. The schematic keeps the printed values unchanged and notes that discrepancy.
 

@@ -1,28 +1,36 @@
 # Original 2022 KiCad verification
 
-**Status:** preliminary electrical transcription. This report checks the KiCad document and its exported connectivity; it does not establish physical pinout, behavior, safety, or graphical identity with the printed article.
+**Status:** preliminary electrical transcription with an improved readable layout. The report checks document structure, ERC and exported connectivity; it does not establish physical pinout, electrical operation, safety, or visual identity with the printed article.
 
 ## Environment and commands
 
 - KiCad CLI: **10.0.7**.
-- The schematic was opened in Eeschema and also rendered to SVG for visual inspection.
-- ERC command: `kicad-cli sch erc --severity-all -o cad/original_2022/reports/original_2022_erc.rpt cad/original_2022/original_2022.kicad_sch`.
-- Netlist command: `kicad-cli sch export netlist --format kicadxml -o cad/original_2022/reports/original_2022.net cad/original_2022/original_2022.kicad_sch`.
-- BOM command: `kicad-cli sch export bom -o cad/original_2022/reports/original_2022_bom.csv cad/original_2022/original_2022.kicad_sch`.
-- Full connectivity check: `python3 cad/original_2022/verify_netlist.py cad/original_2022/reports/original_2022.net`.
-- Repository whitespace check: `git diff --check`.
+- Reviewed the exported SVG at full-sheet view and a detail crop around DA1 and its timing parts.
+- ERC: `kicad-cli sch erc --severity-all --format json -o <report>.json cad/original_2022/original_2022.kicad_sch`; retained text report: `kicad-cli sch erc --severity-all -o cad/original_2022/reports/original_2022_erc.rpt cad/original_2022/original_2022.kicad_sch`.
+- Netlist: `kicad-cli sch export netlist --format kicadxml -o cad/original_2022/reports/original_2022.net cad/original_2022/original_2022.kicad_sch`.
+- BOM: `kicad-cli sch export bom -o cad/original_2022/reports/original_2022_bom.csv cad/original_2022/original_2022.kicad_sch`.
+- Full inventory/net review: `python3 -B cad/original_2022/verify_netlist.py cad/original_2022/reports/original_2022.net`.
+- Format check: `git diff --check`.
 
-## Results
+## ERC result and rule coverage
 
-- ERC at `2026-10-31T02:50:10`: **0 errors, 0 warnings, 0 violations**. The report listed ignored-check categories: “Global label only appears once in the schematic”, “Four connection points are joined together”, “SPICE model issue”, and “Assigned footprint doesn't match footprint filters”. No ERC messages were emitted.
-- BOM: **19 components**.
-- Automated full-netlist comparison: **PASS**. All **13 connected nets / 46 connected symbol pins** match the contact sets in [`data/original_scheme_reference.md`](../../../data/original_scheme_reference.md). The single no-connect is **A1.3**. The checker compares complete pin membership sets, not KiCad's generated names for unnamed nets.
-- Connected nets in the XML export: `/GND`, `/VCC`, `Net-(A1-Pin_2)`, `Net-(DA1-CONT)`, `Net-(DA1-DISCH)`, `Net-(DA1-OUT)`, `Net-(DA1-THRES)`, `Net-(DA1-~{RST})`, `Net-(HA1-Pin_1)`, `Net-(HA1-Pin_2)`, `Net-(HL1-A)`, `Net-(HL2-K)`, and `Net-(VT1-B)`.
-- Exports: [ERC report](original_2022_erc.rpt), [XML netlist](original_2022.net), [BOM](original_2022_bom.csv), and [SVG preview](../exports/original_2022.svg).
-- KiCad's SVG export contains trailing spaces; they were stripped from the retained SVG. Raster comparison against the saved PNG preview produced **0 differing pixels**. Final `git diff --check` passes.
+The `.kicad_pro` now explicitly enables the four categories previously reported under `ignored_checks`: `single_global_label` (warning), `four_way_junction` (warning), `simulation_model_issue` (error), and `footprint_filter` (warning). The report JSON now has **`ignored_checks: []`** and the project declares **no individual ERC exclusions** (`erc_exclusions: []`). KiCad 10.0.7 ERC returned **0 errors and 17 warnings**. All 17 warnings are `footprint_filter`: this Original transcription intentionally has no assigned footprints or PCB. No single-global-label, four-way-junction, or SPICE-model violations remain. An earlier run exposed one four-way-junction warning caused by a redundant zero-length wire where R4.2 and R5.1 already shared one grid point; the zero-length segment was removed without changing the net, and the warning disappeared.
 
-## Scope and remaining work
+Thus the enabled ERC categories produced no electrical-rule errors, but the result is not “zero violations”; the 17 footprint warnings remain open because physical footprints are unknown. KiCad documents distinguish ignored rule categories from individual exclusions; source S69 records the official manual and CLI reference.
 
-In the KiCad connector symbol only, A1.1=VCC, A1.2=DOUT, A1.3=AOUT/NC, and A1.4=GND. These are **conditional KiCad symbol pin numbers**; no physical pin order for the unidentified MQ-4 module has been established. The `PWR_FLAG` symbols support ERC but are not component pins in the exported netlist.
+## Netlist, component and pin audit
 
-The SVG shows a connected transcription and is not a graphical facsimile of the article. Spacing, grouping, and title block still need graphic refinement before the drawing can be treated as a finished E3 document. ERC and netlist checks do not establish electrical operation. No footprints, PCB, or physical A1 module are verified in this Original 2022 project.
+- BOM and KiCad component inventory: **19 references**.
+- The reference now includes both a net-membership table and an explicit component/pin inventory. The checker compares each exported net as a complete set, all component references, and every numbered pin in each component. Each declared pin must occur exactly once in a connected net or in the NC set.
+- Result: **PASS** — 13 connected nets, 46 connected pins, 19 components, 47 total component pins accounted for; the sole no-connect is A1.3. The checker also fails if a component or a declared component pin is removed from the exported inventory.
+- Connected nets: `/GND`, `/VCC`, `Net-(A1-Pin_2)`, `Net-(DA1-CONT)`, `Net-(DA1-DISCH)`, `Net-(DA1-OUT)`, `Net-(DA1-THRES)`, `Net-(DA1-~{RST})`, `Net-(HA1-Pin_1)`, `Net-(HA1-Pin_2)`, `Net-(HL1-A)`, `Net-(HL2-K)`, and `Net-(VT1-B)`.
+
+## Visual review and limits
+
+DA1, C2, R4/R5, C1 and C3 fields were repositioned to separate designators/values from pin names and wire paths. The displayed netlist, reference table and Original values remain unchanged. The SVG is a readable connectivity drawing, not a facsimile of the article or a released E3 sheet; final title-block and ESKD formatting remain future work.
+
+A1.1=VCC, A1.2=DOUT, A1.3=AOUT/NC, and A1.4=GND are conditional **KiCad connector-symbol pin numbers only**. They do not establish the physical pin order of the unidentified module. `PWR_FLAG` symbols support ERC and are not physical BOM components. No footprints, board, exact A1 module, physical behavior, or gas calibration are verified.
+
+## Retained outputs
+
+[ERC report](original_2022_erc.rpt), [XML netlist](original_2022.net), [BOM](original_2022_bom.csv), [SVG](../exports/original_2022.svg), and [PNG preview](../exports/original_2022_preview.png).

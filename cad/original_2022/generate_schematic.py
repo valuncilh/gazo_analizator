@@ -159,6 +159,8 @@ def placement(
     angle: int = 0,
     footprint: str = "",
     datasheet: str = "~",
+    reference_position: tuple[float, float] | None = None,
+    value_position: tuple[float, float] | None = None,
 ) -> list[str]:
     # KiCad's default electrical grid is 50 mil (1.27 mm). Keep symbol origins
     # on that grid so all library pin and wire endpoints land exactly on-grid.
@@ -172,7 +174,11 @@ def placement(
     lines: list[str] = []
 
     # Keep field text outside symbols; large IC fields get wider separation.
-    field_offset = 15 if symbol_id == "Timer:NE555D" else 7.62
+    field_offset = 7.62
+    if reference_position is None:
+        reference_position = (x, y - field_offset)
+    if value_position is None:
+        value_position = (x, y + field_offset)
     lines.append(
         f'''\t(symbol
 \t\t(lib_id "{symbol_id}")
@@ -183,8 +189,8 @@ def placement(
 \t\t(on_board yes)
 \t\t(dnp no)
 \t\t(uuid "{instance_id}")
-{property_block("Reference", reference, x, y - field_offset)}
-{property_block("Value", value, x, y + field_offset)}
+{property_block("Reference", reference, *reference_position)}
+{property_block("Value", value, *value_position)}
 {property_block("Footprint", footprint, x, y, hide=True)}
 {property_block("Datasheet", datasheet, x, y, hide=True)}'''
     )
@@ -251,15 +257,23 @@ add("R3", "Device:R", "2 kΩ", 125, 66.11, {"1": "VCC", "2": "RESET"})
 add("DA1", "Timer:NE555D", "NE555N", 140, 75,
     {"1": "GND", "2": "CT", "3": "OUT", "4": "RESET",
      "5": "CTRL", "6": "CT", "7": "DISCH", "8": "VCC"},
-    datasheet="http://www.ti.com/lit/ds/symlink/ne555.pdf")
-add("R4", "Device:R", "8.2 kΩ", 185, 68.65, {"1": "VCC", "2": "DISCH"})
-add("R5", "Device:R", "8.2 kΩ", 185, 76.27, {"1": "DISCH", "2": "CT"})
+    datasheet="http://www.ti.com/lit/ds/symlink/ne555.pdf",
+    reference_position=(158, 49), value_position=(158, 106))
+add("R4", "Device:R", "8.2 kΩ", 185, 68.65, {"1": "VCC", "2": "DISCH"},
+    reference_position=(197, 66), value_position=(197, 71))
+add("R5", "Device:R", "8.2 kΩ", 185, 76.27, {"1": "DISCH", "2": "CT"},
+    reference_position=(197, 74), value_position=(197, 79))
 add("C1", "Device:C_Polarized", "4.7 µF 16 V", 207, 83.89,
-    {"1": "CT", "2": "GND"})
-add("C2", "Device:C", "100 n (as printed)", 140, 61.03,
-    {"1": "CTRL", "2": "GND"}, angle=180)
-add("C3", "Device:C_Polarized", "47 µF 16 V", 245, 45,
-    {"1": "VCC", "2": "GND"})
+    {"1": "CT", "2": "GND"},
+    reference_position=(207, 76), value_position=(191, 94))
+add("C2", "Device:C", "100 n (as printed)", 140, 50.8,
+    {"1": "CTRL", "2": "GND"}, angle=180,
+    reference_position=(121, 47), value_position=(121, 55))
+# Keep the supply capacitor next to the input connector and power flags so
+# its role is visually clear instead of leaving it isolated at the sheet edge.
+add("C3", "Device:C_Polarized", "47 µF 16 V", 71, 111,
+    {"1": "VCC", "2": "GND"},
+    reference_position=(71, 96), value_position=(84, 115))
 
 # Original direct output stage: no added VT2/R9 driver.
 add("R6", "Device:R", "220 Ω", 162, 75,
@@ -287,6 +301,8 @@ def pin_point(reference: str, number: str) -> tuple[float, float]:
 
 def route(*points: tuple[float, float]) -> None:
     for (x1, y1), (x2, y2) in zip(points, points[1:]):
+        if x1 == x2 and y1 == y2:
+            continue
         if x1 != x2 and y1 != y2:
             raise ValueError(f"Non-orthogonal wire path: {(x1, y1)} -> {(x2, y2)}")
         OBJECTS.append(wire(x1, y1, x2, y2))
@@ -297,7 +313,7 @@ route(pin_point("A1", "2"), pin_point("R1", "2"), pin_point("R2", "1"))
 route(pin_point("R2", "2"), pin_point("VT1", "1"))
 route(pin_point("VT1", "2"), pin_point("R3", "2"), pin_point("DA1", "4"))
 route(pin_point("DA1", "7"), pin_point("R4", "2"))
-route(pin_point("R5", "1"), pin_point("R4", "2"))
+# R4.2 and R5.1 share the same grid point; no zero-length wire is needed.
 route(pin_point("DA1", "6"), pin_point("DA1", "2"),
       pin_point("R5", "2"), pin_point("C1", "1"))
 route(pin_point("DA1", "5"), pin_point("C2", "1"))
@@ -348,6 +364,16 @@ def generate() -> None:
     (ROOT / f"{PROJECT}.kicad_sch").write_text(schematic, encoding="utf-8")
     project = {
         "board": {},
+        "erc": {
+            "erc_exclusions": [],
+            "meta": {"version": 0},
+            "rule_severities": {
+                "footprint_filter": "warning",
+                "four_way_junction": "warning",
+                "simulation_model_issue": "error",
+                "single_global_label": "warning",
+            },
+        },
         "meta": {"filename": f"{PROJECT}.kicad_pro", "version": 1},
         "schematic": {},
     }
