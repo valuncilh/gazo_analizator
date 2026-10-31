@@ -48,3 +48,10 @@ Latest completed physical-layout checks before the trace regression was added:
 - Preliminary FreeCAD FCStd, STEP and STL exports were generated in an earlier model build. Their geometry and fit still require manual review against the selected components.
 
 Do not generate manufacturing files from this draft. The native schematic/ERC/netlist parity, exact component pinouts and footprints, copper routing and physical fit checks remain open.
+
+
+## Проектная схема Э3 по ЕСКД
+
+Проектная электрическая принципиальная схема CH₄ оформляется отдельным комплектом и не смешивается с транскрипцией Original 2022. Проверяемые критерии оформления, электрической топологии, ERC и выдаваемых артефактов находятся в [критериях приёмки Э3](project_modification_eskd/acceptance_criteria.md).
+
+Перед переносом экспериментальной компоновки в репозиторий необходимо перенести её исходный генератор, эталонную таблицу и локальные результаты KiCad. До этого локальный PASS не является воспроизводимой проверкой из текущего Git-состояния. Все результаты остаются **PRELIMINARY / NOT FOR FABRICATION**.
