@@ -9,10 +9,11 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/E3-APPROVED-18794E?style=flat-square" alt="E3 approved">
-  <img src="https://img.shields.io/badge/ERC-0_ERRORS-18794E?style=flat-square" alt="ERC zero errors">
+  <img src="https://img.shields.io/badge/ERC-0_ERRORS%20%7C%2018_WARNINGS-18794E?style=flat-square" alt="ERC zero errors and 18 warnings">
   <img src="https://img.shields.io/badge/PCB-NOT_STARTED-64748B?style=flat-square" alt="PCB not started">
   <img src="https://img.shields.io/badge/RPZ-IN_PROGRESS-D97706?style=flat-square" alt="RPZ in progress">
   <img src="https://img.shields.io/badge/DOCUMENTATION-RU-3157A5?style=flat-square" alt="Russian documentation">
+  <a href="docs/PROJECT_TAGS.md"><img src="https://img.shields.io/badge/STATUS_TAGS-DEFINED-3157A5?style=flat-square" alt="Project status tags"></a>
 </p>
 
 ---
@@ -20,6 +21,19 @@
 ## О проекте
 
 Проект объединяет электрическую схему, выбор элементной базы, электрические и тепловые расчёты, разработку печатных плат и корпуса, а также расчётно-пояснительную записку. Документация ведётся как инженерный комплект с прослеживаемыми исходными данными, ограничениями моделей и статусами проверок.
+
+## Утверждённая электрическая схема E3
+
+![APPROVED](https://img.shields.io/badge/APPROVED-18794E?style=flat-square)
+
+<p align="center">
+  <img src="docs/figures/e3_approved_topology.svg" alt="Функционально-связевое представление утверждённой E3 по XML-netlist" width="100%">
+</p>
+
+<sub>Визуализация топологии по утверждённому XML-netlist. Она не заменяет исходный лист KiCad и не является чертежом печатной платы.</sub>
+
+**Первоисточники:** [схема KiCad E3](cad/project_modification/gost_e3_final/gazo_analizator_E3_GOST_itog.kicad_sch) · [паспорт утверждённой редакции](cad/project_modification/gost_e3_final/APPROVED_BASELINE.md) · [XML-netlist](cad/project_modification/gost_e3_final/reports/kicad10/netlist_current.xml) · [полная карта 15 сетей](docs/figures/e3_approved_netlist_map.md) · [ERC](cad/project_modification/gost_e3_final/reports/kicad10/erc_current.rpt) · [Git tag E3](https://github.com/valuncilh/gazo_analizator/tree/gost-e3-approved-2026-11-01)
+
 
 <p align="center">
   <img src="docs/figures/joyit_sen_mq4_v1_module.jpg" alt="Сенсорный модуль Joy-IT SEN-MQ4-V2, позиция A1 утверждённой схемы E3" width="420">
@@ -34,6 +48,7 @@
 | Посмотреть состояние работ | [Карта прогресса](docs/project_progress_map.md) · [визуальная карта SVG](docs/project_progress_map.svg) |
 | Изучить расчётно-пояснительную записку | [Структура и материалы РПЗ](docs/rpz/README.md) |
 | Открыть стандарт оформления документации | [Documentation Style Guide](docs/DOCUMENTATION_STYLE.md) |
+| Разобраться в статусных метках | [Теги и статусы материалов](docs/PROJECT_TAGS.md) |
 | Посмотреть графики и иллюстрации | [Каталог изображений](docs/figures/README.md) |
 | Проверить состав документации | [Реестр документов](docs/document_register.md) |
 | Изучить исходные требования | [Техническое задание](requirements/technical_assignment_draft.md) · [матрица верификации](requirements/verification_matrix.md) |
@@ -71,14 +86,44 @@
 
 ## Расчётные материалы и графики
 
-Ниже приведены действующие параметрические графики теплового раздела. Они показывают чувствительность расчётной модели и не являются результатами измерения готового корпуса.
+### Тепловые расчёты
+
+![CURRENT CALCULATION](https://img.shields.io/badge/CURRENT_CALCULATION-3157A5?style=flat-square)
+
+Параметрическая зависимость перегрева и номограмма естественной конвекции построены по расчётным моделям главы 6. Это не измерения готового корпуса.
 
 <p align="center">
   <img src="docs/rpz/thermal_sensitivity.svg" alt="Параметрическая зависимость перегрева от эквивалентного теплового сопротивления" width="48%">
-  <img src="docs/rpz/natural_convection_nomogram.svg" alt="Номограмма естественной конвективной теплоотдачи для вертикальной поверхности по Churchill–Chu" width="48%">
+  <img src="docs/rpz/natural_convection_nomogram.svg" alt="Номограмма коэффициента естественной конвекции по Churchill–Chu" width="48%">
 </p>
 
-Подробная методика, исходные допущения и ограничения приведены в [разделе 6 РПЗ](docs/rpz/06_thermal_model_and_sensitivity.md).
+### Исследовательские SPICE-графики
+
+![SPICE MODEL](https://img.shields.io/badge/SPICE_MODEL-D97706?style=flat-square)
+
+Графики построены по сохранённым ngspice-логам. Они отражают чувствительность упрощённых моделей, а не подтверждённые характеристики физического сенсора или готового изделия.
+
+<p align="center">
+  <img src="spice/graphs/r1_pullup_reset_sensitivity.svg" alt="Чувствительность напряжения RESET к R1 и оценочному BF транзистора" width="48%">
+  <img src="spice/graphs/r1_pullup_sink_current.svg" alt="Расчётный ток, который должен поглощать DOUT в сценарии OC LOW" width="48%">
+</p>
+
+<p align="center">
+  <img src="spice/graphs/mq4_ratio_aout_transfer.svg" alt="Исследовательская модель отношения Rs/R0 к напряжению AOUT" width="70%">
+</p>
+
+Ограничения и исходные логи: [каталог SPICE-графиков](spice/graphs/README.md). Полный каталог инженерных схем, графиков и исторических изображений: [docs/figures](docs/figures/README.md).
+
+### Предварительная компоновка
+
+![PRELIMINARY](https://img.shields.io/badge/PRELIMINARY-D97706?style=flat-square)
+![NOT FOR FABRICATION](https://img.shields.io/badge/NOT_FOR_FABRICATION-B91C1C?style=flat-square)
+
+<p align="center">
+  <img src="cad/placement/e3_placement_zones.svg" alt="Концептуальные зоны размещения основной платы E3, не в масштабе" width="86%">
+</p>
+
+Геометрия платы и координаты компонентов не зафиксированы. Это не PCB и не результат DRC. Предварительные конструктивные листы и исторические схемы собраны в [каталоге изображений](docs/figures/README.md).
 
 ## Статусы и границы достоверности
 
