@@ -3,7 +3,7 @@
 **Дата актуализации:** 01.11.2026  
 **Рабочая ветка:** analysis/vendor-behavioral-reconciliation  
 **Электрическая база:** gost-e3-approved-2026-11-01, коммит 683e53410de5f1a960c9e060061119f843cc2c51.  
-**Статус:** конструктив выбран; физическая спецификация и часть footprint-кандидатов подготовлены. Трассировка и выпуск в производство ещё не выполнены.
+**Статус:** конструктивная архитектура и документальные MPN/footprint-кандидаты подготовлены. Реализация PCB и полная CAD-увязка ещё не выполнены. Физическое изготовление, закупка, сборка и лабораторные измерения не входят в текущий объём.
 
 ## 1. Решения пользователя
 
@@ -15,7 +15,7 @@
 | Корпус | настольный |
 | Питание | USB 5 В |
 | Габариты | оптимизировать по компоновке |
-| Назначение | реальное изготовление + курсовая документация |
+| Назначение | проектная CAD-конструкция и курсовая документация без физического изготовления |
 | E3 | сохранить неизменной |
 
 ## 2. Неизменяемая схема E3
@@ -29,7 +29,7 @@
 
 ## 3. Сенсор A1
 
-Пользователь подтвердил Joy-IT SEN-MQ4-V2. Amperka AMP-B052 исключён из текущей конструкции. A1 имеет VCC, DOUT, AOUT и GND; 4-контактный кабель подключается к Molex PicoBlade 53261-0471. Pin 1 и порядок жил проверить прозвонкой на физическом модуле. DOUT active-low — рабочая гипотеза по общему руководству Joy-IT, не гарантированный параметр конкретной ревизии V2. Допустимый ток DOUT не опубликован, проверить измерением.
+Пользователь подтвердил Joy-IT SEN-MQ4-V2. Amperka AMP-B052 исключён из текущей конструкции. A1 имеет VCC, DOUT, AOUT и GND; 4-контактный кабель подключается к Molex PicoBlade 53261-0471. Доступный паспорт не содержит однозначной нумерации физических контактов Molex относительно VCC/DOUT/AOUT/GND. Pin mapping и ориентация жгута остаются TBC до нахождения номерного чертежа. DOUT active-low — гипотеза по общему руководству Joy-IT, не гарантированный параметр конкретной ревизии V2. Допустимый ток DOUT не опубликован и документально не подтверждён.
 
 По механическому чертежу SEN-MQ4-V2 плата около 25 × 35 мм, четыре отверстия Ø2.9 mm с шагом18.5 ×28.5 mm, общий габарит 41 ×25 ×21 mm. Модуль крепить отдельно от main PCB, не нагружать кабелем.
 
@@ -41,26 +41,26 @@ Footprint register: cad/footprint_selection_2026-11-01.md. Пользовате�
 
 ## 5. E4 USB-C power entry
 
-USB-C не добавляется скрытыми цепями в E3. Отдельная плата E4: GCT USB4105-GF-A, Rd 5.1k на CC1/CC2, TVS, eFuse/PTC, выход защищённых +5V/GND через Molex PicoBlade 53261-0271 на XS1. Защита и лимит тока будут выбраны после измерения cold-start/warm-up/steady/alarm currents. До измерений не назначать eFuse/PTC.
+USB-C не добавляется скрытыми цепями в E3. Отдельная плата E4: GCT USB4105-GF-A, Rd 5.1k на CC1/CC2, TVS, eFuse/PTC, выход защищённых +5V/GND через Molex PicoBlade 53261-0271 на XS1. Защита и лимит тока должны обосновываться по гарантированным паспортным данным и worst-case расчёту. Максимальный полный ток SEN-MQ4-V2 не опубликован. Физические измерения не входят в проект, поэтому F1 и доказательство лимита 300 mA могут остаться TBC/BLOCKED.
 
 ## 6. Физические компоненты и риски
 
-- DA1: TI NE555P PDIP-8, Package_DIP:DIP-8_W7.62mm, коммерческий диапазон 0…+70 °C. Проверить требования по температуре, иначе выбрать расширенный аналог без изменения netlist.
-- VT1: КТ3102Б без суффикса М — металлостеклянный корпус с гибкими выводами. Запрещено переносить старый KT-26/TO-92 footprint. Footprint не создан до измерения фактических выводов.
-- HA1: Ningbo Kepo HCM1206X, drawing OEM2690R. Model-specific OEM2690R gives 40mA at 6V and 4…8V, while the general HCM12X series sheet gives 30mA at 6V and 4…7V. Until the supplier confirms the delivered variant, use 40mA for worst-case current, voltage intersection 4…7V and temperature intersection −25…+70°C. Verify positive lead against the golden + mark on sample.
+- DA1: TI NE555P PDIP-8, Package_DIP:DIP-8_W7.62mm, рабочий диапазон 0…+70 °C покрывает утверждённые +10…+35 °C. В отдельной реализации сверить pin numbering symbol NE555D и physical NE555P. Утверждённую E3 не менять.
+- VT1: КТ3102Б без суффикса М — металлостеклянный корпус с гибкими выводами. Для семейства найден drawing KT-1-7, достаточный для подготовки drawing-derived footprint. Старый KT-26/TO-92 footprint запрещён. Координаты pad 1=B, 2=C, 3=E необходимо перенести из заводского чертежа и перепроверить.
+- HA1: Ningbo Kepo HCM1206X, drawing OEM2690R. Drawing specifies 40 mA at 6 V, 4…8 V and −25…+70 °C. The general HCM12X family sheet conflicts on current and voltage. For conservative design retain 40 mA and 4…7 V. Physical pin corresponding to the golden + mark is not unambiguously identified in available documentation and remains TBC.
 - SA1: NKK AS11AP, SPST ON-NONE-OFF, straight PC terminals. AS11 соединяет terminals 3-1, terminal2 отсутствует. Custom pad1/2 correspond to physical1/3. Проверить ориентацию actuator и посадку.
 - Пассивы, LED и диод: кандидаты и MPN в реестре footprints. Ток LED/R6/R7 проверить по реальному UOH таймера.
 
 ## 7. USB-C питание и токовый бюджет
 
-Целевое ограничение 300mA сохраняется, пока измерения не подтвердят его достижимость. SEN-MQ4-V2 current max в паспорте не опубликован. HCM1206X specific sheet states max rated 40mA at6V, not generic 30mA. Измерить ток датчика при старте/прогреве/установившемся режиме и полный ток в тревоге с HA1 и HL1/HL2. Выбрать защиту E4 после этих данных.
+Целевое ограничение 300 mA сохраняется как проектное требование. Максимальный полный ток SEN-MQ4-V2 в доступном паспорте не указан. Физические измерения не входят в объём проекта. HCM1206X OEM2690R задаёт 40 mA при 6 V. Для E4 требуется worst-case расчёт по документированным верхним пределам. Если максимальный ток A1 остаётся неизвестным, выбор F1 и доказательство лимита 300 mA остаются BLOCKED/TBC.
 
 ## 8. Статус ворот
 
 | Gate | Условие | Статус |
 |---|---|---|
 | G0 | Пользовательские требования | PASS |
-| G1 | Joy-IT module selected | PASS по выбору; pin map физически не проверен |
+| G1 | Joy-IT module selected | PASS по выбору модели; Molex pin mapping TBC по доступной документации |
 | G2 | E4 USB-C architecture | PARTIAL; protection/current budget open |
 | G3 | MPN and footprint candidates | PARTIAL; KT3102B, DA1 temp range, sample checks open |
 | G4 | All library footprints opened/checked in KiCad 10 | NOT STARTED |
@@ -70,15 +70,15 @@ USB-C не добавляется скрытыми цепями в E3. Отде�
 
 ## 9. Правило выпуска
 
-Не редактировать утверждённую E3. E4 оформить отдельной схемой и PCB. Сначала закрыть точные MPN/pinout/footprints, затем placement and routing. Не выпускать Gerber/CPL/BOM до KiCad 10 validation, DRC, физической посадки, электрического и теплового контроля.
+Не редактировать утверждённую E3. E4 оформить отдельной схемой и PCB. Сначала закрыть точные MPN/pinout/footprints, затем placement and routing. В текущем объёме производственное изготовление не выполняется. Gerber/Drill/BOM/CPL могут формироваться только как проектные CAD-артефакты после KiCad 10 validation, DRC и CAD-проверки механических зазоров. Маркировать PRELIMINARY / NOT FOR FABRICATION. Физическая посадка и аппаратная проверка не заявляются.
 
 
 ## 10. Уточнение HA1 и физической элементной базы
 
-Для HA1 выбран конкретный документированный изготовитель: Ningbo Kepo Electronics, HCM1206X, drawing OEM2690R. Спецификация задаёт 6 V rated, 4…8 V operating, maximum rated current 40 mA at 6 V, SPL 88 dB/10 cm, Ø12 × 9.5 mm body and 7.6 ±0.2 mm lead pitch. Этот паспорт точнее общего семейного каталога, где для иных вариантов HCM12X встречается предел 30 mA. Для токового worst-case использовать 40 mA до измерения при 5 V. HCM plus mark is printed on the upper face; actual positive lead must be confirmed on the received unit.
+Для HA1 выбран конкретный документированный изготовитель: Ningbo Kepo Electronics, HCM1206X, drawing OEM2690R. Спецификация задаёт 6 V rated, 4…8 V operating, maximum rated current 40 mA at 6 V, SPL 88 dB/10 cm, Ø12 × 9.5 mm body and 7.6 ±0.2 mm lead pitch. Этот паспорт точнее общего семейного каталога, где для иных вариантов HCM12X встречается предел 30 mA. Для консервативного токового расчёта использовать 40 mA при 6 V как паспортный номинальный максимум. Доступный drawing не позволяет однозначно определить, какой физический вывод соответствует золотой метке «+», поэтому полярность остаётся TBC.
 
 DA1 candidate is TI NE555P PDIP-8, 0…+70 °C. If the final environmental requirement is wider, the footprint remains DIP-8 but the MPN must be reconsidered. The approved E3 schematic is unchanged.
 
 SA1 candidate is NKK AS11AP. According to the NKK Series AS data, AS11 is SPST ON-NONE-OFF and connects physical contacts 3–1. Terminal2 is absent. Two PCB pads are mapped to physical terminals 1 and 3.
 
-KT3102Б is the metal-glass type with flexible leads, not KT3102БМ plastic type. No PCB footprint is assigned until the physical leads and top-view orientation are measured.
+KT3102Б is the metal-glass type with flexible leads, not KT3102БМ plastic type. PCB footprint ещё не создан. Для текущего CAD-only проекта координаты и ориентацию выводов следует получить транскрипцией заводского чертежа, без требования физического образца.
