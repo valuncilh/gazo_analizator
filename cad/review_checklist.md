@@ -100,6 +100,7 @@ The current PCB is intentionally unrouted. Its DRC report is diagnostic only. No
 - [x] Record A1.3 /AOUT as intentional isolated pad.
 - [x] Record C3.2/SA1.2 as a separate net, not Earth.
 - [x] Add XML blob-locked netlist audit and pad-to-net CSV generator.
+- [x] Commit 47-row pad-to-net map generated from the approved XML.
 - [ ] Run `python3 cad/scripts/verify_e3_netlist.py --write-csv` locally.
 - [ ] Close VT1 exact lead coordinates and create the matching THT footprint.
 - [ ] Load all assigned footprints in KiCad 10.0.7 and run footprint checks.
