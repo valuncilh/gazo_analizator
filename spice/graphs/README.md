@@ -45,3 +45,15 @@ python3 run_r1_sweep.py
 ## Другие графические SPICE-материалы
 
 Исторические графики ранней архитектуры (Amperka AMP-B052, TLV7041-Q1, TLC555, VT2/R9) оставлены в [каталоге иллюстраций](../../docs/figures/README.md) под меткой HISTORICAL. Они не являются результатами моделирования утверждённой E3.
+
+## 4. Графики, ожидающие исходные временные ряды
+
+В репозитории также есть plotter-скрипты для других сценариев, но их исходные массивы .dat в текущей ветке не сохранены. Поэтому соответствующие выходные графики здесь не публикуются как будто они уже проверены:
+
+| Скрипт | Требуемые данные | Ожидаемый график |
+|---|---|---|
+| spice/plot_bode.py | spice/bode_results.dat | spice/bode_linearized.png |
+| spice/plot_model_comparison.py | spice/model_comparison_behavioral.dat, spice/model_comparison_vendor.dat | spice/model_comparison_overlay.png, spice/model_comparison_branch_currents.png |
+| spice/plot_results.py | spice/spice_chain_results.dat | spice/spice_chain_plots.png |
+
+Текстовый протокол spice/model_comparison_2026-10-25.md содержит численные результаты и ограничения сравнения, но не заменяет исходные временные ряды для восстановления графиков. После добавления исходных .dat эти графики нужно построить штатными скриптами и добавить в реестр с точными источниками.
