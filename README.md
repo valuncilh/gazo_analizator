@@ -53,6 +53,7 @@
 | Проверить состав документации | [Реестр документов](docs/document_register.md) |
 | Изучить исходные требования | [Техническое задание](requirements/technical_assignment_draft.md) · [матрица верификации](requirements/verification_matrix.md) |
 | Проверить компонентную базу | [Реестр MPN и footprints](cad/footprint_selection_2026-11-01.md) · [документальный аудит E3/E4](cad/footprint_audit_2026-11-02.md) |
+| Проверить расчёты текущей конфигурации | [A1 Joy-IT V2](calculations/mq4_module_check_joyit_v2.md) · [массогабариты E3/E4](calculations/mass_gabarit_joyit_e3.md) · [надёжность](calculations/reliability_joyit_e3_preliminary.md) · [токовый бюджет](calculations/power_budget_joyit_e3.md) · [тепловая оценка](calculations/thermal_joyit_e3.md) |
 | Открыть реализационную копию E3 | [KiCad implementation scaffold](cad/kicad/e3_project/README.md) · [проверка базы и назначений](cad/scripts/verify_e3_implementation.py) |
 | Найти нормативную базу и правила РПЗ | [Методики МАИ](docs/course_acceptance/README.md) · [контрольный лист оформления](requirements/report_formatting.md) |
 | Проследить историю решений | [Инженерный журнал](docs/engineering_log_2026-11-02.md) · [индекс архива](docs/ARCHIVE_INDEX.md) |
