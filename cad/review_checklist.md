@@ -76,3 +76,18 @@ The current PCB is intentionally unrouted. Its DRC report is diagnostic only. No
 - [ ] Measure KT3102B real lead locations and map pin1=B, pin2=C, pin3=E.
 - [ ] Confirm DA1 temperature range is acceptable.
 - [ ] Measure HA1 current and LED currents with actual DA1 output level.
+
+
+## Approved E3 topology and placement plan — 01.11.2026
+
+- [x] Export/freeze the approved E3 XML-netlist.
+- [x] Map all 15 nets and 47 pin nodes to their component pads.
+- [x] Record the separate A1.3 /AOUT measurement net.
+- [x] Record the isolated C3.2/SA1.2 network and prohibit accidental GND/VCC tie.
+- [x] Define placement zones and routing priority for E3.
+- [x] Add an XML-netlist verifier with an explicit frozen connectivity reference.
+- [ ] Generate the actual E3 PCB placement from the verified footprint register.
+- [ ] Validate all 19 footprints and 47 pad mappings in KiCad 10.0.7.
+- [ ] Run native DRC and fix all unconnected items.
+- [ ] Route E3 and inspect copper/return paths manually.
+- [ ] Run netlist parity again after routing.

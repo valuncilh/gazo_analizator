@@ -68,3 +68,12 @@ Do not generate manufacturing files from this draft. The native schematic/ERC/ne
 The user confirmed Joy-IT SEN-MQ4-V2. The approved E3 schematic remains unchanged. The main PCB uses Molex PicoBlade 53261-0471 for A1 and 53261-0271 for XS1, with pin order to be checked on physical samples. USB-C is on a separate two-layer E4 power-entry PCB. Current footprint selections and open physical-part blockers are documented in [footprint_selection_2026-11-01.md](footprint_selection_2026-11-01.md) and [power_input_usb/README.md](power_input_usb/README.md).
 
 A preliminary FreeCAD sensor envelope macro is provided at `freecad/build_joyit_sen_mq4_v2_envelope.FCMacro`. It has not yet been executed or checked in FreeCAD. The main enclosure must be designed after the actual E3 and E4 PCB layouts and the sensor module envelope have been verified.
+
+
+## Frozen E3 PCB routing basis — 01.11.2026
+
+- Exact net-to-pin map: [`e3_netlist_map_2026-11-01.md`](e3_netlist_map_2026-11-01.md)
+- Placement and routing priority: [`placement_plan_joyit_e3_2026-11-01.md`](placement_plan_joyit_e3_2026-11-01.md)
+- Netlist regression: `python3 cad/scripts/verify_e3_netlist.py`
+
+These files describe the approved E3 logical topology only. They do not claim that the board has been placed, routed, or DRC-checked.
