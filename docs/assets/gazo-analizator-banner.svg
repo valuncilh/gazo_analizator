@@ -1,49 +1,164 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="420" viewBox="0 0 1600 420" role="img" aria-labelledby="title desc">
-  <title id="title">Газо-анализатор метана — инженерный проект</title>
-  <desc id="desc">Визуальная шапка документации проекта бытового сигнализатора утечки метана. Абстрактные линии измерительного сигнала и химическая формула CH4.</desc>
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#101b2d"/>
-      <stop offset="0.58" stop-color="#183653"/>
-      <stop offset="1" stop-color="#0f5862"/>
-    </linearGradient>
-    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#56d6c8"/>
-      <stop offset="1" stop-color="#8ee4bc"/>
-    </linearGradient>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M40 0H0V40" fill="none" stroke="#b7d8e8" stroke-opacity=".09" stroke-width="1"/>
-      <circle cx="0" cy="0" r="1.5" fill="#b7d8e8" fill-opacity=".18"/>
-    </pattern>
-  </defs>
-  <rect width="1600" height="420" rx="28" fill="url(#bg)"/>
-  <rect width="1600" height="420" rx="28" fill="url(#grid)"/>
-  <path d="M0 340 C240 300 340 370 560 330 S900 250 1120 300 S1390 355 1600 285" fill="none" stroke="#56d6c8" stroke-opacity=".13" stroke-width="2"/>
-  <path d="M0 365 C230 325 380 390 600 350 S920 275 1120 325 S1390 380 1600 310" fill="none" stroke="#8ee4bc" stroke-opacity=".12" stroke-width="2"/>
-  <g transform="translate(1120 72)" fill="none" stroke="url(#accent)" stroke-width="3">
-    <circle cx="170" cy="132" r="86" stroke-opacity=".72"/>
-    <circle cx="170" cy="132" r="112" stroke-opacity=".28"/>
-    <circle cx="170" cy="132" r="138" stroke-opacity=".14"/>
-    <path d="M170 20V244M58 132H282" stroke-opacity=".34"/>
-    <path d="M170 132 L245 76 L310 112" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="170" cy="132" r="8" fill="#8ee4bc" stroke="none"/>
-    <circle cx="245" cy="76" r="6" fill="#56d6c8" stroke="none"/>
-    <circle cx="310" cy="112" r="6" fill="#56d6c8" stroke="none"/>
-  </g>
-  <g transform="translate(1335 115)">
-    <rect width="170" height="112" rx="18" fill="#ffffff" fill-opacity=".08" stroke="#a9e9df" stroke-opacity=".35"/>
-    <text x="85" y="68" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="46" font-weight="700" fill="#effffb">CH₄</text>
-    <text x="85" y="91" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" letter-spacing="2" fill="#a9e9df">METHANE</text>
-  </g>
-  <g transform="translate(92 96)">
-    <rect width="66" height="6" rx="3" fill="url(#accent)"/>
-    <text x="0" y="78" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="54" font-weight="750" letter-spacing="2" fill="#ffffff">GAZO ANALIZATOR</text>
-    <text x="2" y="126" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="21" font-weight="500" letter-spacing="4" fill="#b9d8e7">ENGINEERING PROJECT · MAI</text>
-    <text x="2" y="188" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" fill="#d4e6ee">Бытовой сигнализатор утечки метана</text>
-    <text x="2" y="218" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" fill="#d4e6ee">Электроника · расчёты · печатные платы · корпус · документация</text>
-  </g>
-  <g transform="translate(92 350)" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" letter-spacing="2" fill="#a9c9d7">
-    <text x="0" y="0">SCHEMATIC E3 / DOCUMENTATION / ENGINEERING REVIEW</text>
-    <path d="M590 -5 H980" stroke="url(#accent)" stroke-width="2" stroke-linecap="round"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="440" viewBox="0 0 1600 440" role="img" aria-labelledby="title desc">
+<title id="title">Газоанализатор — курсовой проект МАИ</title>
+<desc id="desc">Инженерная композиция в фирменных цветах МАИ. Слева название проекта чертёжным начертанием. Справа отдельно показана молекулярная модель метана и химическая формула CH4.</desc>
+<rect width="1600" height="440" fill="#FFFFFF"/>
+<rect x="0" y="0" width="18" height="440" fill="#0271FF"/>
+<path d="M78 28 H842" stroke="#0271FF" stroke-width="3"/>
+<path d="M78 410 H842" stroke="#E8EEF6" stroke-width="2"/>
+<g transform="translate(92.00 52.00) scale(0.43333)" fill="none" stroke="#0271FF" stroke-width="6.000" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M0 60 V0 L24 32 L48 0 V60" transform="translate(0.00 0)"/>
+<path d="M0 60 L18 0 L36 60 M7 38 H29" transform="translate(60.00 0)"/>
+<path d="M0 60 V0 L36 60 V0" transform="translate(108.00 0)"/>
+</g>
+<g transform="translate(236.00 45.00) scale(0.25000)" fill="none" stroke="#5A6472" stroke-width="6.000" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M0 60 V0 L24 32 L48 0 V60" transform="translate(0.00 0)"/>
+<path d="M18 0 C7 0 0 9 0 30 C0 51 7 60 18 60 C29 60 36 51 36 30 C36 9 29 0 18 0 Z" transform="translate(60.00 0)"/>
+<path d="M36 8 C28 0 9 0 3 13 C-1 23 -1 37 3 47 C9 60 28 60 36 52" transform="translate(108.00 0)"/>
+<path d="M0 0 V60 M36 0 L0 30 L36 60" transform="translate(156.00 0)"/>
+<path d="M18 0 C7 0 0 9 0 30 C0 51 7 60 18 60 C29 60 36 51 36 30 C36 9 29 0 18 0 Z" transform="translate(204.00 0)"/>
+<path d="M0 0 V60 H21 C40 60 40 30 21 30 H0 M21 30 C38 30 38 0 21 0 H0" transform="translate(252.00 0)"/>
+<path d="M36 8 C28 0 9 0 3 13 C-1 23 -1 37 3 47 C9 60 28 60 36 52" transform="translate(300.00 0)"/>
+<path d="M0 0 V60 M36 0 L0 30 L36 60" transform="translate(348.00 0)"/>
+<path d="M0 60 V0 L36 60 V0" transform="translate(396.00 0)"/>
+<path d="M0 60 V10 L36 60 V10 M10 0 Q18 -12 26 0" transform="translate(444.00 0)"/>
+<path d="M0 60 L18 0 L36 60 M7 38 H29" transform="translate(516.00 0)"/>
+<path d="M0 0 V60 H21 C40 60 40 30 21 30 H0 M21 30 C38 30 38 0 21 0 H0" transform="translate(564.00 0)"/>
+<path d="M0 60 V0 L36 60 V0" transform="translate(612.00 0)"/>
+<path d="M0 60 L18 0 L36 60 M7 38 H29" transform="translate(660.00 0)"/>
+<path d="M0 0 V60 H30 V0 M30 60 L30 70" transform="translate(708.00 0)"/>
+<path d="M0 60 V0 L36 60 V0" transform="translate(756.00 0)"/>
+<path d="M18 0 C7 0 0 9 0 30 C0 51 7 60 18 60 C29 60 36 51 36 30 C36 9 29 0 18 0 Z" transform="translate(804.00 0)"/>
+<path d="M0 0 V60 M36 0 V60 M0 30 H36" transform="translate(852.00 0)"/>
+<path d="M0 0 V60 M36 0 V60 M0 30 H36" transform="translate(900.00 0)"/>
+<path d="M0 0 V60 M0 30 H18 C34 30 34 60 18 60 H0 M46 0 V60" transform="translate(948.00 0)"/>
+<path d="M0 60 V10 L36 60 V10 M10 0 Q18 -12 26 0" transform="translate(1008.00 0)"/>
+<path d="M0 60 V0 L36 60 V0" transform="translate(1080.00 0)"/>
+<path d="M0 0 V60 M36 0 V60 M0 30 H36" transform="translate(1128.00 0)"/>
+<path d="M36 8 C28 0 9 0 3 13 C-1 23 -1 37 3 47 C9 60 28 60 36 52" transform="translate(1176.00 0)"/>
+<path d="M0 0 H36 M18 0 V60" transform="translate(1224.00 0)"/>
+<path d="M0 60 V0 L36 60 V0" transform="translate(1272.00 0)"/>
+<path d="M0 0 H36 M18 0 V60" transform="translate(1320.00 0)"/>
+<path d="M0 0 L18 30 L36 0 M18 30 L8 60" transform="translate(1368.00 0)"/>
+<path d="M0 0 H36 M18 0 V60" transform="translate(1416.00 0)"/>
+</g>
+<g transform="translate(92.00 120.00) scale(1.10000)" fill="none" stroke="#232323" stroke-width="6.000" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M0 0 H36 V60" transform="translate(0.00 0)"/>
+<path d="M0 60 L18 0 L36 60 M7 38 H29" transform="translate(48.00 0)"/>
+<path d="M2 8 C10 -1 30 -1 35 11 C40 23 31 29 18 30 C31 31 40 37 35 50 C30 63 10 63 2 52" transform="translate(96.00 0)"/>
+<path d="M18 0 C7 0 0 9 0 30 C0 51 7 60 18 60 C29 60 36 51 36 30 C36 9 29 0 18 0 Z" transform="translate(144.00 0)"/>
+<path d="M0 60 L18 0 L36 60 M7 38 H29" transform="translate(192.00 0)"/>
+<path d="M0 0 V60 M36 0 V60 M0 30 H36" transform="translate(240.00 0)"/>
+<path d="M0 60 L18 0 L36 60 M7 38 H29" transform="translate(288.00 0)"/>
+<path d="M0 60 L18 0 L36 60" transform="translate(336.00 0)"/>
+<path d="M0 60 V0 L36 60 V0" transform="translate(384.00 0)"/>
+<path d="M2 8 C10 -1 30 -1 35 11 C40 23 31 29 18 30 C31 31 40 37 35 50 C30 63 10 63 2 52" transform="translate(432.00 0)"/>
+<path d="M0 60 L18 0 L36 60 M7 38 H29" transform="translate(480.00 0)"/>
+<path d="M0 0 H36 M18 0 V60" transform="translate(528.00 0)"/>
+<path d="M18 0 C7 0 0 9 0 30 C0 51 7 60 18 60 C29 60 36 51 36 30 C36 9 29 0 18 0 Z" transform="translate(576.00 0)"/>
+<path d="M0 60 V0 H22 C41 0 41 30 22 30 H0" transform="translate(624.00 0)"/>
+</g>
+<path d="M94 198 H828.0" stroke="#0271FF" stroke-width="4"/>
+<g transform="translate(96.00 245.00) scale(0.50000)" fill="none" stroke="#0271FF" stroke-width="6.000" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M0 0 V60 M36 0 L0 30 L36 60" transform="translate(0.00 0)"/>
+<path d="M0 0 L18 30 L36 0 M18 30 L8 60" transform="translate(48.00 0)"/>
+<path d="M0 60 V0 H22 C41 0 41 30 22 30 H0" transform="translate(96.00 0)"/>
+<path d="M36 8 C28 0 9 0 3 13 C-1 23 -1 37 3 47 C9 60 28 60 36 52" transform="translate(144.00 0)"/>
+<path d="M18 0 C7 0 0 9 0 30 C0 51 7 60 18 60 C29 60 36 51 36 30 C36 9 29 0 18 0 Z" transform="translate(192.00 0)"/>
+<path d="M0 0 V60 H21 C40 60 40 30 21 30 H0 M21 30 C38 30 38 0 21 0 H0" transform="translate(240.00 0)"/>
+<path d="M18 0 C7 0 0 9 0 30 C0 51 7 60 18 60 C29 60 36 51 36 30 C36 9 29 0 18 0 Z" transform="translate(288.00 0)"/>
+<path d="M0 60 V10 L36 60 V10 M10 0 Q18 -12 26 0" transform="translate(336.00 0)"/>
+<path d="M0 60 V0 H36 V60" transform="translate(408.00 0)"/>
+<path d="M0 60 V0 H22 C41 0 41 30 22 30 H0" transform="translate(456.00 0)"/>
+<path d="M18 0 C7 0 0 9 0 30 C0 51 7 60 18 60 C29 60 36 51 36 30 C36 9 29 0 18 0 Z" transform="translate(504.00 0)"/>
+<path d="M36 0 H0 V60 H36 M0 30 H29" transform="translate(552.00 0)"/>
+<path d="M0 0 V60 M36 0 L0 30 L36 60" transform="translate(600.00 0)"/>
+<path d="M0 0 H36 M18 0 V60" transform="translate(648.00 0)"/>
+</g>
+<g transform="translate(96.00 316.00) scale(0.36667)" fill="none" stroke="#232323" stroke-width="6.000" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M0 0 H36 M0 0 V60 H22 C41 60 41 30 22 30 H0" transform="translate(0.00 0)"/>
+<path d="M0 0 V60 M0 30 H18 C34 30 34 60 18 60 H0 M46 0 V60" transform="translate(48.00 0)"/>
+<path d="M0 0 H36 M18 0 V60" transform="translate(108.00 0)"/>
+<path d="M18 0 C7 0 0 9 0 30 C0 51 7 60 18 60 C29 60 36 51 36 30 C36 9 29 0 18 0 Z" transform="translate(156.00 0)"/>
+<path d="M0 0 V60 H21 C40 60 40 30 21 30 H0 M21 30 C38 30 38 0 21 0 H0" transform="translate(204.00 0)"/>
+<path d="M18 0 C7 0 0 9 0 30 C0 51 7 60 18 60 C29 60 36 51 36 30 C36 9 29 0 18 0 Z" transform="translate(252.00 0)"/>
+<path d="M0 60 V10 L36 60 V10 M10 0 Q18 -12 26 0" transform="translate(300.00 0)"/>
+<path d="M36 8 C28 0 9 0 3 13 C-1 23 -1 37 3 47 C9 60 28 60 36 52" transform="translate(372.00 0)"/>
+<path d="M0 60 V0 L36 60 V0" transform="translate(420.00 0)"/>
+<path d="M0 0 H36 V60" transform="translate(468.00 0)"/>
+<path d="M0 0 V60 M36 0 V60 M0 30 H36" transform="translate(516.00 0)"/>
+<path d="M0 60 L18 0 L36 60 M7 38 H29" transform="translate(564.00 0)"/>
+<path d="M0 60 L18 0 L36 60" transform="translate(612.00 0)"/>
+<path d="M0 60 V0 L36 60 V0" transform="translate(660.00 0)"/>
+<path d="M2 8 C10 -1 30 -1 35 11 C40 23 31 29 18 30 C31 31 40 37 35 50 C30 63 10 63 2 52" transform="translate(708.00 0)"/>
+<path d="M0 60 L18 0 L36 60 M7 38 H29" transform="translate(756.00 0)"/>
+<path d="M0 0 H36 M18 0 V60" transform="translate(804.00 0)"/>
+<path d="M18 0 C7 0 0 9 0 30 C0 51 7 60 18 60 C29 60 36 51 36 30 C36 9 29 0 18 0 Z" transform="translate(852.00 0)"/>
+<path d="M0 60 V0 H22 C41 0 41 30 22 30 H0" transform="translate(900.00 0)"/>
+<path d="M0 0 L18 30 L36 0 M18 30 L8 60" transform="translate(972.00 0)"/>
+<path d="M0 0 H36 M18 0 V60" transform="translate(1020.00 0)"/>
+<path d="M36 0 H0 V60 H36 M0 30 H29" transform="translate(1068.00 0)"/>
+<path d="M0 0 V30 H36 V0 M36 30 V60" transform="translate(1116.00 0)"/>
+<path d="M0 0 V60 M36 0 L0 30 L36 60" transform="translate(1164.00 0)"/>
+<path d="M0 60 V0 L36 60 V0" transform="translate(1212.00 0)"/>
+<path d="M0 60 V0 L24 32 L48 0 V60" transform="translate(1284.00 0)"/>
+<path d="M36 0 H0 V60 H36 M0 30 H29" transform="translate(1344.00 0)"/>
+<path d="M0 0 H36 M18 0 V60" transform="translate(1392.00 0)"/>
+<path d="M0 60 L18 0 L36 60 M7 38 H29" transform="translate(1440.00 0)"/>
+<path d="M0 0 V60 M36 0 V60 M0 30 H36" transform="translate(1488.00 0)"/>
+<path d="M0 60 L18 0 L36 60 M7 38 H29" transform="translate(1536.00 0)"/>
+</g>
+<path d="M900 48 V392" stroke="#E8EEF6" stroke-width="2"/>
+<rect x="948" y="38" width="590" height="364" fill="#F5F8FC" stroke="#E8EEF6" stroke-width="2"/>
+<g transform="translate(1000.00 89.00) scale(0.45000)" fill="none" stroke="#0271FF" stroke-width="6.000" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M0 60 V0 L24 32 L48 0 V60" transform="translate(0.00 0)"/>
+<path d="M36 0 H0 V60 H36 M0 30 H29" transform="translate(60.00 0)"/>
+<path d="M0 0 H36 M18 0 V60" transform="translate(108.00 0)"/>
+<path d="M0 60 L18 0 L36 60 M7 38 H29" transform="translate(156.00 0)"/>
+<path d="M0 0 V60 M36 0 V60 M0 30 H36" transform="translate(204.00 0)"/>
+</g>
+<g transform="translate(1002.00 121.00) scale(0.21667)" fill="none" stroke="#5A6472" stroke-width="6.000" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M0 60 V0 L24 32 L48 0 V60" transform="translate(0.00 0)"/>
+<path d="M18 0 C7 0 0 9 0 30 C0 51 7 60 18 60 C29 60 36 51 36 30 C36 9 29 0 18 0 Z" transform="translate(60.00 0)"/>
+<path d="M0 60 L18 0 L36 60" transform="translate(108.00 0)"/>
+<path d="M36 0 H0 V60 H36 M0 30 H29" transform="translate(156.00 0)"/>
+<path d="M0 0 V60 M36 0 L0 30 L36 60" transform="translate(204.00 0)"/>
+<path d="M0 0 L18 30 L36 0 M18 30 L8 60" transform="translate(252.00 0)"/>
+<path d="M0 60 L18 0 L36 60" transform="translate(300.00 0)"/>
+<path d="M0 60 L18 0 L36 60 M7 38 H29" transform="translate(348.00 0)"/>
+</g>
+<path d="M1224 255 L1224 164" stroke="#0271FF" stroke-width="5" stroke-linecap="round"/>
+<path d="M1224 255 L1139 278" stroke="#0271FF" stroke-width="5" stroke-linecap="round"/>
+<path d="M1224 255 L1309 278" stroke="#0271FF" stroke-width="5" stroke-linecap="round"/>
+<path d="M1224 255 L1224 346" stroke="#0271FF" stroke-width="4" stroke-dasharray="8 8" stroke-linecap="round"/>
+<circle cx="1224" cy="164" r="25" fill="#FFFFFF" stroke="#0271FF" stroke-width="4"/>
+<g transform="translate(1213.20 151.00) scale(0.36667)" fill="none" stroke="#0271FF" stroke-width="6.000" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M0 0 V60 M36 0 V60 M0 30 H36" transform="translate(0.00 0)"/>
+</g>
+<circle cx="1139" cy="278" r="25" fill="#FFFFFF" stroke="#0271FF" stroke-width="4"/>
+<g transform="translate(1128.20 265.00) scale(0.36667)" fill="none" stroke="#0271FF" stroke-width="6.000" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M0 0 V60 M36 0 V60 M0 30 H36" transform="translate(0.00 0)"/>
+</g>
+<circle cx="1309" cy="278" r="25" fill="#FFFFFF" stroke="#0271FF" stroke-width="4"/>
+<g transform="translate(1298.20 265.00) scale(0.36667)" fill="none" stroke="#0271FF" stroke-width="6.000" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M0 0 V60 M36 0 V60 M0 30 H36" transform="translate(0.00 0)"/>
+</g>
+<circle cx="1224" cy="346" r="25" fill="#FFFFFF" stroke="#0271FF" stroke-width="4"/>
+<g transform="translate(1213.20 333.00) scale(0.36667)" fill="none" stroke="#0271FF" stroke-width="6.000" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M0 0 V60 M36 0 V60 M0 30 H36" transform="translate(0.00 0)"/>
+</g>
+<circle cx="1224" cy="255" r="31" fill="#0271FF" stroke="#FFFFFF" stroke-width="4"/>
+<g transform="translate(1213.20 242.00) scale(0.36667)" fill="none" stroke="#FFFFFF" stroke-width="6.000" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M36 8 C28 0 9 0 3 13 C-1 23 -1 37 3 47 C9 60 28 60 36 52" transform="translate(0.00 0)"/>
+</g>
+<path d="M1370 145 V355" stroke="#E8EEF6" stroke-width="2"/>
+<g transform="translate(1400.00 206.00) scale(0.80000)" fill="none" stroke="#0271FF" stroke-width="6.000" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M36 8 C28 0 9 0 3 13 C-1 23 -1 37 3 47 C9 60 28 60 36 52" transform="translate(0.00 0)"/>
+</g>
+<g transform="translate(1438.00 206.00) scale(0.80000)" fill="none" stroke="#0271FF" stroke-width="6.000" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M0 0 V60 M36 0 V60 M0 30 H36" transform="translate(0.00 0)"/>
+</g>
+<g transform="translate(1474.00 230.00) scale(0.45000)" fill="none" stroke="#0271FF" stroke-width="6.000" stroke-linecap="butt" stroke-linejoin="miter">
+<path d="M0 0 L0 30 H36 M28 0 V60" transform="translate(0.00 0)"/>
+</g>
+<path d="M1398 290 H1507" stroke="#0271FF" stroke-width="3"/>
 </svg>
