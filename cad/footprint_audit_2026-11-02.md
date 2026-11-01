@@ -140,4 +140,20 @@ CC1 и CC2 не объединять. USB PD не применяется. Нел
 6. Обновить footprint register и pad-to-net register без изменения утверждённого XML.
 7. Только после этого создавать placement board для E3.
 
+
+## 10. Источники и прослеживаемость
+
+- Joy-IT SEN-MQ4-V2: [страница изделия](https://joy-it.net/en/products/SEN-MQ4-V2), [datasheet EN, 2026-01-15](https://joy-it.net/files/files/Produkte/SEN-MQ4-V2/SEN-MQ4-V2_Datasheet-EN_2026-01-15.pdf).
+- Molex PicoBlade 53261-0471: [официальная страница](https://www.molex.com/en-us/products/part-detail/532610471). 53261-0271: [официальная страница и PDF](https://www.molex.com/en-us/products/part-detail/532610271?display=pdf). Кабельные housings 51021-0400/0200 и female crimp terminal 50058-8000: [каталог Molex PicoBlade](https://www.molex.com/en-us/products/connectors/wire-to-board-connectors/picoblade-connectors).
+- Texas Instruments NE555P: [страница точного исполнения](https://www.ti.com/product/NE555/part-details/NE555P), [datasheet](https://www.ti.com/lit/ds/symlink/ne555.pdf).
+- GCT USB4105-GF-A: [официальная страница и datasheet](https://gct.co/connector/usb4105), [габаритный чертёж](https://gct.co/files/drawings/usb4105.pdf).
+- NKK AS11AP: [страница точного исполнения](https://www.nkkswitches.com/wp-content/themes/impress-blank/search/inc/part.php?part_no=AS11AP), [Series AS datasheet](https://www.nkkswitches.com/pdf/Aslides.pdf).
+- Yageo RC0805FR: [datasheet family](https://yageogroup.com/component-documentation/download/specsheet/RC0805FR-07160KL). Yageo C2 CC0805KRX7R9BB104: [страница компонента](https://www.yageo.com/en/Product/Index?key=CC0805KRX7R9BB104).
+- Multicomp Pro MCGLR16V476M5X11: [каталог производителя/дистрибьютора с datasheet-параметрами](https://cpc.farnell.com/multicomp-pro/mcglr16v476m5x11/capacitor-47uf-16v-radial-105/dp/CA08260).
+- Kingbright WP7083SED/J3 red: [datasheet](https://www.kingbrightusa.com/images/catalog/SPEC/WP7083SED-J3.pdf). WP7083ZGD/G green: [datasheet](https://www.kingbrightusa.com/images/catalog/SPEC/WP7083ZGD-G.pdf).
+- Ningbo Kepo HCM1206X OEM2690R: [model-specific drawing/specification](https://kvarci.ru/files/files/HCM1206X%3DDAP1206X%5BOEM2690%5D.pdf). Различия с общей таблицей HCM12X оставлены в разделе 3 и не скрыты.
+- КТ3102A/Б/В/Д and M suffix variants: [family technical sheet](https://radioizba.ru/cat/PIC/415N0377318.pdf). Дополнительный справочный drawing: [Голомедов и др., «Полупроводниковые приборы. Транзисторы малой мощности», 1989, раздел КТ3102](https://datasheet.datasheetarchive.com/originals/scans/Scans-048/DSAGER000352.pdf). Это справочные/семейные документы, а не паспорт конкретной поставки.
+
+Точные источники для КД510А и согласование корпуса DO-35 с конкретным изготовителем остаются открытыми. До появления однозначного dimensional drawing статус VD1 сохраняется TBC.
+
 **P2 не закрывается, пока все 19 символов не имеют документированного footprint status, pad mapping и понятного ограничения. P3 не начинается до фиксации этого реестра.**
