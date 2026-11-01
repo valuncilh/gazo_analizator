@@ -3,7 +3,7 @@
 **Актуально на:** 02.11.2026  
 **Рабочая ветка:** `analysis/vendor-behavioral-reconciliation`  
 **Базовый commit при открытии этапов 0–1:** `314f8290cacf44b82ffa9761a7be3eaa0d2fd4b1`  
-**Текущий Git HEAD после этапов P0–P1 и фиксации политики веток:** `4b2182c0c3b83b23eb4afb6f6e5356f57984b51c`  
+**Политика веток:** [docs/branch_policy.md](branch_policy.md)  
 **Главная матрица приёмки:** [requirements/verification_matrix.md](../requirements/verification_matrix.md)  
 **Инженерный журнал:** [engineering_log_2026-10-25.md](engineering_log_2026-10-25.md)
 
