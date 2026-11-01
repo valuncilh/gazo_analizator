@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="420" viewBox="0 0 1600 420" role="img" aria-labelledby="title desc">
+  <title id="title">Gazo Analizator — инженерный проект</title>
+  <desc id="desc">Визуальная шапка документации проекта бытового сигнализатора утечки метана. Абстрактные линии измерительного сигнала и химическая формула CH4.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101b2d"/>
+      <stop offset="0.58" stop-color="#183653"/>
+      <stop offset="1" stop-color="#0f5862"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#56d6c8"/>
+      <stop offset="1" stop-color="#8ee4bc"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#b7d8e8" stroke-opacity=".09" stroke-width="1"/>
+      <circle cx="0" cy="0" r="1.5" fill="#b7d8e8" fill-opacity=".18"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="420" rx="28" fill="url(#bg)"/>
+  <rect width="1600" height="420" rx="28" fill="url(#grid)"/>
+  <path d="M0 340 C240 300 340 370 560 330 S900 250 1120 300 S1390 355 1600 285" fill="none" stroke="#56d6c8" stroke-opacity=".13" stroke-width="2"/>
+  <path d="M0 365 C230 325 380 390 600 350 S920 275 1120 325 S1390 380 1600 310" fill="none" stroke="#8ee4bc" stroke-opacity=".12" stroke-width="2"/>
+  <g transform="translate(1120 72)" fill="none" stroke="url(#accent)" stroke-width="3">
+    <circle cx="170" cy="132" r="86" stroke-opacity=".72"/>
+    <circle cx="170" cy="132" r="112" stroke-opacity=".28"/>
+    <circle cx="170" cy="132" r="138" stroke-opacity=".14"/>
+    <path d="M170 20V244M58 132H282" stroke-opacity=".34"/>
+    <path d="M170 132 L245 76 L310 112" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="170" cy="132" r="8" fill="#8ee4bc" stroke="none"/>
+    <circle cx="245" cy="76" r="6" fill="#56d6c8" stroke="none"/>
+    <circle cx="310" cy="112" r="6" fill="#56d6c8" stroke="none"/>
+  </g>
+  <g transform="translate(1335 115)">
+    <rect width="170" height="112" rx="18" fill="#ffffff" fill-opacity=".08" stroke="#a9e9df" stroke-opacity=".35"/>
+    <text x="85" y="68" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="46" font-weight="700" fill="#effffb">CH₄</text>
+    <text x="85" y="91" text-anchor="middle" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="10" letter-spacing="2" fill="#a9e9df">METHANE</text>
+  </g>
+  <g transform="translate(92 96)">
+    <rect width="66" height="6" rx="3" fill="url(#accent)"/>
+    <text x="0" y="78" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="54" font-weight="750" letter-spacing="2" fill="#ffffff">GAZO ANALIZATOR</text>
+    <text x="2" y="126" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="21" font-weight="500" letter-spacing="4" fill="#b9d8e7">ENGINEERING PROJECT · MAI</text>
+    <text x="2" y="188" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" fill="#d4e6ee">Бытовой сигнализатор утечки метана</text>
+    <text x="2" y="218" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" fill="#d4e6ee">Электроника · расчёты · печатные платы · корпус · документация</text>
+  </g>
+  <g transform="translate(92 350)" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" letter-spacing="2" fill="#a9c9d7">
+    <text x="0" y="0">SCHEMATIC E3 / DOCUMENTATION / ENGINEERING REVIEW</text>
+    <path d="M590 -5 H980" stroke="url(#accent)" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg>
