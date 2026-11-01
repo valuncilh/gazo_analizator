@@ -83,7 +83,7 @@ These files describe the approved E3 logical topology only. They do not claim th
 
 The current placement zones and routing priorities derived from the immutable approved XML-netlist are documented in [`placement/e3_placement_plan.md`](placement/e3_placement_plan.md). Conceptual zone diagram: [`placement/e3_placement_zones.svg`](placement/e3_placement_zones.svg).
 
-The netlist audit script is [`scripts/verify_e3_netlist.py`](scripts/verify_e3_netlist.py). Run locally from the repository root with:
+The netlist audit script is [`scripts/verify_e3_netlist.py`](scripts/verify_e3_netlist.py). The 47-row exported [pad-to-net map](project_modification/gost_e3_final/reports/kicad10/e3_pad_net_map.csv) is committed next to the approved KiCad reports. Run the audit locally from the repository root with:
 
 ```fish
 python3 cad/scripts/verify_e3_netlist.py --write-csv
