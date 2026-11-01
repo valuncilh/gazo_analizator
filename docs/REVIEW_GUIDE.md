@@ -1,8 +1,27 @@
 # Навигация по проекту
 
+<p align="center">
+  <img src="assets/gazo-analizator-banner.svg" alt="Gazo Analizator — инженерный проект" width="100%">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/E3-APPROVED-18794E?style=flat-square" alt="E3 approved">
+  <img src="https://img.shields.io/badge/PCB-IN_PROGRESS-64748B?style=flat-square" alt="PCB work in progress">
+  <img src="https://img.shields.io/badge/RPZ-IN_PROGRESS-D97706?style=flat-square" alt="RPZ in progress">
+</p>
+
+> Документы ниже расположены в порядке инженерной проверки: от исходных требований и утверждённой схемы к расчётам, конструкции и итоговой документации. Текущий статус каждого этапа нужно читать вместе с его ограничениями.
+
+
 > Краткий маршрут для преподавателя и рецензента. Документы расположены в порядке, в котором удобно проверять исходные требования, инженерные решения, расчёты и степень готовности конструкции.
 
 ## Кратко об изделии
+
+<p align="center">
+  <img src="figures/joyit_sen_mq4_v1_module.jpg" alt="Сенсорный модуль Joy-IT SEN-MQ4-V2, A1" width="360">
+</p>
+<p align="center"><sub>Изображён только сенсорный модуль A1, не готовое изделие.</sub></p>
+
 
 **Изделие:** бытовой сигнализатор утечки метана (CH₄).  
 **Электрическая база:** утверждённая принципиальная схема Э3 с Joy-IT SEN-MQ4-V2.  
@@ -64,6 +83,12 @@
 - **BLOCKED** — не хватает исходных данных или физической проверки.
 - **NOT STARTED** — работа ещё не выполнена.
 - **HISTORICAL** — материал сохранён для прослеживаемости и не относится к текущей реализации.
+
+## Визуальные и редакционные материалы
+
+- [Каталог иллюстраций и графиков](figures/README.md).
+- [Стандарт оформления Markdown, формул LaTeX и изображений](DOCUMENTATION_STYLE.md).
+- [Правила оформления РПЗ](../requirements/report_formatting.md).
 
 ## Полезные указатели
 
