@@ -31,7 +31,10 @@
 | 10 | [Заключение и открытые вопросы](10_conclusion_and_open_issues.md) |
 | 11 | [Стандарты и источники](11_standards_and_references.md) |
 
-**Визуальные материалы:** [каталог иллюстраций](../figures/README.md).  
+**Тепловые иллюстрации:** [параметрическая характеристика](thermal_sensitivity.svg) · [номограмма естественной конвекции](natural_convection_nomogram.svg).
+**Генераторы:** [тепловая чувствительность](tools/thermal_sensitivity.py) · [номограмма Churchill–Chu](tools/natural_convection_nomogram.py).
+**Единый стандарт Markdown и LaTeX:** [DOCUMENTATION_STYLE.md](../DOCUMENTATION_STYLE.md).
+**Нормативные требования к итоговой РПЗ:** [контрольный лист](../../requirements/report_formatting.md).
 **Единый стандарт Markdown и LaTeX:** [DOCUMENTATION_STYLE.md](../DOCUMENTATION_STYLE.md).  
 **Нормативные требования к итоговой РПЗ:** [контрольный лист](../../requirements/report_formatting.md).
 
@@ -151,6 +154,8 @@
 | [11_standards_and_references.md](11_standards_and_references.md) | Нормативная база и список источников | Проверено на 01.11.2026 |
 | [thermal_sensitivity.svg](thermal_sensitivity.svg) | Иллюстративная параметрическая тепловая характеристика | Не является результатом измерений |
 | [tools/thermal_sensitivity.py](tools/thermal_sensitivity.py) | Генератор графика тепловой чувствительности | Воспроизводимый исходник |
+| [natural_convection_nomogram.svg](natural_convection_nomogram.svg) | Номограмма естественной конвекции по Churchill–Chu | Параметрический расчёт, не измерение |
+| [tools/natural_convection_nomogram.py](tools/natural_convection_nomogram.py) | Генератор номограммы естественной конвекции | Воспроизводимый исходник |
 
 ## 10. Нормативная база
 
