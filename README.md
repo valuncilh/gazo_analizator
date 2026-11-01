@@ -29,7 +29,7 @@
 Нативный редактируемый лист KiCad: [схема электрическая принципиальная E3](cad/project_modification/gost_e3_final/gazo_analizator_E3_GOST_itog.kicad_sch).
 
 <p align="center">
-  <img src="https://img.shields.io/badge/E3-APPROVED-18794E?style=flat-square](https://github.com/valuncilh/gazo_analizator/blob/analysis/vendor-behavioral-reconciliation/docs/assets/%D1%81%D1%85%D0%B5%D0%BC%D0%B0.png" alt="E3 approved">
+  <img src="docs/assets/%D1%81%D1%85%D0%B5%D0%BC%D0%B0.png" alt="Утверждённая принципиальная схема E3" width="100%">
 </p>
 
 Электрическая редакция зафиксирована тегом [gost-e3-approved-2026-11-01](https://github.com/valuncilh/gazo_analizator/tree/gost-e3-approved-2026-11-01). Схема, XML-netlist, baseline и сохранённый ERC-отчёт составляют неизменяемую базовую редакцию. Визуальные правки выполняются только в отдельной копии и должны подтверждаться сравнением netlist.
