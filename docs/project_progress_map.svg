@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+<title id="title">Карта прогресса проекта газоанализатора</title>
+<desc id="desc">Дорожная карта P0-P7. Схема E3 утверждена. Подготовка footprints частично завершена. PCB E3, E4 и корпус ещё не начаты.</desc>
+<defs>
+  <style>
+    .bg{fill:#f5f7fa}.title{font:700 28px sans-serif;fill:#182230}.sub{font:15px sans-serif;fill:#526174}
+    .card{fill:#fff;stroke:#d6dde7;stroke-width:2}.done{stroke:#23835b}.partial{stroke:#c28a22}.todo{stroke:#8492a6}
+    .h{font:700 17px sans-serif;fill:#182230}.body{font:14px sans-serif;fill:#526174}.status{font:700 12px sans-serif}
+    .green{fill:#e5f4ec}.yellow{fill:#fff3d9}.gray{fill:#edf1f5}.link{stroke:#9aa8b8;stroke-width:3;fill:none}
+  </style>
+</defs>
+<rect class="bg" width="1200" height="760"/>
+<text x="48" y="52" class="title">Gazo Analizator — карта прогресса</text>
+<text x="48" y="82" class="sub">Актуально на 02.11.2026 • analysis/vendor-behavioral-reconciliation • E3 неизменна</text>
+<rect x="48" y="112" width="1104" height="62" rx="12" fill="#e9eef5"/>
+<text x="70" y="138" class="h">Зафиксированная база</text>
+<text x="70" y="159" class="body">E3: 19 компонентов • 15 сетей • 47 выводов | Joy-IT SEN-MQ4-V2 | 2 слоя | mixed SMD/THT | USB-C на отдельной E4</text>
+<path class="link" d="M600 174 V205 H190 V230 M600 205 H1010 V230 M190 390 V420 H600 V445 M1010 390 V420 H600 M600 575 V600"/>
+<g>
+ <rect x="48" y="230" width="284" height="160" rx="14" class="card partial"/>
+ <rect x="66" y="248" width="76" height="24" rx="12" class="yellow"/>
+ <text x="80" y="265" class="status" fill="#8b5d00">PARTIAL</text>
+ <text x="66" y="303" class="h">P0 · Репозиторий</text>
+ <text x="66" y="330" class="body">Удалённая ветка и</text><text x="66" y="351" class="body">политика проверены.</text>
+ <text x="66" y="372" class="body">Локальный clone: TBC.</text>
+</g>
+<g>
+ <rect x="360" y="230" width="284" height="160" rx="14" class="card done"/>
+ <rect x="378" y="248" width="56" height="24" rx="12" class="green"/>
+ <text x="389" y="265" class="status" fill="#176342">PASS</text>
+ <text x="378" y="303" class="h">P1 · Карта и статусы</text>
+ <text x="378" y="330" class="body">Карта проекта создана.</text>
+ <text x="378" y="351" class="body">README, ТЗ, матрица</text>
+ <text x="378" y="372" class="body">и журнал актуализируются.</text>
+</g>
+<g>
+ <rect x="672" y="230" width="284" height="160" rx="14" class="card partial"/>
+ <rect x="690" y="248" width="76" height="24" rx="12" class="yellow"/>
+ <text x="704" y="265" class="status" fill="#8b5d00">PARTIAL</text>
+ <text x="690" y="303" class="h">P2 · Компоненты E3</text>
+ <text x="690" y="330" class="body">Кандидаты и footprints</text>
+ <text x="690" y="351" class="body">частично проверены.</text>
+ <text x="690" y="372" class="body">VT1 и pin maps открыты.</text>
+</g>
+<g>
+ <rect x="984" y="230" width="168" height="160" rx="14" class="card todo"/>
+ <rect x="1002" y="248" width="122" height="24" rx="12" class="gray"/>
+ <text x="1014" y="265" class="status" fill="#536274">NOT STARTED</text>
+ <text x="1002" y="303" class="h">P3 · PCB E3</text>
+ <text x="1002" y="330" class="body">Placement,</text><text x="1002" y="351" class="body">routing, DRC.</text>
+</g>
+<g>
+ <rect x="48" y="445" width="344" height="130" rx="14" class="card todo"/>
+ <rect x="66" y="463" width="122" height="24" rx="12" class="gray"/>
+ <text x="78" y="480" class="status" fill="#536274">NOT STARTED</text>
+ <text x="66" y="518" class="h">P4 · Плата E4</text>
+ <text x="66" y="544" class="body">USB-C sink, защита VBUS, ERC/DRC.</text>
+</g>
+<g>
+ <rect x="428" y="445" width="344" height="130" rx="14" class="card todo"/>
+ <rect x="446" y="463" width="122" height="24" rx="12" class="gray"/>
+ <text x="458" y="480" class="status" fill="#536274">NOT STARTED</text>
+ <text x="446" y="518" class="h">P5 · Корпус и сборка</text>
+ <text x="446" y="544" class="body">FreeCAD, зазоры, вентиляция, CAD fit.</text>
+</g>
+<g>
+ <rect x="808" y="445" width="344" height="130" rx="14" class="card partial"/>
+ <rect x="826" y="463" width="76" height="24" rx="12" class="yellow"/>
+ <text x="840" y="480" class="status" fill="#8b5d00">PARTIAL</text>
+ <text x="826" y="518" class="h">P6 · Расчёты и ЕСКД</text>
+ <text x="826" y="544" class="body">Расчёты, графики, РПЗ и КД.</text>
+</g>
+<g>
+ <rect x="308" y="620" width="584" height="92" rx="14" class="card todo"/>
+ <rect x="328" y="638" width="122" height="24" rx="12" class="gray"/>
+ <text x="340" y="655" class="status" fill="#536274">NOT STARTED</text>
+ <text x="468" y="656" class="h">P7 · Итоговая проверка комплекта</text>
+ <text x="328" y="687" class="body">Матрица • исходники • CAD-экспорты • PDF • BOM • журнал</text>
+</g>
+<text x="48" y="735" class="sub">PASS относится только к документированной проверке. Физическое изготовление и измерения не входят в текущий объём.</text>
+</svg>
