@@ -233,3 +233,18 @@ D=\frac{0{,}534}{0{,}801}\approx0{,}667.
 [6] HCM12X Series. Datasheet, электрические и механические параметры семейства. https://www.taydaelectronics.com/datasheets/files/A-7397.pdf. Параметры серии требуют подтверждения для закупаемого экземпляра HCM1206X.
 
 [7] Amperka. Датчик природного газа MQ-4 (Troyka-модуль), AMP-B052. https://amperka.ru/product/troyka-mq4-gas-sensor. Исторический альтернативный вариант, исключённый из текущей конструкции пользователем. Не использовать как спецификацию A1.
+
+
+## 3.11 Физические исполнения и footprints для первой PCB-итерации
+
+Для DA1 физический кандидат — TI NE555P в PDIP-8, footprint Package_DIP:DIP-8_W7.62mm. Символ/значение утверждённой E3 не изменяются. У NE555P рабочий диапазон 0…+70 °C. Если окончательные требования изделия предусматривают более низкую температуру, нужен другой совместимый 555 и отдельная запись в BOM.
+
+Для VT1 паспорт семейства КТ3102 различает КТ3102Б с металлостеклянным корпусом и КТ3102БМ с пластмассовым. Старую посадочную модель KT-26/TO-92 использовать нельзя. Footprint не назначен до измерения фактического образца: опубликованный чертёж показывает гибкие выводы, а точные производственные центры/ориентация должны быть подтверждены.
+
+Для HA1 выбран Ningbo Kepo HCM1206X, чертёж OEM2690R. Конкретный документ указывает 6 V rated, 4…8 V operating, maximum rated current 40 mA at 6 V and sound pressure 88 dB/10 cm. Geometry: Ø12 mm, height9.5mm, lead pitch7.6±0.2mm, leads Ø0.6mm. Поэтому старое общее допущение 30mA для HA1 заменено на 40mA conservative value. Полярность верхней маркировки и соответствующий вывод должны быть проверены на физическом образце.
+
+Для SA1 выбран NKK AS11AP, SPST ON-NONE-OFF, straight PC terminals. Согласно NKK Series AS, AS11 соединяет terminals 3–1 в положении ON; terminal2 отсутствует. Custom footprint maps pad1 to physical terminal1 and pad2 to physical terminal3.
+
+Пассивы-кандидаты: Yageo RC0805FR 1% 0.125W для R1–R7; Yageo CC0805KRX7R9BB104 для C2; Multicomp Pro MCGLR16V476M5X11 для C1/C3. Для HL1/HL2 выбраны Kingbright WP7083SED/J3 и WP7083ZGD/G 5mm diffused. Для VD1 оставлен стандартный кандидат DO-35 horizontal с проверкой катода и pin numbering.
+
+Пользовательская библиотека GazoE3 содержит footprint candidates HCM1206X_P7.6mm и NKK_AS11AP_SPST_P5.08mm. KT3102B footprint не создан до физического замера. Source-level checker есть в cad/scripts/verify_gazo_e3_footprints.py. Ни один пользовательский footprint не проверен в KiCad 10.0.7.

@@ -59,3 +59,20 @@ The current PCB is intentionally unrouted. Its DRC report is diagnostic only. No
 - [x] Не переносить A1/1–2 листа Э3 из раздела дипломного проектирования (печатная с. 7) на текущую курсовую работу.
 - [x] Установить книжную ориентацию A4 по ГОСТ Р 2.104-2023, приложение Б, Б.5. Альбомное A4 не применяется.
 - [x] Зафиксировать выводы в [методической основе](project_modification_eskd/mai_methodical_basis.md) и скорректировать [критерии Э3](project_modification_eskd/acceptance_criteria.md).
+
+
+## Physical part and footprint selection — 01.11.2026
+
+- [x] Select NE555P PDIP-8 as DA1 physical candidate; temperature range 0…+70 °C is an explicit gate.
+- [x] Identify KT3102B as metal-glass variant, not KT3102BM/KT-26 plastic. Do not assign a TO-92 footprint.
+- [x] Select Ningbo Kepo HCM1206X drawing OEM2690R; update HA1 current allowance to 40 mA at rated 6 V.
+- [x] Select NKK AS11AP SPST and map physical terminals 1/3 to the two E3 symbol pins.
+- [x] Select Yageo 0805 resistors, Multicomp Pro radial capacitors, Kingbright 5 mm LEDs.
+- [x] Create GazoE3 custom source footprints for HCM1206X and NKK AS11AP.
+- [x] Add source-level footprint pad-map checker.
+- [ ] Load GazoE3.pretty in KiCad 10.0.7 and run footprint checks.
+- [ ] Verify the HCM1206X plus mark against its actual positive lead.
+- [ ] Verify NKK AS11AP actuator orientation/panel geometry.
+- [ ] Measure KT3102B real lead locations and map pin1=B, pin2=C, pin3=E.
+- [ ] Confirm DA1 temperature range is acceptable.
+- [ ] Measure HA1 current and LED currents with actual DA1 output level.
