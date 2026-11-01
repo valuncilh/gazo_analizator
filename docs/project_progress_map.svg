@@ -43,11 +43,11 @@
  <text x="690" y="372" class="body">1.2 mm и pin maps TBC.</text>
 </g>
 <g>
- <rect x="984" y="230" width="168" height="160" rx="14" class="card todo"/>
- <rect x="1002" y="248" width="122" height="24" rx="12" class="gray"/>
- <text x="1014" y="265" class="status" fill="#536274">NOT STARTED</text>
+ <rect x="984" y="230" width="168" height="160" rx="14" class="card partial"/>
+ <rect x="1002" y="248" width="76" height="24" rx="12" class="yellow"/>
+ <text x="1014" y="265" class="status" fill="#8b5d00">PARTIAL</text>
  <text x="1002" y="303" class="h">P3 · PCB E3</text>
- <text x="1002" y="330" class="body">Placement,</text><text x="1002" y="351" class="body">routing, DRC.</text>
+ <text x="1002" y="330" class="body">E3 copy, 19 refs.</text><text x="1002" y="351" class="body">ERC / board pending.</text>
 </g>
 <g>
  <rect x="48" y="445" width="344" height="130" rx="14" class="card todo"/>
