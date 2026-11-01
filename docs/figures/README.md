@@ -3,9 +3,9 @@
 > **HISTORICAL / NOT FOR CURRENT E3.** Все девять PNG в этом каталоге были созданы для раннего анализа архитектуры MQ-4 с аналоговым выходом, внешним компаратором U2 и нагрузочной ветвью VT2. Они не являются иллюстрациями утверждённой E3 с Joy-IT SEN-MQ4-V2.
 
 Актуальные документы для просмотра:
-- [Утверждённая принципиальная схема E3](../cad/project_modification/gost_e3_final/gazo_analizator_E3_GOST_itog.kicad_sch).
-- [Маршрут проверки проекта](../docs/REVIEW_GUIDE.md).
-- [Индекс исторических материалов](../docs/ARCHIVE_INDEX.md).
+- [Утверждённая принципиальная схема E3](../../cad/project_modification/gost_e3_final/gazo_analizator_E3_GOST_itog.kicad_sch).
+- [Маршрут проверки проекта](../REVIEW_GUIDE.md).
+- [Индекс исторических материалов](../ARCHIVE_INDEX.md).
 
 ## Что изображено в историческом наборе
 
