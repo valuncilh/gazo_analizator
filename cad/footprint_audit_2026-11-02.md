@@ -7,7 +7,7 @@
 
 ## 1. Вывод аудита
 
-Для всех 19 позиций утверждённой E3 определены физические кандидаты и/или библиотечные footprints. Для VT1 пока нет готового footprint, но найден размерный чертёж семейства КТ3102Б в металлостеклянном исполнении. Следующий шаг — аккуратно перенести координаты выводов из заводского рисунка в собственный footprint и проверить его средствами KiCad.
+Для всех 19 позиций утверждённой E3 определены физические кандидаты и/или библиотечные footprints. Для VT1 создан отдельный чертёжный footprint DRAFT по корпусу KT-1-7. Его pad map привязан к symbol pins 1=B, 2=C, 3=E. Размерная трактовка верхнего вида ещё не полностью закрыта, поэтому footprint не является fabrication-ready. Для VD1 выбран стандартный DO-35 footprint, геометрически близкий к паспорту КД510А, с правильной стороной pad 1=K.
 
 Доступность библиотек и 3D-моделей проверена в KiCad 10.0.7. Пользователь подтвердил отображение Molex 53261-0471 и GCT USB4105 в 3D-просмотрщике, а также визуальный просмотр 2D-посадочных мест. Это подтверждает загрузку моделей и библиотечных объектов, но не геометрическую совместимость с реальными компонентами.
 
@@ -45,8 +45,8 @@
 | R6 | Yageo RC0805FR-07220RL, 220 Ω, 1 %, 0.125 W | `Resistor_SMD:R_0805_2012Metric` | Корпус 0805. Ток HL1 зависит от UOH DA1 и Vf выбранного LED. | CANDIDATE / load calculation |
 | R7 | Yageo RC0805FR-07220RL, 220 Ω, 1 %, 0.125 W | `Resistor_SMD:R_0805_2012Metric` | Корпус 0805. Используется в ветвях, которые необходимо проверять по фактической топологии E3, не по старой схеме U2/VT2. | CANDIDATE / load calculation |
 | SA1 | NKK AS11AP, SPST ON-NONE-OFF, straight PC terminals | `GazoE3:NKK_AS11AP_SPST_P5.08mm` | Для исполнения AS11 используются физические terminal 1 и 3, terminal 2 отсутствует. Pad 1 соответствует terminal 1, pad 2 — terminal 3. Шаг 5.08 mm. Температурный диапазон -30…+85 °C покрывает проектный. Нужна проверка ориентации актуатора в CAD-корпусе. | CANDIDATE |
-| VD1 | КД510А, осевой стеклянный диод | `Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal` | Катод должен соответствовать pin 1 утверждённого символа. Точный корпусной чертёж и шаг 7.62 mm для конкретного исполнения требуют дополнительной сверки. | TBC / package review |
-| VT1 | КТ3102Б без суффикса М, металлостеклянное исполнение | Собственный footprint ещё не создан | Найден чертёж семейства КТ3102А–Д с корпусом KT-1-7 и гибкими выводами. Он позволяет перейти к построению drawing-derived footprint. Старый KT-26/TO-92 footprint неприменим. Символ E3: pin 1=B, pin 2=C, pin 3=E. | BLOCKED / footprint drafting |
+| VD1 | КД510А, стеклянный осевой диод | `Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal` | Чертёж КД510А: корпус 3.8×1.9 mm, выводы Ø0.5 mm. Стандартный DO-35 footprint KiCad описан как 4×2 mm, pitch 7.62 mm, drill 0.8 mm. Исходный footprint содержит pad 1=K и pad 2=A, что соответствует утверждённому символу E3. Размеры близкие, KiCad 10 local check pending. | CANDIDATE / pad map reviewed |
+| VT1 | КТ3102Б без суффикса М, металлостеклянное исполнение | `GazoE3:KT3102B_KT1-7_DWG_DRAFT` | Чертёжный кандидат: body Ø4.95 mm, max envelope Ø5.8 mm, h=5.3 mm, leads Ø0.45 mm × 13.5 mm. Pad 1=B, pad 2=C, pad 3=E. Координаты верхнего вида: pad1=(+0.8,-0.96177), pad2=(0,+1.25), pad3=(-0.8,-0.96177). Они построены по интерпретации PCD Ø2.5 mm и верхнего pin pitch 1.6 mm. Размер 1.2 mm из рисунка ещё требует независимой проверки. Старый TO-92 footprint неприменим. | DRAFT / coordinate review TBC |
 | XS1 | Molex PicoBlade 53261-0271, 2 circuits, 1.25 mm | `Connector_Molex:Molex_PicoBlade_53261-0271_1x02-1MP_P1.25mm_Horizontal` | 2-circuit right-angle SMT header. Библиотека и 3D-модель доступны. Pin 1=/VCC, pin 2=Earth согласно E3. | SELECTED / cable map TBC |
 
 ## 4. Проверка климатических условий
@@ -66,7 +66,7 @@
 | Molex 53261 series | -40…+105 °C | Температурный диапазон покрывает проектный |
 | USB-C GCT USB4105 | -40…+85 °C | Температурный диапазон покрывает проектный |
 | A1 Joy-IT SEN-MQ4-V2 | Доступный паспорт не задаёт однозначного предельного диапазона эксплуатации | TBC. Наличие графиков зависимости от температуры и влажности не является пределами допустимой эксплуатации |
-| VD1 КД510А | Для найденных документов сведения требуют сверки по конкретному изготовителю и корпусу | TBC |
+| VD1 КД510А | −60…+85 °C по datasheet КД510А | Температурный интервал покрывает проектные +10…+35 °C | PASS (temperature only) |
 
 **Вывод:** документально подтверждено покрытие температуры для большей части выбранной элементной базы. Полная климатическая совместимость изделия пока не доказана из-за отсутствия однозначных пределов для Joy-IT SEN-MQ4-V2, уточнения по КД510А и ограничений по условиям гарантирования акустических характеристик HA1. Утверждение климатических условий не превращает эти TBC в PASS.
 
@@ -132,8 +132,8 @@ CC1 и CC2 не объединять. USB PD не применяется. Нел
 
 ## 9. Следующие действия P2
 
-1. Создать drawing-derived footprint КТ3102Б по заводскому чертежу, без использования TO-92.
-2. Уточнить геометрию и полярность КД510А по документу конкретного изготовителя.
+1. Проверить размерную трактовку 1.2 mm callout в верхнем виде KT3102(A–Д) и закрыть coordinates of KT3102B draft. Не использовать TO-92.
+2. Сверить DO-35 footprint КД510А в KiCad 10.0.7, сохранить pin1=K, pin2=A.
 3. Проверить pad numbering и ориентацию всех стандартных и custom footprints средствами KiCad 10.0.7.
 4. Сверить символ/footprint DA1 NE555P PDIP-8 в отдельной реализации E3.
 5. Зафиксировать Molex cable housing/crimp terminal candidates и оформить длины/сечения как отдельные параметры проекта.
@@ -152,8 +152,28 @@ CC1 и CC2 не объединять. USB PD не применяется. Нел
 - Multicomp Pro MCGLR16V476M5X11: [каталог производителя/дистрибьютора с datasheet-параметрами](https://cpc.farnell.com/multicomp-pro/mcglr16v476m5x11/capacitor-47uf-16v-radial-105/dp/CA08260).
 - Kingbright WP7083SED/J3 red: [datasheet](https://www.kingbrightusa.com/images/catalog/SPEC/WP7083SED-J3.pdf). WP7083ZGD/G green: [datasheet](https://www.kingbrightusa.com/images/catalog/SPEC/WP7083ZGD-G.pdf).
 - Ningbo Kepo HCM1206X OEM2690R: [model-specific drawing/specification](https://kvarci.ru/files/files/HCM1206X%3DDAP1206X%5BOEM2690%5D.pdf). Различия с общей таблицей HCM12X оставлены в разделе 3 и не скрыты.
-- КТ3102A/Б/В/Д and M suffix variants: [family technical sheet](https://radioizba.ru/cat/PIC/415N0377318.pdf). Дополнительный справочный drawing: [Голомедов и др., «Полупроводниковые приборы. Транзисторы малой мощности», 1989, раздел КТ3102](https://datasheet.datasheetarchive.com/originals/scans/Scans-048/DSAGER000352.pdf). Это справочные/семейные документы, а не паспорт конкретной поставки.
-
-Точные источники для КД510А и согласование корпуса DO-35 с конкретным изготовителем остаются открытыми. До появления однозначного dimensional drawing статус VD1 сохраняется TBC.
+- КТ3102A/Б/В/Д and M suffix variants: [family technical sheet](https://radioizba.ru/cat/PIC/415N0377318.pdf), [Goldomedov et al., Small-Signal Transistors Handbook, 1989, scanned page 112–113](https://djvu.online/jpg1/j/T/i/jTiCg7zNvKMqH/058.webp). Чертёж различает металлостеклянный вариант без «М» и пластиковый вариант с «М». Более поздняя листовка КТ3102A–Д даёт явную размерную схему и pin labels: [Radioizba PDF](https://radioizba.ru/cat/PIC/415N0377318.pdf).
+- КД510А: [datasheet КД509А/КД510А](https://static.chipdip.ru/lib/249/DOC000249243.pdf) указывает стеклянный корпус 3.8×1.9 mm, leads Ø0.5 mm и маркировочные полосы со стороны катода. [Справочник 1983](https://www.elec.ru/files/2025/01/24/Sprv-DTO.pdf) описывает семейство 2Д510А/КД510А в металлостеклянном исполнении. Библиотечная геометрия сверена по исходнику KiCad: [D_DO-35_SOD27_P7.62mm_Horizontal](https://sources.debian.org/src/kicad-footprints/9.0.2-1/Diode_THT.pretty/D_DO-35_SOD27_P7.62mm_Horizontal.kicad_mod).
 
 **P2 не закрывается, пока все 19 символов не имеют документированного footprint status, pad mapping и понятного ограничения. P3 не начинается до фиксации этого реестра.**
+
+
+## 11. Drawing-derived footprint update — 02.11.2026
+
+### VT1 — КТ3102Б, корпус KT-1-7
+
+В рабочую библиотеку добавлен файл:
+
+`cad/kicad/footprints/GazoE3.pretty/KT3102B_KT1-7_DWG_DRAFT.kicad_mod`
+
+Использована размерная схема металлостеклянного КТ3102(A–Д), в которую входит Б. Кандидатная геометрия корпуса: Ø4.95 mm, максимальная оболочка Ø5.8 mm, высота 5.3 mm, гибкие выводы Ø0.45 mm, длина 13.5 mm. Распиновка в верхнем виде: Emitter, Base, Collector. Символ утверждённой E3 имеет pin 1=B, pin 2=C, pin 3=E. Поэтому draft footprint использует pad 1=B, pad 2=C, pad 3=E.
+
+Текущая координатная интерпретация чертежа задаёт upper pin pitch 1.6 mm и positioning circle Ø2.5 mm: pad 1=(+0.8,-0.96177), pad 2=(0,+1.25), pad 3=(-0.8,-0.96177). На рисунке присутствует дополнительный размер 1.2 mm, который пока не удалось однозначно отнести к координатам центров выводов. По этой причине файл является DRAFT: он годится для дальнейшей CAD-оценки и проверки в KiCad, но не для fabrication release. Следующая задача — сверить размер 1.2 mm с исходным видом/датумом и при необходимости скорректировать координаты.
+
+### VD1 — КД510А, DO-35
+
+Для КД510А найден datasheet с габаритами стеклянного корпуса 3.8×1.9 mm и выводами Ø0.5 mm. Стандартный KiCad footprint `Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal` описывает корпус 4×2 mm, pitch 7.62 mm, отверстия Ø0.8 mm. Это близкий размерный кандидат. Исходный файл KiCad помечает pin 1 как K (cathode), pin 2 — A (anode). Это соответствует E3 symbol: VD1.1=K, VD1.2=A. В E3 pad 1 остаётся в `Net-(HA1-Pin_1)`, pad 2 — в `Net-(DA1-OUT)`.
+
+КД510А обозначается цветными полосами со стороны катодного вывода. Этот факт записан как документальная подсказка ориентации, но не используется для изменения нумерации symbol/footprint. KiCad 10 local validation остаётся pending.
+
+**P2 remains PARTIAL.** VT1 has draft footprint, VD1 has a library candidate. All assigned footprints still require KiCad 10 checks and pad-to-net review. Physical fit is not claimed.
