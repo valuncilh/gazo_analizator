@@ -35,8 +35,6 @@
 **Генераторы:** [тепловая чувствительность](tools/thermal_sensitivity.py) · [номограмма Churchill–Chu](tools/natural_convection_nomogram.py).
 **Единый стандарт Markdown и LaTeX:** [DOCUMENTATION_STYLE.md](../DOCUMENTATION_STYLE.md).
 **Нормативные требования к итоговой РПЗ:** [контрольный лист](../../requirements/report_formatting.md).
-**Единый стандарт Markdown и LaTeX:** [DOCUMENTATION_STYLE.md](../DOCUMENTATION_STYLE.md).  
-**Нормативные требования к итоговой РПЗ:** [контрольный лист](../../requirements/report_formatting.md).
 
 ## 1. Назначение этого каталога
 
