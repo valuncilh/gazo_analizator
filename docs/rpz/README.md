@@ -1,9 +1,39 @@
 # Расчётно-пояснительная записка — рабочий комплект
 
+<p align="center">
+  <img src="../assets/gazo-analizator-banner.svg" alt="Gazo Analizator — инженерная документация" width="100%">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/RPZ-IN_PROGRESS-D97706?style=flat-square" alt="RPZ in progress">
+  <img src="https://img.shields.io/badge/E3-APPROVED-18794E?style=flat-square" alt="E3 approved">
+  <img src="https://img.shields.io/badge/MATH-LaTeX-3157A5?style=flat-square" alt="LaTeX mathematics">
+</p>
+
 **Проект:** бытовой сигнализатор утечки метана (CH₄).  
 **Рабочая ветка:** `analysis/vendor-behavioral-reconciliation`.  
 **Утверждённая электрическая база:** тег `gost-e3-approved-2026-11-01`, схема `cad/project_modification/gost_e3_final/gazo_analizator_E3_GOST_itog.kicad_sch`.  
 **Статус:** содержательная разработка РПЗ. Не является выпуском документа в производство.
+
+## Быстрая навигация по главам
+
+| Глава | Содержание |
+|---|---|
+| 1 | [Введение и анализ проекта](01_intro_and_project_analysis.md) |
+| 2 | [Технические требования](02_technical_requirements.md) |
+| 3 | [Выбор элементной базы](03_component_selection.md) |
+| 4 | [Электрические расчёты](04_electrical_calculations.md) |
+| 5 | [Печатная плата и функциональная ячейка](05_pcb_and_functional_cell.md) |
+| 6 | [Тепловой режим, графики и номограммы](06_thermal_model_and_sensitivity.md) |
+| 7 | [Механическая прочность](07_mechanical_strength.md) |
+| 8 | [Надёжность](08_reliability.md) |
+| 9 | [Технологичность и изготовление](09_manufacturability_and_process.md) |
+| 10 | [Заключение и открытые вопросы](10_conclusion_and_open_issues.md) |
+| 11 | [Стандарты и источники](11_standards_and_references.md) |
+
+**Визуальные материалы:** [каталог иллюстраций](../figures/README.md).  
+**Единый стандарт Markdown и LaTeX:** [DOCUMENTATION_STYLE.md](../DOCUMENTATION_STYLE.md).  
+**Нормативные требования к итоговой РПЗ:** [контрольный лист](../../requirements/report_formatting.md).
 
 ## 1. Назначение этого каталога
 
