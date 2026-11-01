@@ -1,12 +1,12 @@
-# CAD: preliminary placement and enclosure
+# CAD: historical preliminary placement and current E3/E4 design
 
-Date: 25.10.2026. Status: **PRELIMINARY / NOT FOR FABRICATION**.
+The original iteration below is **HISTORICAL / SUPERSEDED**. Current design requirements are in [pcb_design_basis_2026-11-01.md](pcb_design_basis_2026-11-01.md). No manufacturing release is implied.
 
 ## Iteration 0.1
 
 - Native KiCad PCB placement draft: 72 x 50 x 1.6 mm, net assignments and custom in-file footprints.
 - No copper routing is present. DRC unconnected-net warnings are expected and are not a pass for manufacturing.
-- Control board is placed beside a separate 25.4 x 25.4 mm Amperka AMP-B052 module.
+- This historical placement used a separate 25.4 x 25.4 mm Amperka AMP-B052 module. The current design uses Joy-IT SEN-MQ4-V2 and does not reuse this mechanical placement.
 - A parametric FreeCAD case concept is provided at 120 x 78 x 42 mm. It includes a removable lid, standoffs, module rails, MQ-4 vent grid, HCM1205X aperture, LED holes and a provisional power connector cutout.
 - The selected JL World HCM1205X dimensions come from passport 0105-86 Rev. A2: body OD 12 mm, height about 9.5 mm, lead pitch 7.6 mm. The MQ-4 sensor can profile is still a TBC envelope.
 
@@ -36,7 +36,7 @@ Create a native KiCad schematic and validate its pin mapping before routing. Rep
 
 ## Electrical trace audit
 
-See [end-to-end electrical trace audit](electrical_trace_audit_2026-10-25.md) for the chain from the Amperka A1.S output through the external comparator, reset transistor, timer, LED and sounder driver.
+The [historical electrical trace audit](electrical_trace_audit_2026-10-25.md) describes the Amperka A1.S path and an alternative comparator design. It is not the current Joy-IT E3 signal path and must not be used to populate the current PCB.
 
 Run `python3 cad/scripts/test_electrical_trace.py` locally to compare declared SPICE nodes against the provisional PCB pad-net map. This is a topology consistency check, not a measurement of copper continuity.
 
@@ -61,3 +61,10 @@ Do not generate manufacturing files from this draft. The native schematic/ERC/ne
 Методическая основа формата: [анализ материалов МАИ](project_modification_eskd/mai_methodical_basis.md). Для текущего курсового проекта выбран A4 по пособию МАИ 2007, раздел 1.3, печатная с. 5. A1 в этом пособии относится к графической части дипломного проекта и не применяется к нашей курсовой.
 
 Для листа A4 установлена книжная ориентация и размещение основной надписи вдоль короткой стороны по ГОСТ Р 2.104-2023, приложение Б, Б.5. Альбомное A4 не использовать.
+
+
+## Current design selection — 01.11.2026
+
+The user confirmed Joy-IT SEN-MQ4-V2. The approved E3 schematic remains unchanged. The main PCB uses Molex PicoBlade 53261-0471 for A1 and 53261-0271 for XS1, with pin order to be checked on physical samples. USB-C is on a separate two-layer E4 power-entry PCB. Current footprint selections and open physical-part blockers are documented in [footprint_selection_2026-11-01.md](footprint_selection_2026-11-01.md) and [power_input_usb/README.md](power_input_usb/README.md).
+
+A preliminary FreeCAD sensor envelope macro is provided at `freecad/build_joyit_sen_mq4_v2_envelope.FCMacro`. It has not yet been executed or checked in FreeCAD. The main enclosure must be designed after the actual E3 and E4 PCB layouts and the sensor module envelope have been verified.
