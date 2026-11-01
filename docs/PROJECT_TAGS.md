@@ -11,19 +11,19 @@
 
 | Метка | Значение | Где применяется |
 |---|---|---|
-| <badge color="success">APPROVED</badge> | Пользователь утвердил конкретную редакцию документа. Утверждение не означает физические испытания. | E3 и её базовые отчёты |
-| <badge color="success">VERIFIED</badge> | Проверка выполнена в явно указанном объёме. | ERC, XML-netlist, статическая сверка |
-| <badge color="info">CURRENT CALCULATION</badge> | Расчёт воспроизводится по зафиксированным исходным данным и допущениям. | Тепловые графики, номограммы |
-| <badge color="warning">SPICE MODEL</badge> | Результат моделирования. Не измерение и не подтверждение точного поведения реального экземпляра. | SPICE-графики и sensitivity sweeps |
-| <badge color="warning">PRELIMINARY</badge> | Предварительная компоновка или расчёт, ожидающий дальнейшего подтверждения. | Зоны PCB, компоновка, предварительные чертежи |
-| <badge color="danger">NOT FOR FABRICATION</badge> | Материал нельзя использовать как производственный документ. | Эскизные чертежи и незавершённые footprints |
-| <badge color="secondary">HISTORICAL</badge> | Сохранено для истории, не описывает текущую конфигурацию E3. | Ранняя схема 2022, Amperka/TLV7041/TLC555 и старые SPICE-графики |
+| ![APPROVED](https://img.shields.io/badge/APPROVED-18794E?style=flat-square) | Пользователь утвердил конкретную редакцию документа. Утверждение не означает физические испытания. | E3 и её базовые отчёты |
+| ![VERIFIED](https://img.shields.io/badge/VERIFIED-18794E?style=flat-square) | Проверка выполнена в явно указанном объёме. | ERC, XML-netlist, статическая сверка |
+| ![CURRENT CALCULATION](https://img.shields.io/badge/CURRENT_CALCULATION-3157A5?style=flat-square) | Расчёт воспроизводится по зафиксированным исходным данным и допущениям. | Тепловые графики, номограммы |
+| ![SPICE MODEL](https://img.shields.io/badge/SPICE_MODEL-D97706?style=flat-square) | Результат моделирования. Не измерение и не подтверждение точного поведения реального экземпляра. | SPICE-графики и sensitivity sweeps |
+| ![PRELIMINARY](https://img.shields.io/badge/PRELIMINARY-D97706?style=flat-square) | Предварительная компоновка или расчёт, ожидающий дальнейшего подтверждения. | Зоны PCB, компоновка, предварительные чертежи |
+| ![NOT FOR FABRICATION](https://img.shields.io/badge/NOT_FOR_FABRICATION-B91C1C?style=flat-square) | Материал нельзя использовать как производственный документ. | Эскизные чертежи и незавершённые footprints |
+| ![HISTORICAL](https://img.shields.io/badge/HISTORICAL-64748B?style=flat-square) | Сохранено для истории, не описывает текущую конфигурацию E3. | Ранняя схема 2022, Amperka/TLV7041/TLC555 и старые SPICE-графики |
 
 ## Реальные Git tags
 
 | Git tag | Назначение | Зафиксированный объект |
 |---|---|---|
-| [\`gost-e3-approved-2026-11-01\`](https://github.com/valuncilh/gazo_analizator/tree/gost-e3-approved-2026-11-01) | Утверждённая базовая редакция электрической схемы E3 | Commit с утверждённой схемой, XML-netlist и отчётами |
+| [`gost-e3-approved-2026-11-01`](https://github.com/valuncilh/gazo_analizator/tree/gost-e3-approved-2026-11-01) | Утверждённая базовая редакция электрической схемы E3 | Commit с утверждённой схемой, XML-netlist и отчётами |
 
 Эта метка является действующим контрольным тегом проекта. Любая новая Git-метка должна создаваться только после отдельной проверки и фиксации результата. Нельзя перемещать или переписывать существующий тег утверждённой E3.
 
