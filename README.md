@@ -65,7 +65,9 @@
 | `calculations/amperka_mq4_integration.md` | Рабочая схема интерфейса S → U2 → DOUT', расчёт выбранного R8, базового тока VT1, опорного уровня и гистерезиса. |
 | `calculations/u2_comparator_selection.md` | Основной U2 = TI TLV7041-Q1, ручные расчёты интерфейса, U_REF и RHYS, плюс сравнительные варианты. |
 | `calculations/1401sa1rmk_datasheet_review.md` | Исторический разбор PDF 1401СА1РМК/Р1МК, оставленный для отечественной альтернативы. |
-| `calculations/power_budget.md` | Баланс потребления в дежурном, тревожном и пусковом режимах, проверка лимита 300 мА. |
+| `calculations/power_budget.md` | Исторические сценарии Amperka/старых сенсорных вариантов. Не применять к утверждённой E3. |
+| `calculations/power_budget_joyit_e3.md` | Актуальный предварительный токовый бюджет утверждённой E3 с Joy-IT SEN-MQ4-V2 и HCM1206X. Ток A1 требует измерения. |
+| `calculations/thermal_joyit_e3.md` | Актуальные тепловые источники и план измерений для конструкции Joy-IT E3. |
 | `calculations/thermal_preliminary.md` | Тепловой баланс и исходные данные, необходимые для расчёта температур. |
 | `calculations/mass_gabarit_preliminary.md` | Размеры и установочные площади компонентов, расчёт площади платы и габаритов изделия. |
 | `calculations/reliability_preliminary.md` | Модель безотказности, интенсивности отказов и проверка полноты данных для итоговой оценки надёжности. |
