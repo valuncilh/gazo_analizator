@@ -97,7 +97,7 @@ NOTES = {
 
 
 def git_blob_sha(data: bytes) -> str:
-    header = f"blob {len(data)}\\0".encode("ascii")
+    header = f"blob {len(data)}\0".encode("ascii")
     return hashlib.sha1(header + data).hexdigest()
 
 
@@ -199,7 +199,7 @@ def main() -> int:
         )
 
     if errors:
-        print("\\n".join(errors), file=sys.stderr)
+        print("\n".join(errors), file=sys.stderr)
         return 1
 
     print(f"PASS: approved E3 netlist blob {actual_sha}")
