@@ -105,8 +105,8 @@
 <text x="846" y="348" class="value">2 кОм</text>
 <path d="M820 375 V420 H865" class="wire"/>
 <circle cx="820" cy="420" r="5" class="node"/>
-<path d="M865 420 H930" class="wire"/>
-<text x="897" y="400" text-anchor="middle" class="net">RESET · DA1.4</text>
+<path d="M865 420 H900 V532 H1035" class="wire"/>
+<text x="956" y="518" text-anchor="middle" class="net">Net-(DA1-~{RST}) · DA1.4</text>
 
 <!-- Timer block -->
 <rect x="930" y="300" width="430" height="430" rx="12" class="block-violet"/>
@@ -123,8 +123,8 @@
 <text x="1235" y="506" text-anchor="end" class="pin">3 · OUT</text>
 <text x="1235" y="610" text-anchor="end" class="pin">1 · GND</text>
 <path d="M930 420 H1035" class="wire"/>
-<path d="M1147 385 V210" class="rail"/>
-<path d="M1147 630 V900" class="earth"/>
+<path d="M1147 506 V210" class="rail"/><path d="M1035 506 H1147" class="rail"/>
+<path d="M1147 610 V900" class="earth"/><path d="M1147 610 H1260" class="earth"/>
 <!-- output pin -->
 <path d="M1260 520 H1430" class="wire"/>
 <circle cx="1430" cy="520" r="5" class="node"/>
@@ -132,10 +132,10 @@
 <!-- timing components -->
 <rect x="955" y="195" width="380" height="84" rx="8" fill="#fff" stroke="#A78BFA" stroke-width="1.5"/>
 <text x="974" y="221" class="ref">R4 = 8,2 кОм</text>
-<text x="974" y="244" class="value">/VCC → DA1.7 (DISCH)</text>
+<text x="974" y="244" class="value">R4.2 → /VCC · R4.1 → DA1.7</text>
 <text x="1150" y="221" class="ref">R5 = 8,2 кОм</text>
-<text x="1150" y="244" class="value">DA1.7 → узел 2/6</text>
-<text x="974" y="266" class="tiny">C1 = 47 000 000 пФ · узел 2/6 → Earth</text>
+<text x="1150" y="244" class="value">R5.1 → DA1.7 · R5.2 → узел 2/6</text>
+<text x="974" y="266" class="tiny">C1.1 → узел DA1.2/6 · C1.2 → Earth</text>
 <path d="M1045 279 V558" stroke="#6D28D9" stroke-width="2" stroke-dasharray="6 5" fill="none"/>
 <path d="M1240 279 V584" stroke="#6D28D9" stroke-width="2" stroke-dasharray="6 5" fill="none"/>
 <rect x="970" y="655" width="350" height="55" rx="7" fill="#fff" stroke="#C4B5FD"/>
