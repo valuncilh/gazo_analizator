@@ -176,4 +176,20 @@ CC1 и CC2 не объединять. USB PD не применяется. Нел
 
 КД510А обозначается цветными полосами со стороны катодного вывода. Этот факт записан как документальная подсказка ориентации, но не используется для изменения нумерации symbol/footprint. KiCad 10 local validation остаётся pending.
 
+
+## 12. Отдельная реализационная копия E3 — 02.11.2026
+
+Создан изолированный каталог `cad/kicad/e3_project/`:
+- `gazo_e3_implementation.kicad_sch` — копия утверждённой E3 с 19 candidate footprint fields в экземплярах компонентов.
+- `fp-lib-table` — относительная регистрация `GazoE3.pretty` для каталога реализации.
+- `reports/e3_pad_net_map.csv` — 47 назначений pin-to-net из approved XML.
+- `reports/footprint_assignment_status.csv` — ограничения и статусы для всех 19 refs.
+- `reports/implementation_scaffold_validation.md` — отчёт read-only source validation.
+
+**Контроль копирования:** после сброса только 19 instance-level полей Footprint и возврата имени project instance к исходному значению, текст реализации совпал с утверждённым `.kicad_sch` точно. Отдельно сверены blob IDs approved schematic и XML-netlist. Следовательно, номиналы, symbol graphics, pins, wires, labels и net topology в копии не менялись.
+
+Проверяющий скрипт: `cad/scripts/verify_e3_implementation.py`. Его локальный запуск в KiCad/CachyOS ещё не подтверждён. В текущем scaffold отсутствуют `.kicad_pro` и `.kicad_pcb`. Они не создавались, чтобы не выдавать неподтверждённый KiCad project/board за проверенный. Следующий gate — открыть реализационную схему в KiCad 10.0.7, подтвердить библиотеку, выполнить ERC и экспортировать свежий XML. Только после parity разрешается создавать board.
+
+**Статус:** source-content verification PASS для копии; P3 PARTIAL / PREPARATION. Нативные KiCad ERC, fresh netlist, footprint checks и PCB DRC остаются pending.
+
 **P2 remains PARTIAL.** VT1 has draft footprint, VD1 has a library candidate. All assigned footprints still require KiCad 10 checks and pad-to-net review. Physical fit is not claimed.
