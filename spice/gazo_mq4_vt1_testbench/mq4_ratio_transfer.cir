@@ -1,0 +1,34 @@
+* GAZO.001 — MQ-4 Rs/R0 to AOUT divider exploration
+* NOT a physical SEN-MQ4-V2 board model and NOT a ppm calibration.
+* RL=1.5k is printed on Joy-IT V2 datasheet page 3.
+* R0 is an example value from MQSensorsLib README only; replace after calibration.
+.title MQ-4 ratio-to-AOUT exploratory transfer
+
+.param VCCVAL=5
+.param RLVAL=1.5k
+.param R0_EXAMPLE=3.86018237k
+.param RATIO_CLEANAIR=4.4
+.param RATIO_NEAR_R0=1.0
+.param RATIO_LOWER=0.6
+
+VMAIN VCC 0 DC {VCCVAL}
+
+* Sensor element Rs represented by R0*(Rs/R0), RL=1.5k to ground.
+RS_RATIO44 VCC AOUT_RATIO44 {R0_EXAMPLE*RATIO_CLEANAIR}
+RL_RATIO44 AOUT_RATIO44 0 {RLVAL}
+
+RS_RATIO10 VCC AOUT_RATIO10 {R0_EXAMPLE*RATIO_NEAR_R0}
+RL_RATIO10 AOUT_RATIO10 0 {RLVAL}
+
+RS_RATIO06 VCC AOUT_RATIO06 {R0_EXAMPLE*RATIO_LOWER}
+RL_RATIO06 AOUT_RATIO06 0 {RLVAL}
+
+.control
+set noaskquit
+op
+echo "MQ-4 ratio transfer only. R0=3.86018237k is library example, not calibrated V2 value."
+echo "Columns are AOUT for Rs/R0 = 4.4, 1.0, 0.6."
+print v(AOUT_RATIO44) v(AOUT_RATIO10) v(AOUT_RATIO06)
+quit
+.endc
+.end

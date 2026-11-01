@@ -1,0 +1,36 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: SEN-MQ4-V2 DOUT and KT3102B input stage, BF=200
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 1
+============================================================
+KT3102B ESTIMATED MODEL: BF=200
+R1=160k, R2=13k, R3=2k, VCC=5V
+============================================================
+v(dout_pplow) = 1.562012e-03
+v(base_pplow) = 1.562077e-03
+v(reset_pplow) = 5.000000e+00
+ib_pplow = -5.00687e-12
+ic_pplow = 1.001981e-11
+v(dout_pphigh) = 4.983612e+00
+v(base_pphigh) = 7.213539e-01
+v(reset_pphigh) = 8.817596e-02
+ib_pphigh = 3.278660e-04
+ic_pphigh = 2.455912e-03
+v(dout_oclow) = 3.124805e-04
+v(base_oclow) = 3.125456e-04
+v(reset_oclow) = 5.000000e+00
+ib_oclow = -5.00937e-12
+ic_oclow = 1.002056e-11
+v(dout_ocrel) = 1.008833e+00
+v(base_ocrel) = 6.845506e-01
+v(reset_ocrel) = 1.653918e-01
+ib_ocrel = 2.494479e-05
+ic_ocrel = 2.417304e-03
+ngspice-47 done

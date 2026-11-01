@@ -1,0 +1,71 @@
+* GAZO.001 — DOUT / KT3102B / NE555 RESET input-stage test
+* This deck is a controlled sensitivity model, not a vendor model of SEN-MQ4-V2.
+.title SEN-MQ4-V2 DOUT and KT3102B input stage, BF=200
+
+.param VCCVAL=5
+.param R1VAL=160k
+.param R2VAL=13k
+.param R3VAL=2k
+.param RDRV=50
+.param ROCLOW=10
+
+.model QKT3102B_EST NPN (IS=1e-14 BF=200 VAF=80 IKF=0.05 CJE=12p CJC=5p TF=0.5n TR=10n RB=100 RC=10 RE=1)
+
+VMAIN VCC 0 DC {VCCVAL}
+
+* CASE 1 — push-pull DOUT LOW, finite assumed output resistance 50 ohm
+VPPLOW_CMD PPLOW_SRC 0 DC 0
+RPPLOW PPLOW_SRC DOUT_PPLOW {RDRV}
+R1_PPLOW VCC DOUT_PPLOW {R1VAL}
+R2_PPLOW DOUT_PPLOW BASE_PPLOW {R2VAL}
+Q_PPLOW RESET_PPLOW BASE_PPLOW 0 QKT3102B_EST
+R3_PPLOW VCC RESET_PPLOW {R3VAL}
+
+* CASE 2 — push-pull DOUT HIGH, finite assumed output resistance 50 ohm
+VPPHIGH_CMD PPHIGH_SRC 0 DC {VCCVAL}
+RPPHIGH PPHIGH_SRC DOUT_PPHIGH {RDRV}
+R1_PPHIGH VCC DOUT_PPHIGH {R1VAL}
+R2_PPHIGH DOUT_PPHIGH BASE_PPHIGH {R2VAL}
+Q_PPHIGH RESET_PPHIGH BASE_PPHIGH 0 QKT3102B_EST
+R3_PPHIGH VCC RESET_PPHIGH {R3VAL}
+
+* CASE 3 — open-collector DOUT asserted LOW, transistor sink represented by 10 ohm
+ROCLOW DOUT_OCLOW 0 {ROCLOW}
+R1_OCLOW VCC DOUT_OCLOW {R1VAL}
+R2_OCLOW DOUT_OCLOW BASE_OCLOW {R2VAL}
+Q_OCLOW RESET_OCLOW BASE_OCLOW 0 QKT3102B_EST
+R3_OCLOW VCC RESET_OCLOW {R3VAL}
+
+* CASE 4 — open-collector DOUT released, no internal pull-up assumed.
+* The only pull-up is the actual schematic R1=160k; this is intentionally tested as weak-drive case.
+R1_OCREL VCC DOUT_OCREL {R1VAL}
+R2_OCREL DOUT_OCREL BASE_OCREL {R2VAL}
+Q_OCREL RESET_OCREL BASE_OCREL 0 QKT3102B_EST
+R3_OCREL VCC RESET_OCREL {R3VAL}
+
+.control
+set noaskquit
+op
+
+echo "============================================================"
+echo "KT3102B ESTIMATED MODEL: BF=200"
+echo "R1=160k, R2=13k, R3=2k, VCC=5V"
+echo "============================================================"
+
+let ib_pplow = (v(dout_pplow)-v(base_pplow))/13k
+let ic_pplow = (v(VCC)-v(reset_pplow))/2k
+let ib_pphigh = (v(dout_pphigh)-v(base_pphigh))/13k
+let ic_pphigh = (v(VCC)-v(reset_pphigh))/2k
+let ib_oclow = (v(dout_oclow)-v(base_oclow))/13k
+let ic_oclow = (v(VCC)-v(reset_oclow))/2k
+let ib_ocrel = (v(dout_ocrel)-v(base_ocrel))/13k
+let ic_ocrel = (v(VCC)-v(reset_ocrel))/2k
+
+print v(dout_pplow) v(base_pplow) v(reset_pplow) ib_pplow ic_pplow
+print v(dout_pphigh) v(base_pphigh) v(reset_pphigh) ib_pphigh ic_pphigh
+print v(dout_oclow) v(base_oclow) v(reset_oclow) ib_oclow ic_oclow
+print v(dout_ocrel) v(base_ocrel) v(reset_ocrel) ib_ocrel ic_ocrel
+
+quit
+.endc
+.end

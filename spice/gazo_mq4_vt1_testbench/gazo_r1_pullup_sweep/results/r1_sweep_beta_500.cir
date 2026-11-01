@@ -1,0 +1,220 @@
+* GAZO.001 — R1 pull-up sensitivity, DOUT open-collector assumption
+* Controlled DC sweep only. Not a physical sensor/NE555 vendor model.
+.title GAZO R1 pull-up sweep, estimated KT3102B BF=500
+.param VCCVAL=5
+.param R2VAL=13k
+.param R3VAL=2k
+.param ROCLOW=10
+.model QKT3102B_EST NPN (IS=1e-14 BF=500 VAF=80 IKF=0.05 CJE=12p CJC=5p TF=0.5n TR=10n RB=100 RC=10 RE=1)
+VMAIN VCC 0 DC {VCCVAL}
+
+* OC RELEASED: external R1 is the only pull-up, feeding the base through R2.
+RPU_REL_160k VCC DREL_160k 160k
+R2_REL_160k DREL_160k BREL_160k {R2VAL}
+Q_REL_160k RESET_REL_160k BREL_160k 0 QKT3102B_EST
+R3_REL_160k VCC RESET_REL_160k {R3VAL}
+RPU_REL_100k VCC DREL_100k 100k
+R2_REL_100k DREL_100k BREL_100k {R2VAL}
+Q_REL_100k RESET_REL_100k BREL_100k 0 QKT3102B_EST
+R3_REL_100k VCC RESET_REL_100k {R3VAL}
+RPU_REL_82k VCC DREL_82k 82k
+R2_REL_82k DREL_82k BREL_82k {R2VAL}
+Q_REL_82k RESET_REL_82k BREL_82k 0 QKT3102B_EST
+R3_REL_82k VCC RESET_REL_82k {R3VAL}
+RPU_REL_68k VCC DREL_68k 68k
+R2_REL_68k DREL_68k BREL_68k {R2VAL}
+Q_REL_68k RESET_REL_68k BREL_68k 0 QKT3102B_EST
+R3_REL_68k VCC RESET_REL_68k {R3VAL}
+RPU_REL_56k VCC DREL_56k 56k
+R2_REL_56k DREL_56k BREL_56k {R2VAL}
+Q_REL_56k RESET_REL_56k BREL_56k 0 QKT3102B_EST
+R3_REL_56k VCC RESET_REL_56k {R3VAL}
+RPU_REL_47k VCC DREL_47k 47k
+R2_REL_47k DREL_47k BREL_47k {R2VAL}
+Q_REL_47k RESET_REL_47k BREL_47k 0 QKT3102B_EST
+R3_REL_47k VCC RESET_REL_47k {R3VAL}
+RPU_REL_33k VCC DREL_33k 33k
+R2_REL_33k DREL_33k BREL_33k {R2VAL}
+Q_REL_33k RESET_REL_33k BREL_33k 0 QKT3102B_EST
+R3_REL_33k VCC RESET_REL_33k {R3VAL}
+RPU_REL_22k VCC DREL_22k 22k
+R2_REL_22k DREL_22k BREL_22k {R2VAL}
+Q_REL_22k RESET_REL_22k BREL_22k 0 QKT3102B_EST
+R3_REL_22k VCC RESET_REL_22k {R3VAL}
+RPU_REL_10k VCC DREL_10k 10k
+R2_REL_10k DREL_10k BREL_10k {R2VAL}
+Q_REL_10k RESET_REL_10k BREL_10k 0 QKT3102B_EST
+R3_REL_10k VCC RESET_REL_10k {R3VAL}
+RPU_REL_6k8 VCC DREL_6k8 6.8k
+R2_REL_6k8 DREL_6k8 BREL_6k8 {R2VAL}
+Q_REL_6k8 RESET_REL_6k8 BREL_6k8 0 QKT3102B_EST
+R3_REL_6k8 VCC RESET_REL_6k8 {R3VAL}
+RPU_REL_4k7 VCC DREL_4k7 4.7k
+R2_REL_4k7 DREL_4k7 BREL_4k7 {R2VAL}
+Q_REL_4k7 RESET_REL_4k7 BREL_4k7 0 QKT3102B_EST
+R3_REL_4k7 VCC RESET_REL_4k7 {R3VAL}
+RPU_REL_3k3 VCC DREL_3k3 3.3k
+R2_REL_3k3 DREL_3k3 BREL_3k3 {R2VAL}
+Q_REL_3k3 RESET_REL_3k3 BREL_3k3 0 QKT3102B_EST
+R3_REL_3k3 VCC RESET_REL_3k3 {R3VAL}
+
+* OC ASSERTED LOW: same R1, output sink approximated by 10 ohm.
+RPU_LOW_160k VCC DLOW_160k 160k
+ROC_LOW_160k DLOW_160k 0 {ROCLOW}
+R2_LOW_160k DLOW_160k BLOW_160k {R2VAL}
+Q_LOW_160k RESET_LOW_160k BLOW_160k 0 QKT3102B_EST
+R3_LOW_160k VCC RESET_LOW_160k {R3VAL}
+RPU_LOW_100k VCC DLOW_100k 100k
+ROC_LOW_100k DLOW_100k 0 {ROCLOW}
+R2_LOW_100k DLOW_100k BLOW_100k {R2VAL}
+Q_LOW_100k RESET_LOW_100k BLOW_100k 0 QKT3102B_EST
+R3_LOW_100k VCC RESET_LOW_100k {R3VAL}
+RPU_LOW_82k VCC DLOW_82k 82k
+ROC_LOW_82k DLOW_82k 0 {ROCLOW}
+R2_LOW_82k DLOW_82k BLOW_82k {R2VAL}
+Q_LOW_82k RESET_LOW_82k BLOW_82k 0 QKT3102B_EST
+R3_LOW_82k VCC RESET_LOW_82k {R3VAL}
+RPU_LOW_68k VCC DLOW_68k 68k
+ROC_LOW_68k DLOW_68k 0 {ROCLOW}
+R2_LOW_68k DLOW_68k BLOW_68k {R2VAL}
+Q_LOW_68k RESET_LOW_68k BLOW_68k 0 QKT3102B_EST
+R3_LOW_68k VCC RESET_LOW_68k {R3VAL}
+RPU_LOW_56k VCC DLOW_56k 56k
+ROC_LOW_56k DLOW_56k 0 {ROCLOW}
+R2_LOW_56k DLOW_56k BLOW_56k {R2VAL}
+Q_LOW_56k RESET_LOW_56k BLOW_56k 0 QKT3102B_EST
+R3_LOW_56k VCC RESET_LOW_56k {R3VAL}
+RPU_LOW_47k VCC DLOW_47k 47k
+ROC_LOW_47k DLOW_47k 0 {ROCLOW}
+R2_LOW_47k DLOW_47k BLOW_47k {R2VAL}
+Q_LOW_47k RESET_LOW_47k BLOW_47k 0 QKT3102B_EST
+R3_LOW_47k VCC RESET_LOW_47k {R3VAL}
+RPU_LOW_33k VCC DLOW_33k 33k
+ROC_LOW_33k DLOW_33k 0 {ROCLOW}
+R2_LOW_33k DLOW_33k BLOW_33k {R2VAL}
+Q_LOW_33k RESET_LOW_33k BLOW_33k 0 QKT3102B_EST
+R3_LOW_33k VCC RESET_LOW_33k {R3VAL}
+RPU_LOW_22k VCC DLOW_22k 22k
+ROC_LOW_22k DLOW_22k 0 {ROCLOW}
+R2_LOW_22k DLOW_22k BLOW_22k {R2VAL}
+Q_LOW_22k RESET_LOW_22k BLOW_22k 0 QKT3102B_EST
+R3_LOW_22k VCC RESET_LOW_22k {R3VAL}
+RPU_LOW_10k VCC DLOW_10k 10k
+ROC_LOW_10k DLOW_10k 0 {ROCLOW}
+R2_LOW_10k DLOW_10k BLOW_10k {R2VAL}
+Q_LOW_10k RESET_LOW_10k BLOW_10k 0 QKT3102B_EST
+R3_LOW_10k VCC RESET_LOW_10k {R3VAL}
+RPU_LOW_6k8 VCC DLOW_6k8 6.8k
+ROC_LOW_6k8 DLOW_6k8 0 {ROCLOW}
+R2_LOW_6k8 DLOW_6k8 BLOW_6k8 {R2VAL}
+Q_LOW_6k8 RESET_LOW_6k8 BLOW_6k8 0 QKT3102B_EST
+R3_LOW_6k8 VCC RESET_LOW_6k8 {R3VAL}
+RPU_LOW_4k7 VCC DLOW_4k7 4.7k
+ROC_LOW_4k7 DLOW_4k7 0 {ROCLOW}
+R2_LOW_4k7 DLOW_4k7 BLOW_4k7 {R2VAL}
+Q_LOW_4k7 RESET_LOW_4k7 BLOW_4k7 0 QKT3102B_EST
+R3_LOW_4k7 VCC RESET_LOW_4k7 {R3VAL}
+RPU_LOW_3k3 VCC DLOW_3k3 3.3k
+ROC_LOW_3k3 DLOW_3k3 0 {ROCLOW}
+R2_LOW_3k3 DLOW_3k3 BLOW_3k3 {R2VAL}
+Q_LOW_3k3 RESET_LOW_3k3 BLOW_3k3 0 QKT3102B_EST
+R3_LOW_3k3 VCC RESET_LOW_3k3 {R3VAL}
+
+.control
+set noaskquit
+op
+
+echo "============================================================"
+echo "R1 SWEEP — estimated BF=500, VCC=5V, R2=13k, R3=2k"
+echo "OC RELEASED: v(dout), v(base), v(reset), ibase, icollector"
+echo "OC LOW: v(dout), v(reset), pull-up sink current"
+echo "RESET threshold reference: TI NE555 at 5V, 0.3/0.7/1.0V min/typ/max"
+echo "============================================================"
+let ib_rel_160k = (v(drel_160k)-v(brel_160k))/13k
+let ic_rel_160k = (5-v(reset_rel_160k))/2k
+let ipu_low_160k = (5-v(dlow_160k))/160k
+echo "R1=160k OC RELEASED"
+print v(drel_160k) v(brel_160k) v(reset_rel_160k) ib_rel_160k ic_rel_160k
+echo "R1=160k OC LOW"
+print v(dlow_160k) v(reset_low_160k) ipu_low_160k
+let ib_rel_100k = (v(drel_100k)-v(brel_100k))/13k
+let ic_rel_100k = (5-v(reset_rel_100k))/2k
+let ipu_low_100k = (5-v(dlow_100k))/100k
+echo "R1=100k OC RELEASED"
+print v(drel_100k) v(brel_100k) v(reset_rel_100k) ib_rel_100k ic_rel_100k
+echo "R1=100k OC LOW"
+print v(dlow_100k) v(reset_low_100k) ipu_low_100k
+let ib_rel_82k = (v(drel_82k)-v(brel_82k))/13k
+let ic_rel_82k = (5-v(reset_rel_82k))/2k
+let ipu_low_82k = (5-v(dlow_82k))/82k
+echo "R1=82k OC RELEASED"
+print v(drel_82k) v(brel_82k) v(reset_rel_82k) ib_rel_82k ic_rel_82k
+echo "R1=82k OC LOW"
+print v(dlow_82k) v(reset_low_82k) ipu_low_82k
+let ib_rel_68k = (v(drel_68k)-v(brel_68k))/13k
+let ic_rel_68k = (5-v(reset_rel_68k))/2k
+let ipu_low_68k = (5-v(dlow_68k))/68k
+echo "R1=68k OC RELEASED"
+print v(drel_68k) v(brel_68k) v(reset_rel_68k) ib_rel_68k ic_rel_68k
+echo "R1=68k OC LOW"
+print v(dlow_68k) v(reset_low_68k) ipu_low_68k
+let ib_rel_56k = (v(drel_56k)-v(brel_56k))/13k
+let ic_rel_56k = (5-v(reset_rel_56k))/2k
+let ipu_low_56k = (5-v(dlow_56k))/56k
+echo "R1=56k OC RELEASED"
+print v(drel_56k) v(brel_56k) v(reset_rel_56k) ib_rel_56k ic_rel_56k
+echo "R1=56k OC LOW"
+print v(dlow_56k) v(reset_low_56k) ipu_low_56k
+let ib_rel_47k = (v(drel_47k)-v(brel_47k))/13k
+let ic_rel_47k = (5-v(reset_rel_47k))/2k
+let ipu_low_47k = (5-v(dlow_47k))/47k
+echo "R1=47k OC RELEASED"
+print v(drel_47k) v(brel_47k) v(reset_rel_47k) ib_rel_47k ic_rel_47k
+echo "R1=47k OC LOW"
+print v(dlow_47k) v(reset_low_47k) ipu_low_47k
+let ib_rel_33k = (v(drel_33k)-v(brel_33k))/13k
+let ic_rel_33k = (5-v(reset_rel_33k))/2k
+let ipu_low_33k = (5-v(dlow_33k))/33k
+echo "R1=33k OC RELEASED"
+print v(drel_33k) v(brel_33k) v(reset_rel_33k) ib_rel_33k ic_rel_33k
+echo "R1=33k OC LOW"
+print v(dlow_33k) v(reset_low_33k) ipu_low_33k
+let ib_rel_22k = (v(drel_22k)-v(brel_22k))/13k
+let ic_rel_22k = (5-v(reset_rel_22k))/2k
+let ipu_low_22k = (5-v(dlow_22k))/22k
+echo "R1=22k OC RELEASED"
+print v(drel_22k) v(brel_22k) v(reset_rel_22k) ib_rel_22k ic_rel_22k
+echo "R1=22k OC LOW"
+print v(dlow_22k) v(reset_low_22k) ipu_low_22k
+let ib_rel_10k = (v(drel_10k)-v(brel_10k))/13k
+let ic_rel_10k = (5-v(reset_rel_10k))/2k
+let ipu_low_10k = (5-v(dlow_10k))/10k
+echo "R1=10k OC RELEASED"
+print v(drel_10k) v(brel_10k) v(reset_rel_10k) ib_rel_10k ic_rel_10k
+echo "R1=10k OC LOW"
+print v(dlow_10k) v(reset_low_10k) ipu_low_10k
+let ib_rel_6k8 = (v(drel_6k8)-v(brel_6k8))/13k
+let ic_rel_6k8 = (5-v(reset_rel_6k8))/2k
+let ipu_low_6k8 = (5-v(dlow_6k8))/6.8k
+echo "R1=6.8k OC RELEASED"
+print v(drel_6k8) v(brel_6k8) v(reset_rel_6k8) ib_rel_6k8 ic_rel_6k8
+echo "R1=6.8k OC LOW"
+print v(dlow_6k8) v(reset_low_6k8) ipu_low_6k8
+let ib_rel_4k7 = (v(drel_4k7)-v(brel_4k7))/13k
+let ic_rel_4k7 = (5-v(reset_rel_4k7))/2k
+let ipu_low_4k7 = (5-v(dlow_4k7))/4.7k
+echo "R1=4.7k OC RELEASED"
+print v(drel_4k7) v(brel_4k7) v(reset_rel_4k7) ib_rel_4k7 ic_rel_4k7
+echo "R1=4.7k OC LOW"
+print v(dlow_4k7) v(reset_low_4k7) ipu_low_4k7
+let ib_rel_3k3 = (v(drel_3k3)-v(brel_3k3))/13k
+let ic_rel_3k3 = (5-v(reset_rel_3k3))/2k
+let ipu_low_3k3 = (5-v(dlow_3k3))/3.3k
+echo "R1=3.3k OC RELEASED"
+print v(drel_3k3) v(brel_3k3) v(reset_rel_3k3) ib_rel_3k3 ic_rel_3k3
+echo "R1=3.3k OC LOW"
+print v(dlow_3k3) v(reset_low_3k3) ipu_low_3k3
+
+quit
+.endc
+.end
