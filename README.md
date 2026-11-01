@@ -74,7 +74,7 @@
 
 <p align="center">
   <img src="docs/rpz/thermal_sensitivity.svg" alt="Параметрическая зависимость перегрева от эквивалентного теплового сопротивления" width="48%">
-  <img src="docs/rpz/natural_convection_nomogram.svg" alt="Номограмма естественной конвективной теплоотдачи" width="48%">
+  <img src="docs/rpz/natural_convection_nomogram.svg" width="48%">
 </p>
 
 Подробная методика, исходные допущения и ограничения приведены в [разделе 6 РПЗ](docs/rpz/06_thermal_model_and_sensitivity.md).
