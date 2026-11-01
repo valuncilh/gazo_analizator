@@ -36,6 +36,9 @@
 | 30 | График чувствительности RESET к R1 | SPICE chart | SVG | SPICE MODEL ONLY | `spice/graphs/r1_pullup_reset_sensitivity.svg` — OC RELEASED, оценочные BF=50/200/500, R2=13 кОм и R3=2 кОм. Не использовать как основание менять R1 без проверки реального DOUT. |
 | 31 | График требуемого sink-current DOUT | SPICE chart | SVG | SPICE MODEL ONLY | `spice/graphs/r1_pullup_sink_current.svg` — условный OC LOW с sink 10 Ом. Допустимый выходной ток сенсора не задан. |
 | 32 | Исследовательская модель Rs/R0 → AOUT | SPICE chart | SVG | SPICE MODEL ONLY / NOT CALIBRATION | `spice/graphs/mq4_ratio_aout_transfer.svg` — три расчётные точки из библиотечного примера R0. Не калибровочная кривая модуля SEN-MQ4-V2. |
+| 33 | Документальная проверка Joy-IT SEN-MQ4-V2 | Расчётно-справочный документ | Markdown | CURRENT / PARTIAL | `calculations/mq4_module_check_joyit_v2.md` содержит паспортные характеристики, ограничения DOUT/pin mapping, прогрев, размеры и массу A1. Не является калибровкой. |
+| 34 | Массогабаритная ведомость текущей E3/E4 | Расчётно-конструкторский документ | Markdown | CURRENT / PARTIAL | `calculations/mass_gabarit_joyit_e3.md` содержит текущие размеры MPN, envelope A1 и неизвестные параметры PCB/корпуса. Итоговая площадь и масса не рассчитаны. |
+| 35 | Предварительная оценка надёжности текущей E3/E4 | Расчётно-справочный документ | Markdown | CURRENT / PARTIAL | `calculations/reliability_joyit_e3_preliminary.md` содержит методику МАИ и частичную λ0 по классам. Полная λΣ и MTBF не определены. |
 
 ## Временные примеры обозначений
 
