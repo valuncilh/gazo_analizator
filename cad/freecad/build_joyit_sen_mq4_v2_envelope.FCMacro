@@ -1,0 +1,155 @@
+"""Generate a preliminary mechanical keep-out envelope for Joy-IT SEN-MQ4-V2.
+
+The model contains only geometry that can be traced to the manufacturer drawing,
+plus explicitly marked assumptions. It is not a manufacturer STEP model and is
+not suitable as fabrication geometry without inspection of the purchased module.
+"""
+from pathlib import Path
+import json
+
+import FreeCAD as App
+import Part
+import Mesh
+
+try:
+    ROOT = Path(__file__).resolve().parents[2]
+except NameError:
+    ROOT = Path.home() / "projects" / "gazo_analizator"
+
+OUT = ROOT / "cad" / "output"
+OUT.mkdir(parents=True, exist_ok=True)
+
+# Manufacturer dimensions from SEN-MQ4-V2 datasheet, 2026-01-15.
+PCB_X = 25.0
+PCB_Y = 35.0
+OVERALL_X = 25.0
+OVERALL_Y = 41.0
+OVERALL_Z = 21.0
+HOLE_D = 2.9
+HOLE_PITCH_X = 18.5
+HOLE_PITCH_Y = 28.5
+
+# Explicit modelling assumptions pending measurement of a physical module.
+PCB_T = 1.6
+CAN_D = 19.0
+CAN_PROJECTION = 19.0
+MOLEX_KEEP_OUT = (8.0, 4.0, 4.0)
+HEADER_PITCH = 2.54
+HEADER_PIN_SIZE = 0.64
+
+NAME = "JoyITSENMQ4V2Envelope"
+try:
+    App.closeDocument(NAME)
+except Exception:
+    pass
+doc = App.newDocument(NAME)
+
+def add_feature(name, label, shape):
+    obj = doc.addObject("PartDesign::Feature", name)
+    obj.Label = label
+    obj.Shape = shape
+    try:
+        view = obj.ViewObject
+        view.ShapeColor = (0.25, 0.32, 0.38)
+        view.LineColor = (0.05, 0.05, 0.05)
+    except Exception:
+        pass
+    return obj
+
+# Board is drawn in XY. The 1.6 mm thickness is provisional.
+board_shape = Part.makeBox(PCB_X, PCB_Y, PCB_T, App.Vector(0, 0, 0))
+hole_offset_x = (PCB_X - HOLE_PITCH_X) / 2.0
+hole_offset_y = (PCB_Y - HOLE_PITCH_Y) / 2.0
+hole_centres = [
+    (hole_offset_x, hole_offset_y),
+    (PCB_X - hole_offset_x, hole_offset_y),
+    (hole_offset_x, PCB_Y - hole_offset_y),
+    (PCB_X - hole_offset_x, PCB_Y - hole_offset_y),
+]
+for x, y in hole_centres:
+    bore = Part.makeCylinder(HOLE_D / 2.0, PCB_T + 0.4, App.Vector(x, y, -0.2))
+    board_shape = board_shape.cut(bore)
+board = add_feature("SensorPCB", "SEN-MQ4-V2 PCB envelope 25 x 35 mm", board_shape)
+
+# Sensor can envelope. Approximate 19 mm can size and projection are assumptions.
+can_shape = Part.makeCylinder(CAN_D / 2.0, CAN_PROJECTION,
+                              App.Vector(PCB_X / 2.0, PCB_Y / 2.0, PCB_T))
+can = add_feature("SensorCanEnvelope", "MQ-4 sensing can envelope Ø19 x 19 mm (approx.)",
+                  can_shape)
+
+# Molex and 2.54 mm header envelopes are simplified keep-outs only.
+molex_shape = Part.makeBox(*MOLEX_KEEP_OUT,
+                           App.Vector(PCB_X / 2.0 - MOLEX_KEEP_OUT[0] / 2.0,
+                                      PCB_Y - 7.0, PCB_T))
+molex = add_feature("MolexKeepOut", "Molex PicoBlade keep-out (approx., verify)",
+                    molex_shape)
+
+pin_x0 = (PCB_X - 3.0 * HEADER_PITCH) / 2.0
+pin_parts = []
+for i in range(4):
+    x = pin_x0 + i * HEADER_PITCH
+    pin_parts.append(
+        Part.makeBox(HEADER_PIN_SIZE, HEADER_PIN_SIZE, 5.0,
+                     App.Vector(x - HEADER_PIN_SIZE / 2.0,
+                                1.5, -5.0 + PCB_T / 2.0))
+    )
+header = add_feature("HeaderKeepOut", "1x4 2.54 mm header pin envelope (approx.)",
+                      Part.makeCompound(pin_parts))
+
+# Overall box is a transparent keep-out and is not part of the STEP export.
+overall_shape = Part.makeBox(OVERALL_X, OVERALL_Y, OVERALL_Z,
+                             App.Vector(0, -3.0, -2.0))
+overall = add_feature("OverallKeepOut", "Overall module envelope 25 x 41 x 21 mm",
+                      overall_shape)
+try:
+    overall.ViewObject.Transparency = 88
+except Exception:
+    pass
+
+doc.recompute()
+fcstd = OUT / "joyit_sen_mq4_v2_envelope_preliminary.FCStd"
+step = OUT / "joyit_sen_mq4_v2_envelope_preliminary.step"
+stl = OUT / "joyit_sen_mq4_v2_envelope_preliminary.stl"
+
+doc.saveAs(str(fcstd))
+Part.export([board, can, molex, header], str(step))
+Mesh.export([board, can, molex, header], str(stl))
+
+report = {
+    "status": "PRELIMINARY / MECHANICAL ENVELOPE ONLY / NOT FOR FABRICATION",
+    "part_number": "Joy-IT SEN-MQ4-V2",
+    "source": "Joy-IT SEN-MQ4-V2 Datasheet, 2026-01-15, mechanical drawing page 3",
+    "manufacturer_data_mm": {
+        "overall_module": [OVERALL_Y, OVERALL_X, OVERALL_Z],
+        "pcb_outline": [PCB_X, PCB_Y],
+        "mounting_hole_diameter": HOLE_D,
+        "mounting_hole_pitch": [HOLE_PITCH_X, HOLE_PITCH_Y],
+    },
+    "derived_hole_centres_mm": [list(x) for x in hole_centres],
+    "assumptions_mm": {
+        "pcb_thickness": PCB_T,
+        "sensor_can_diameter": CAN_D,
+        "sensor_can_projection": CAN_PROJECTION,
+        "Molex_keep_out": list(MOLEX_KEEP_OUT),
+        "header_pitch": HEADER_PITCH,
+        "header_pin_size": HEADER_PIN_SIZE,
+    },
+    "physical_sample_checks": [
+        "confirm module orientation and the actual meaning of 41 x 25 x 21 mm",
+        "confirm Molex pin 1 corresponds to VCC, DOUT, AOUT, GND in the expected sequence",
+        "measure PCB thickness and corner radii",
+        "measure sensor can projection and rear component height",
+        "confirm hole positions and fit M2.5 hardware",
+        "confirm cable bend radius and sensor gas-flow clearance",
+    ],
+    "outputs": [fcstd.name, step.name, stl.name],
+}
+(OUT / "joyit_sen_mq4_v2_envelope_report.json").write_text(
+    json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+)
+print("Joy-IT SEN-MQ4-V2 envelope created. PRELIMINARY / NOT FOR FABRICATION.")
+try:
+    import FreeCADGui as Gui
+    Gui.getMainWindow().close()
+except Exception:
+    pass
