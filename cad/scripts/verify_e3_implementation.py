@@ -86,15 +86,16 @@ def extract_sexpr(text: str, start: int) -> str:
     raise ValueError(f"Unclosed S-expression starting at offset {start}")
 
 
-def get_symbol_instances(text: str) -> dict[str, dict[str, str]]:
-    instances: dict[str, dict[str, str]] = {}
+def get_symbol_instances(text: str) -> dict[str, dict[str, str | int]]:
+    instances: dict[str, dict[str, str | int]] = {}
     cursor = 0
     while True:
         start = text.find("(symbol", cursor)
         if start < 0:
             break
         block = extract_sexpr(text, start)
-        cursor = start + len(block)
+        end = start + len(block)
+        cursor = end
         if '(lib_id "' not in block:
             continue
         ref_match = re.search(r'\(property "Reference" "([^"]+)"', block)
@@ -102,7 +103,6 @@ def get_symbol_instances(text: str) -> dict[str, dict[str, str]]:
             continue
         ref = ref_match.group(1)
         # Power symbols and flags use generated refs such as #PWR01.
-        # The physical E3 BOM contains only the 19 references in EXPECTED_FOOTPRINTS.
         if ref.startswith("#"):
             continue
         fp_match = re.search(r'\(property "Footprint" "([^"]*)"', block)
@@ -112,8 +112,36 @@ def get_symbol_instances(text: str) -> dict[str, dict[str, str]]:
         instances[ref] = {
             "footprint": fp_match.group(1) if fp_match else "",
             "lib_id": lib_match.group(1) if lib_match else "",
+            "start": start,
+            "end": end,
         }
     return instances
+
+
+def normalize_implementation_copy(
+    text: str, instances: dict[str, dict[str, str | int]]
+) -> str:
+    """Undo only the 19 implementation footprint fields and project rename."""
+    normalized = text
+    for ref, info in sorted(
+        instances.items(), key=lambda item: int(item[1]["start"]), reverse=True
+    ):
+        start = int(info["start"])
+        end = int(info["end"])
+        block = normalized[start:end]
+        block, count = re.subn(
+            r'(\(property "Footprint" ")[^"]*(")',
+            r'\1\2',
+            block,
+            count=1,
+        )
+        if count != 1:
+            raise ValueError(f"{ref}: expected exactly one instance Footprint property")
+        normalized = normalized[:start] + block + normalized[end:]
+    return normalized.replace(
+        '(project "gazo_e3_implementation"',
+        '(project "gazo_analizator_E3_GOST"',
+    )
 
 
 def load_csv(path: Path) -> list[dict[str, str]]:
@@ -163,6 +191,17 @@ def main() -> int:
         actual_fp = instances.get(ref, {}).get("footprint", "")
         if actual_fp != expected_fp:
             errors.append(f"{ref}: expected footprint {expected_fp!r}, got {actual_fp!r}")
+
+    try:
+        normalized = normalize_implementation_copy(implementation_text, instances)
+        approved_text = APPROVED_SCHEMATIC.read_text(encoding="utf-8")
+        if normalized != approved_text:
+            errors.append(
+                "Implementation copy differs from the approved schematic beyond "
+                "the 19 instance Footprint fields and project-name update."
+            )
+    except ValueError as exc:
+        errors.append(f"Could not normalize implementation copy: {exc}")
 
     fp_table = FP_TABLE.read_text(encoding="utf-8")
     expected_uri = "$" + "{KIPRJMOD}/../footprints/GazoE3.pretty"
@@ -216,6 +255,7 @@ def main() -> int:
         return 1
 
     print("PASS: immutable approved E3 schematic and XML-netlist blob IDs.")
+    print("PASS: implementation copy differs from source only by 19 instance Footprint fields and project name.")
     print("PASS: implementation copy contains exactly 19 E3 refs with expected footprint assignments.")
     print("PASS: project-local GazoE3 library path is relative and resolvable from e3_project.")
     print("PASS: 47 pad-to-net rows cover the 19 E3 refs.")
