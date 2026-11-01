@@ -55,7 +55,7 @@ EXPECTED_FOOTPRINTS = {
 
 def git_blob_sha(path: Path) -> str:
     data = path.read_bytes()
-    header = f"blob {len(data)}\\0".encode("ascii")
+    header = f"blob {len(data)}\0".encode("ascii")
     return hashlib.sha1(header + data).hexdigest()
 
 
@@ -68,7 +68,7 @@ def extract_sexpr(text: str, start: int) -> str:
         if quoted:
             if escaped:
                 escaped = False
-            elif char == "\\\\":
+            elif char == "\\":
                 escaped = True
             elif char == '"':
                 quoted = False
@@ -97,12 +97,16 @@ def get_symbol_instances(text: str) -> dict[str, dict[str, str]]:
         cursor = start + len(block)
         if '(lib_id "' not in block:
             continue
-        ref_match = re.search(r'\\(property "Reference" "([^"]+)"', block)
+        ref_match = re.search(r'\(property "Reference" "([^"]+)"', block)
         if not ref_match:
             continue
         ref = ref_match.group(1)
-        fp_match = re.search(r'\\(property "Footprint" "([^"]*)"', block)
-        lib_match = re.search(r'\\(lib_id "([^"]+)"', block)
+        # Power symbols and flags use generated refs such as #PWR01.
+        # The physical E3 BOM contains only the 19 references in EXPECTED_FOOTPRINTS.
+        if ref.startswith("#"):
+            continue
+        fp_match = re.search(r'\(property "Footprint" "([^"]*)"', block)
+        lib_match = re.search(r'\(lib_id "([^"]+)"', block)
         if ref in instances:
             raise ValueError(f"Duplicate symbol reference: {ref}")
         instances[ref] = {
@@ -131,7 +135,7 @@ def main() -> int:
         if not path.is_file():
             errors.append(f"Missing required file: {path.relative_to(ROOT)}")
     if errors:
-        print("\\n".join(errors), file=sys.stderr)
+        print("\n".join(errors), file=sys.stderr)
         return 1
 
     schematic_sha = git_blob_sha(APPROVED_SCHEMATIC)
@@ -161,7 +165,8 @@ def main() -> int:
             errors.append(f"{ref}: expected footprint {expected_fp!r}, got {actual_fp!r}")
 
     fp_table = FP_TABLE.read_text(encoding="utf-8")
-    if '${KIPRJMOD}/../footprints/GazoE3.pretty' not in fp_table:
+    expected_uri = "$" + "{KIPRJMOD}/../footprints/GazoE3.pretty"
+    if expected_uri not in fp_table:
         errors.append("Project-local GazoE3 library URI is incorrect.")
 
     pad_rows = load_csv(PAD_MAP)
@@ -203,13 +208,11 @@ def main() -> int:
     status_rows = load_csv(STATUS_CSV)
     status_refs = {row["Ref"] for row in status_rows}
     if status_refs != expected_refs or len(status_rows) != 19:
-        errors.append(
-            "Footprint status register must contain exactly the 19 E3 references."
-        )
+        errors.append("Footprint status register must contain exactly the 19 E3 references.")
 
     if errors:
         print("FAIL: E3 implementation source checks")
-        print("\\n".join(f"- {item}" for item in errors), file=sys.stderr)
+        print("\n".join(f"- {item}" for item in errors), file=sys.stderr)
         return 1
 
     print("PASS: immutable approved E3 schematic and XML-netlist blob IDs.")
