@@ -38,9 +38,9 @@
  <rect x="690" y="248" width="76" height="24" rx="12" class="yellow"/>
  <text x="704" y="265" class="status" fill="#8b5d00">PARTIAL</text>
  <text x="690" y="303" class="h">P2 · Компоненты E3</text>
- <text x="690" y="330" class="body">Кандидаты и footprints</text>
- <text x="690" y="351" class="body">частично проверены.</text>
- <text x="690" y="372" class="body">VT1 и pin maps открыты.</text>
+ <text x="690" y="330" class="body">Аудит 19 компонентов E3</text>
+ <text x="690" y="351" class="body">и климатических диапазонов.</text>
+ <text x="690" y="372" class="body">VT1 и pin maps TBC.</text>
 </g>
 <g>
  <rect x="984" y="230" width="168" height="160" rx="14" class="card todo"/>
