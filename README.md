@@ -38,6 +38,7 @@
 | Проверить состав документации | [Реестр документов](docs/document_register.md) |
 | Изучить исходные требования | [Техническое задание](requirements/technical_assignment_draft.md) · [матрица верификации](requirements/verification_matrix.md) |
 | Проверить компонентную базу | [Реестр MPN и footprints](cad/footprint_selection_2026-11-01.md) · [документальный аудит E3/E4](cad/footprint_audit_2026-11-02.md) |
+| Открыть реализационную копию E3 | [KiCad implementation scaffold](cad/kicad/e3_project/README.md) · [проверка базы и назначений](cad/scripts/verify_e3_implementation.py) |
 | Найти нормативную базу и правила РПЗ | [Методики МАИ](docs/course_acceptance/README.md) · [контрольный лист оформления](requirements/report_formatting.md) |
 | Проследить историю решений | [Инженерный журнал](docs/engineering_log_2026-11-02.md) · [индекс архива](docs/ARCHIVE_INDEX.md) |
 
@@ -60,7 +61,7 @@
 | Схема E3 | **APPROVED** | Базовая редакция зафиксирована тегом gost-e3-approved-2026-11-01 |
 | ERC и XML-netlist E3 | **VERIFIED** | 0 ошибок ERC и 18 предупреждений в сохранённом отчёте |
 | MPN и footprints | **PRELIMINARY** | Документально сверены 19 refs E3. Создан KT3102B footprint DRAFT, для KD510A выбран DO-35 с pad1=K. Открыты координатная сверка 1.2 mm для VT1, pin maps A1/HA1 и локальные KiCad 10 checks |
-| PCB E3 | **NOT STARTED** | Подготовлены netlist и план размещения. Трассированная плата ещё не создана |
+| PCB E3 | **PREPARATION** | Создана изолированная копия схемы с кандидатными footprints для 19 refs и карта 47 pad-to-net. `.kicad_pro` и `.kicad_pcb` ещё не созданы, ERC/DRC и routing не выполнены |
 | USB-C E4 | **PREPARATION** | Архитектура определена. Схема, PCB и защита VBUS ещё не завершены |
 | Токовый бюджет | **BLOCKED** | Паспорт не задаёт полный максимальный ток A1. Worst-case всей системы пока не доказан |
 | Тепловой расчёт | **PRELIMINARY** | Оценены отдельные источники тепла. Полной модели конечной сборки пока нет |
