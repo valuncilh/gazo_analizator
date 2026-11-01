@@ -49,6 +49,18 @@
 
 Утверждённая редакция Э3 хранится в каталоге cad/project_modification/gost_e3_final/. Схема и её XML-netlist зафиксированы тегом gost-e3-approved-2026-11-01.
 
+<p align="center">
+  <img src="figures/e3_approved_topology.svg" alt="Функционально-связевое представление утверждённой E3 по XML-netlist" width="100%">
+</p>
+<p align="center"><sub>Дополнительная визуализация топологии. Нативный исходник схемы остаётся главным документом.</sub></p>
+
+- [Нативная схема KiCad E3](../cad/project_modification/gost_e3_final/gazo_analizator_E3_GOST_itog.kicad_sch).
+- [Карта всех 15 сетей E3](figures/e3_approved_netlist_map.md).
+- [XML-netlist](../cad/project_modification/gost_e3_final/reports/kicad10/netlist_current.xml).
+- [Отчёт ERC](../cad/project_modification/gost_e3_final/reports/kicad10/erc_current.rpt).
+- [Git tag утверждённой E3](https://github.com/valuncilh/gazo_analizator/tree/gost-e3-approved-2026-11-01).
+
+
 В сохранённом отчёте KiCad ERC указано 0 ошибок и 18 предупреждений. 17 предупреждений связаны с отсутствующими фильтрами посадочных мест в символах схемы, одно — с отдельной сетью AOUT. Это подтверждает только проверку CAD-документа в указанном объёме, но не физическую плату и не работоспособность собранного устройства.
 
 ### Элементная база
@@ -84,6 +96,9 @@
 - **HISTORICAL** — материал сохранён для прослеживаемости и не относится к текущей реализации.
 
 ## Визуальные и редакционные материалы
+
+- [Каталог всех схем, графиков и иллюстраций с тегами статусов](figures/README.md).
+- [Теги и правила присвоения статусов](PROJECT_TAGS.md).
 
 - [Каталог иллюстраций и графиков](figures/README.md).
 - [Стандарт оформления Markdown, формул LaTeX и изображений](DOCUMENTATION_STYLE.md).
