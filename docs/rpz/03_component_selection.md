@@ -241,7 +241,7 @@ D=\frac{0{,}534}{0{,}801}\approx0{,}667.
 
 Для VT1 паспорт семейства КТ3102 различает КТ3102Б с металлостеклянным корпусом и КТ3102БМ с пластмассовым. Старую посадочную модель KT-26/TO-92 использовать нельзя. Footprint не назначен до измерения фактического образца: опубликованный чертёж показывает гибкие выводы, а точные производственные центры/ориентация должны быть подтверждены.
 
-Для HA1 выбран Ningbo Kepo HCM1206X, чертёж OEM2690R. Конкретный документ указывает 6 V rated, 4…8 V operating, maximum rated current 40 mA at 6 V and sound pressure 88 dB/10 cm. Geometry: Ø12 mm, height9.5mm, lead pitch7.6±0.2mm, leads Ø0.6mm. Поэтому старое общее допущение 30mA для HA1 заменено на 40mA conservative value. Полярность верхней маркировки и соответствующий вывод должны быть проверены на физическом образце.
+Для HA1 выбран Ningbo Kepo HCM1206X, чертёж OEM2690R. Модельный документ указывает 6 V rated, 4…8 V operating, maximum rated current 40 mA at 6 V и SPL 88 dB/10 cm. Общая спецификация HCM12X расходится: 4…7 V operating и 30 mA max at 6 V. До подтверждения точного варианта поставщиком использовать 40 mA для worst-case тока и консервативное пересечение 4…7 V и −25…+70 °C. Геометрия OEM2690R: Ø12 mm, height 9.5 mm, lead pitch 7.6±0.2 mm, leads Ø0.6 mm. Полярность верхней маркировки проверить на образце.
 
 Для SA1 выбран NKK AS11AP, SPST ON-NONE-OFF, straight PC terminals. Согласно NKK Series AS, AS11 соединяет terminals 3–1 в положении ON; terminal2 отсутствует. Custom footprint maps pad1 to physical terminal1 and pad2 to physical terminal3.
 
