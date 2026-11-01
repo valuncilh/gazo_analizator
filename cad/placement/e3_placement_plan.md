@@ -35,7 +35,7 @@
 | R6 | 0,22 кОм | Resistor_SMD:R_0805_2012Metric | CANDIDATE |
 | R7 | 0,22 кОм | Resistor_SMD:R_0805_2012Metric | CANDIDATE |
 | SA1 | Включение звукового сигнала | GazoE3:NKK_AS11AP_SPST_P5.08mm | CUSTOM / pad1=terminal1, pad2=terminal3 |
-| VD1 | КД510А | Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal | CANDIDATE / pin1=K |
+| VD1 | КД510А | Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal | CANDIDATE / pad1=K; body 3.8×1.9 mm vs DO-35 4×2 mm; KiCad10 check pending |
 | VT1 | КТ3102Б | GazoE3:KT3102B_KT1-7_DWG_DRAFT | DRAFT / drawing-derived, upper-view coordinate review TBC |
 | XS1 | ~ | Connector_Molex:Molex_PicoBlade_53261-0271_1x02-1MP_P1.25mm_Horizontal | SELECTED / polarity verify |
 
