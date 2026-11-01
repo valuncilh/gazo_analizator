@@ -32,6 +32,8 @@
 | 11 | [Стандарты и источники](11_standards_and_references.md) |
 
 **Тепловые иллюстрации:** [параметрическая характеристика](thermal_sensitivity.svg) · [номограмма естественной конвекции](natural_convection_nomogram.svg).
+**Схема E3:** [функционально-связевое представление](../figures/e3_approved_topology.svg) · [полная карта сетей](../figures/e3_approved_netlist_map.md) · [нативный KiCad](../../cad/project_modification/gost_e3_final/gazo_analizator_E3_GOST_itog.kicad_sch).
+**Полный визуальный каталог:** [схемы, графики, номограммы и исторические изображения](../figures/README.md) · [теги и статусы](../PROJECT_TAGS.md).
 **Генераторы:** [тепловая чувствительность](tools/thermal_sensitivity.py) · [номограмма Churchill–Chu](tools/natural_convection_nomogram.py).
 **Единый стандарт Markdown и LaTeX:** [DOCUMENTATION_STYLE.md](../DOCUMENTATION_STYLE.md).
 **Нормативные требования к итоговой РПЗ:** [контрольный лист](../../requirements/report_formatting.md).
