@@ -23,6 +23,8 @@
 | 17 | Карта прогресса проекта | Внутренний документ | Markdown | Active | Сводит этапы, статусы, блокеры и критерии завершения. Основная матрица верификации остаётся отдельным источником критериев. |
 | 18 | Визуальная карта прогресса | Внутренний документ | SVG | Active | Компактная схема этапов P0–P7, обновляется синхронно с Markdown-картой. |
 | 19 | Документальный аудит компонентной базы и footprints E3/E4 | Внутренний инженерный документ | Markdown | Active / PARTIAL | Содержит аудит 19 компонентов E3, средовых диапазонов, Molex cable candidates, USB-C E4 и открытых ограничений. Не является физической приёмкой. |
+| 20 | Реализационная копия схемы E3 | KiCad schematic implementation copy | `.kicad_sch` + `fp-lib-table` + CSV | Active / PRELIMINARY | Отдельная копия approved E3 с candidate footprint assignments для 19 refs. Не заменяет утверждённую E3 и пока не является завершённым KiCad project/PCB. |
+| 21 | Автоматическая проверка E3 implementation | Внутренний verification script | Python | Active / SOURCE-LEVEL | Сверяет immutable blob IDs, 19 refs, footprint mappings, 47 pad-to-net rows и защищённые сети. Не заменяет ERC, fresh netlist, footprint checks или DRC. |
 
 ## Временные примеры обозначений
 
