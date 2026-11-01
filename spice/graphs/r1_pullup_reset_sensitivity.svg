@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+<title id="title">Чувствительность RESET к подтяжке R1</title><desc id="desc">SPICE DC sweep · гипотеза DOUT с открытым коллектором · BF = 50 / 200 / 500</desc>
+<rect width="1280" height="760" fill="#fff"/>
+<text x="640" y="55" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#232323">Чувствительность RESET к подтяжке R1</text>
+<text x="640" y="92" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#566170">SPICE DC sweep · гипотеза DOUT с открытым коллектором · BF = 50 / 200 / 500</text>
+<line x1="135" y1="600" x2="1185" y2="600" stroke="#E5EAF0" stroke-width="1"/>
+<text x="117" y="606" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#475569">0.0</text>
+<line x1="135" y1="567.8571428571429" x2="1185" y2="567.8571428571429" stroke="#E5EAF0" stroke-width="1"/>
+<text x="117" y="573.8571428571429" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#475569">0.2</text>
+<line x1="135" y1="535.7142857142858" x2="1185" y2="535.7142857142858" stroke="#E5EAF0" stroke-width="1"/>
+<text x="117" y="541.7142857142858" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#475569">0.4</text>
+<line x1="135" y1="503.57142857142856" x2="1185" y2="503.57142857142856" stroke="#E5EAF0" stroke-width="1"/>
+<text x="117" y="509.57142857142856" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#475569">0.6</text>
+<line x1="135" y1="471.42857142857144" x2="1185" y2="471.42857142857144" stroke="#E5EAF0" stroke-width="1"/>
+<text x="117" y="477.42857142857144" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#475569">0.8</text>
+<line x1="135" y1="439.2857142857143" x2="1185" y2="439.2857142857143" stroke="#E5EAF0" stroke-width="1"/>
+<text x="117" y="445.2857142857143" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#475569">1.0</text>
+<line x1="135" y1="407.1428571428571" x2="1185" y2="407.1428571428571" stroke="#E5EAF0" stroke-width="1"/>
+<text x="117" y="413.1428571428571" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#475569">1.2</text>
+<line x1="135" y1="375" x2="1185" y2="375" stroke="#E5EAF0" stroke-width="1"/>
+<text x="117" y="381" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#475569">1.4</text>
+<line x1="135" y1="342.85714285714283" x2="1185" y2="342.85714285714283" stroke="#E5EAF0" stroke-width="1"/>
+<text x="117" y="348.85714285714283" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#475569">1.6</text>
+<line x1="135" y1="310.71428571428567" x2="1185" y2="310.71428571428567" stroke="#E5EAF0" stroke-width="1"/>
+<text x="117" y="316.71428571428567" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#475569">1.8</text>
+<line x1="135" y1="278.57142857142856" x2="1185" y2="278.57142857142856" stroke="#E5EAF0" stroke-width="1"/>
+<text x="117" y="284.57142857142856" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#475569">2.0</text>
+<line x1="135" y1="246.4285714285714" x2="1185" y2="246.4285714285714" stroke="#E5EAF0" stroke-width="1"/>
+<text x="117" y="252.4285714285714" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#475569">2.2</text>
+<line x1="135" y1="214.28571428571428" x2="1185" y2="214.28571428571428" stroke="#E5EAF0" stroke-width="1"/>
+<text x="117" y="220.28571428571428" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#475569">2.4</text>
+<line x1="135" y1="182.1428571428571" x2="1185" y2="182.1428571428571" stroke="#E5EAF0" stroke-width="1"/>
+<text x="117" y="188.1428571428571" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#475569">2.6</text>
+<line x1="135" y1="150" x2="1185" y2="150" stroke="#E5EAF0" stroke-width="1"/>
+<text x="117" y="156" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#475569">2.8</text>
+<line x1="135" y1="551.7857142857143" x2="1185" y2="551.7857142857143" stroke="#B45309" stroke-width="2" stroke-dasharray="9 7"/>
+<text x="1180" y="543.7857142857143" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#B45309">0,3 В · min TI</text>
+<line x1="135" y1="487.49999999999994" x2="1185" y2="487.49999999999994" stroke="#B45309" stroke-width="2" stroke-dasharray="9 7"/>
+<text x="1180" y="479.49999999999994" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#B45309">0,7 В · typ TI</text>
+<line x1="135" y1="439.2857142857143" x2="1185" y2="439.2857142857143" stroke="#B45309" stroke-width="2" stroke-dasharray="9 7"/>
+<text x="1180" y="431.2857142857143" text-anchor="end" font-family="Arial,sans-serif" font-size="13" fill="#B45309">1,0 В · max TI</text>
+<rect x="135" y="150" width="1050" height="450" fill="none" stroke="#334155" stroke-width="2"/>
+<polyline points="135.0,198.5 230.5,393.7 325.9,495.8 421.4,567.1 516.8,573.0 612.3,575.4 707.7,578.3 803.2,580.4 898.6,582.8 994.1,583.5 1089.5,584.0 1185.0,584.4" fill="none" stroke="#0271FF" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="135" cy="198.51224999999994" r="5" fill="#fff" stroke="#0271FF" stroke-width="3"/>
+<circle cx="230.45454545454544" cy="393.69123214285713" r="5" fill="#fff" stroke="#0271FF" stroke-width="3"/>
+<circle cx="325.9090909090909" cy="495.8009892857143" r="5" fill="#fff" stroke="#0271FF" stroke-width="3"/>
+<circle cx="421.3636363636363" cy="567.0733875000001" r="5" fill="#fff" stroke="#0271FF" stroke-width="3"/>
+<circle cx="516.8181818181818" cy="573.0401303571429" r="5" fill="#fff" stroke="#0271FF" stroke-width="3"/>
+<circle cx="612.2727272727273" cy="575.4246160714285" r="5" fill="#fff" stroke="#0271FF" stroke-width="3"/>
+<circle cx="707.7272727272726" cy="578.2934142857143" r="5" fill="#fff" stroke="#0271FF" stroke-width="3"/>
+<circle cx="803.1818181818181" cy="580.3551696428572" r="5" fill="#fff" stroke="#0271FF" stroke-width="3"/>
+<circle cx="898.6363636363636" cy="582.770625" r="5" fill="#fff" stroke="#0271FF" stroke-width="3"/>
+<circle cx="994.0909090909091" cy="583.5012321428571" r="5" fill="#fff" stroke="#0271FF" stroke-width="3"/>
+<circle cx="1089.5454545454545" cy="584.0146146428572" r="5" fill="#fff" stroke="#0271FF" stroke-width="3"/>
+<circle cx="1185" cy="584.3755789285715" r="5" fill="#fff" stroke="#0271FF" stroke-width="3"/>
+<polyline points="135.0,573.4 230.5,576.4 325.9,577.4 421.4,578.2 516.8,579.1 612.3,579.7 707.7,581.0 803.2,582.1 898.6,583.8 994.1,584.4 1089.5,584.8 1185.0,585.1" fill="none" stroke="#0F7A6C" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="135" cy="573.419175" r="5" fill="#fff" stroke="#0F7A6C" stroke-width="3"/>
+<circle cx="230.45454545454544" cy="576.3855910714285" r="5" fill="#fff" stroke="#0F7A6C" stroke-width="3"/>
+<circle cx="325.9090909090909" cy="577.3883035714287" r="5" fill="#fff" stroke="#0F7A6C" stroke-width="3"/>
+<circle cx="421.3636363636363" cy="578.2456982142858" r="5" fill="#fff" stroke="#0F7A6C" stroke-width="3"/>
+<circle cx="516.8181818181818" cy="579.0597321428572" r="5" fill="#fff" stroke="#0F7A6C" stroke-width="3"/>
+<circle cx="612.2727272727273" cy="579.7368535714286" r="5" fill="#fff" stroke="#0F7A6C" stroke-width="3"/>
+<circle cx="707.7272727272726" cy="580.9558392857143" r="5" fill="#fff" stroke="#0F7A6C" stroke-width="3"/>
+<circle cx="803.1818181818181" cy="582.1318821428571" r="5" fill="#fff" stroke="#0F7A6C" stroke-width="3"/>
+<circle cx="898.6363636363636" cy="583.8075053571429" r="5" fill="#fff" stroke="#0F7A6C" stroke-width="3"/>
+<circle cx="994.0909090909091" cy="584.3690555357143" r="5" fill="#fff" stroke="#0F7A6C" stroke-width="3"/>
+<circle cx="1089.5454545454545" cy="584.7767539285715" r="5" fill="#fff" stroke="#0F7A6C" stroke-width="3"/>
+<circle cx="1185" cy="585.0694178571429" r="5" fill="#fff" stroke="#0F7A6C" stroke-width="3"/>
+<polyline points="135.0,575.4 230.5,577.5 325.9,578.3 421.4,579.0 516.8,579.7 612.3,580.2 707.7,581.3 803.2,582.4 898.6,584.0 994.1,584.5 1089.5,584.9 1185.0,585.2" fill="none" stroke="#B45309" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="135" cy="575.4201160714285" r="5" fill="#fff" stroke="#B45309" stroke-width="3"/>
+<circle cx="230.45454545454544" cy="577.4729678571427" r="5" fill="#fff" stroke="#B45309" stroke-width="3"/>
+<circle cx="325.9090909090909" cy="578.2599375" r="5" fill="#fff" stroke="#B45309" stroke-width="3"/>
+<circle cx="421.3636363636363" cy="578.9632714285715" r="5" fill="#fff" stroke="#B45309" stroke-width="3"/>
+<circle cx="516.8181818181818" cy="579.6537000000001" r="5" fill="#fff" stroke="#B45309" stroke-width="3"/>
+<circle cx="612.2727272727273" cy="580.2427339285714" r="5" fill="#fff" stroke="#B45309" stroke-width="3"/>
+<circle cx="707.7272727272726" cy="581.3319107142858" r="5" fill="#fff" stroke="#B45309" stroke-width="3"/>
+<circle cx="803.1818181818181" cy="582.4115732142857" r="5" fill="#fff" stroke="#B45309" stroke-width="3"/>
+<circle cx="898.6363636363636" cy="583.9871373214285" r="5" fill="#fff" stroke="#B45309" stroke-width="3"/>
+<circle cx="994.0909090909091" cy="584.522835" r="5" fill="#fff" stroke="#B45309" stroke-width="3"/>
+<circle cx="1089.5454545454545" cy="584.9137483928571" r="5" fill="#fff" stroke="#B45309" stroke-width="3"/>
+<circle cx="1185" cy="585.1952989285714" r="5" fill="#fff" stroke="#B45309" stroke-width="3"/>
+<text x="135" y="628" text-anchor="middle" transform="rotate(-28 135 628)" font-family="Arial,sans-serif" font-size="13" fill="#334155">160k</text>
+<text x="230.45454545454544" y="628" text-anchor="middle" transform="rotate(-28 230.45454545454544 628)" font-family="Arial,sans-serif" font-size="13" fill="#334155">100k</text>
+<text x="325.9090909090909" y="628" text-anchor="middle" transform="rotate(-28 325.9090909090909 628)" font-family="Arial,sans-serif" font-size="13" fill="#334155">82k</text>
+<text x="421.3636363636363" y="628" text-anchor="middle" transform="rotate(-28 421.3636363636363 628)" font-family="Arial,sans-serif" font-size="13" fill="#334155">68k</text>
+<text x="516.8181818181818" y="628" text-anchor="middle" transform="rotate(-28 516.8181818181818 628)" font-family="Arial,sans-serif" font-size="13" fill="#334155">56k</text>
+<text x="612.2727272727273" y="628" text-anchor="middle" transform="rotate(-28 612.2727272727273 628)" font-family="Arial,sans-serif" font-size="13" fill="#334155">47k</text>
+<text x="707.7272727272726" y="628" text-anchor="middle" transform="rotate(-28 707.7272727272726 628)" font-family="Arial,sans-serif" font-size="13" fill="#334155">33k</text>
+<text x="803.1818181818181" y="628" text-anchor="middle" transform="rotate(-28 803.1818181818181 628)" font-family="Arial,sans-serif" font-size="13" fill="#334155">22k</text>
+<text x="898.6363636363636" y="628" text-anchor="middle" transform="rotate(-28 898.6363636363636 628)" font-family="Arial,sans-serif" font-size="13" fill="#334155">10k</text>
+<text x="994.0909090909091" y="628" text-anchor="middle" transform="rotate(-28 994.0909090909091 628)" font-family="Arial,sans-serif" font-size="13" fill="#334155">6.8k</text>
+<text x="1089.5454545454545" y="628" text-anchor="middle" transform="rotate(-28 1089.5454545454545 628)" font-family="Arial,sans-serif" font-size="13" fill="#334155">4.7k</text>
+<text x="1185" y="628" text-anchor="middle" transform="rotate(-28 1185 628)" font-family="Arial,sans-serif" font-size="13" fill="#334155">3.3k</text>
+<text x="660" y="703" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="600" fill="#232323">Сценарное сопротивление R1, кОм</text>
+<text x="32" y="375" text-anchor="middle" transform="rotate(-90 32 375)" font-family="Arial,sans-serif" font-size="17" font-weight="600" fill="#232323">Напряжение RESET, В</text>
+<line x1="355" y1="686" x2="395" y2="686" stroke="#0271FF" stroke-width="4"/>
+<text x="405" y="691" font-family="Arial,sans-serif" font-size="14" fill="#334155">Оценочная модель BF=50</text>
+<line x1="545" y1="686" x2="585" y2="686" stroke="#0F7A6C" stroke-width="4"/>
+<text x="595" y="691" font-family="Arial,sans-serif" font-size="14" fill="#334155">Оценочная модель BF=200</text>
+<line x1="735" y1="686" x2="775" y2="686" stroke="#B45309" stroke-width="4"/>
+<text x="785" y="691" font-family="Arial,sans-serif" font-size="14" fill="#334155">Оценочная модель BF=500</text>
+<text x="135" y="744" font-family="Arial,sans-serif" font-size="12" fill="#64748B">Модель KT3102B оценочная. DOUT open-collector не подтверждён для конкретной ревизии SEN-MQ4-V2. Не использовать график для самостоятельной замены R1.</text>
+</svg>
