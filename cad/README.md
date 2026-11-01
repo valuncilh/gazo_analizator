@@ -65,7 +65,7 @@ Do not generate manufacturing files from this draft. The native schematic/ERC/ne
 
 ## Current design selection — 01.11.2026
 
-The user confirmed Joy-IT SEN-MQ4-V2. The approved E3 schematic remains unchanged. The main PCB uses Molex PicoBlade 53261-0471 for A1 and 53261-0271 for XS1, with pin order to be checked on physical samples. USB-C is on a separate two-layer E4 power-entry PCB. Current footprint selections and open physical-part blockers are documented in [footprint_selection_2026-11-01.md](footprint_selection_2026-11-01.md) and [power_input_usb/README.md](power_input_usb/README.md).
+The selected sensor is Joy-IT SEN-MQ4-V2. The approved E3 schematic remains unchanged. A1 uses the Molex PicoBlade 53261-0471 candidate and XS1 uses 53261-0271. The physical A1 Molex pin-1 mapping to VCC/DOUT/AOUT/GND is not explicit in the available module documentation and remains TBC; no physical continuity test is part of this CAD-only project. USB-C is on a separate two-layer E4 power-entry PCB. Current MPN and package restrictions are documented in [footprint_selection_2026-11-01.md](footprint_selection_2026-11-01.md), [the 02.11.2026 footprint audit](footprint_audit_2026-11-02.md), and [power_input_usb/README.md](power_input_usb/README.md).
 
 A preliminary FreeCAD sensor envelope macro is provided at `freecad/build_joyit_sen_mq4_v2_envelope.FCMacro`. It has not yet been executed or checked in FreeCAD. The main enclosure must be designed after the actual E3 and E4 PCB layouts and the sensor module envelope have been verified.
 
@@ -78,6 +78,18 @@ A preliminary FreeCAD sensor envelope macro is provided at `freecad/build_joyit_
 
 These files describe the approved E3 logical topology only. They do not claim that the board has been placed, routed, or DRC-checked.
 
+
+## E3 implementation project scaffold
+
+An isolated implementation copy is prepared in [`kicad/e3_project/`](kicad/e3_project/). It contains:
+- `gazo_e3_implementation.kicad_sch` — implementation copy of the approved E3 schematic, with candidate footprint fields assigned to all 19 physical references. The source schematic remains immutable.
+- `fp-lib-table` — local GazoE3 footprint library registration.
+- `reports/e3_pad_net_map.csv` — 47 pin-to-net assignments.
+- `reports/footprint_assignment_status.csv` — 19-reference candidate/restriction register.
+
+Run `python3 cad/scripts/verify_e3_implementation.py` from the repository root for source-level checks of the implementation copy and immutable schematic/netlist blob IDs. This script does not replace KiCad 10 validation.
+
+No `.kicad_pro` or `.kicad_pcb` has been created in this scaffold yet. The next gate is to open the implementation schematic in KiCad 10.0.7, confirm the project-local GazoE3 library resolves, run ERC and export a fresh XML-netlist. Only after topology parity is confirmed should the board file be created.
 
 ## Approved E3 placement and routing plan
 
