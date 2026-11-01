@@ -27,7 +27,7 @@
 | P0 | Репозиторий и исходная база | **PARTIAL** | GitHub подтверждает единственную рабочую/default ветку. Локальную синхронизацию клона ещё нужно подтвердить. |
 | P1 | Карта проекта и единая система статусов | **PASS** | Созданы эта страница и SVG-карта. README, ТЗ, матрица и журнал синхронизируются с ними. |
 | P2 | Элементная база и footprints E3/E4 | **PARTIAL** | Документально проверены 19 refs. Добавлен draft footprint КТ3102Б KT-1-7, для КД510А выбран DO-35 с pad1=K. Остались координатная сверка 1.2 mm callout VT1, A1/HA1 TBC, pad verification и KiCad 10 checks. См. [аудит footprints](../cad/footprint_audit_2026-11-02.md). |
-| P3 | Основная печатная плата E3 | **PARTIAL** | Подготовлен изолированный schematic implementation scaffold с footprint assignments всех 19 refs, локальной GazoE3 table и 47-row pad-to-net map. `.kicad_pro`/`.kicad_pcb`, KiCad ERC, fresh netlist, placement, routing и DRC ещё не выполнены. См. [implementation scaffold](../cad/kicad/e3_project/README.md). |
+| P3 | Основная печатная плата E3 | **PARTIAL** | Подготовлен изолированный schematic implementation scaffold с footprint assignments всех 19 refs, локальной GazoE3 table и 47-row pad-to-net map. Reversible source comparison PASS, отчёт и проверяющий скрипт добавлены. `.kicad_pro`/`.kicad_pcb`, KiCad ERC, fresh netlist, placement, routing и DRC ещё не выполнены. См. [implementation scaffold](../cad/kicad/e3_project/README.md) и [source validation report](../cad/kicad/e3_project/reports/implementation_scaffold_validation.md). |
 | P4 | Плата питания USB-C E4 | **NOT STARTED** | Создать отдельные схему и PCB E4, выполнить ERC/DRC и расчёт защиты. |
 | P5 | Механическая интеграция | **NOT STARTED** | Построить корпус вокруг проверенных STEP-моделей E3/E4 и габарита сенсорного модуля. Проверить коллизии, зазоры и сборку в CAD. |
 | P6 | Расчёты, графики, номограммы и ЕСКД | **PARTIAL** | Довести расчёты и документы по фактической CAD-конструкции, построить воспроизводимые графики и синхронизировать РПЗ. |
@@ -52,6 +52,7 @@
 - Утверждённый XML-netlist: `cad/project_modification/gost_e3_final/reports/kicad10/netlist_current.xml`.
 - Контроль топологии: `cad/scripts/verify_e3_netlist.py`.
 - Реализационная копия схемы E3 и таблица footprints: `cad/kicad/e3_project/`.
+- Source validation report: `cad/kicad/e3_project/reports/implementation_scaffold_validation.md`.
 - Проверка отдельной реализации: `cad/scripts/verify_e3_implementation.py`.
 - Реестр компонентов: `cad/footprint_selection_2026-11-01.md`.
 - Документальный аудит 19 компонентов E3 и E4: `cad/footprint_audit_2026-11-02.md`.
