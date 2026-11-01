@@ -1,0 +1,63 @@
+ERC report (2026-11-01T23:08:34, Encoding UTF8)
+Report includes: Errors, Warnings, Exclusions
+
+***** Sheet /
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (Connector*:*_1x??_*)
+    ; warning
+    @(93.98 mm, 149.86 mm): Символ XS1 [Conn_01x02]
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (Connector*:*_1x??_*)
+    ; warning
+    @(114.30 mm, 137.16 mm): Символ A1 [Conn_01x04]
+[isolated_pin_label]: Label connected to only one pin
+    ; warning
+    @(125.73 mm, 134.62 mm): Метка 'AOUT'
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (R_*)
+    ; warning
+    @(133.35 mm, 149.86 mm): Символ R2 [R]
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (R_*)
+    ; warning
+    @(146.05 mm, 125.73 mm): Символ R1 [R]
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (CP_*)
+    ; warning
+    @(152.40 mm, 195.58 mm): Символ C3 [C_Polarized]
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (R_*)
+    ; warning
+    @(161.29 mm, 137.16 mm): Символ R3 [R]
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (R_*)
+    ; warning
+    @(180.34 mm, 161.29 mm): Символ R5 [R]
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (R_*)
+    ; warning
+    @(186.69 mm, 135.89 mm): Символ R4 [R]
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (C_*)
+    ; warning
+    @(203.20 mm, 128.27 mm): Символ C2 [C]
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (SOIC*3.9x4.9mm*P1.27mm*)
+    ; warning
+    @(203.20 mm, 149.86 mm): Символ DA1 [NE555D]
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (CP_*)
+    ; warning
+    @(204.47 mm, 175.26 mm): Символ C1 [C_Polarized]
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (TO-???* *_Diode_* *SingleDiode* D_*)
+    ; warning
+    @(223.52 mm, 163.83 mm): Символ VD1 [D]
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (R_*)
+    ; warning
+    @(227.33 mm, 195.58 mm): Символ R7 [R]
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (R_*)
+    ; warning
+    @(236.22 mm, 149.86 mm): Символ R6 [R]
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (Connector*:*_1x??_*)
+    ; warning
+    @(237.49 mm, 175.26 mm): Символ HA1 [Conn_01x02]
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (LED* LED_SMD:* LED_THT:*)
+    ; warning
+    @(254.00 mm, 149.86 mm): Символ HL1 [LED]
+[footprint_filter]: Назначенное посад. место () не соответствует фильтрам посад. мест (LED* LED_SMD:* LED_THT:*)
+    ; warning
+    @(257.81 mm, 195.58 mm): Символ HL2 [LED]
+
+ ** ERC messages: 18  Errors 0  Warnings 18
+
+ ** Ignored checks:
+    - None
