@@ -9,4 +9,7 @@ This library contains two source-level footprints for the unchanged E3 netlist.
 
 No 3D models are included. These footprints have not been opened in KiCad 10.0.7 and have not passed footprint DRC, PCB DRC, or a physical fit inspection. They are not approved for fabrication.
 
-KT3102B deliberately has no custom footprint yet. The datasheet identifies a metal-glass package with flexible leads, but the exact lead coordinates/orientation must be measured from a sample or confirmed from a dimensioned production drawing. Do not reuse the old KT-26 / TO-92 footprint.
+KT3102B deliberately has no custom footprint yet. The family drawing for the KT-1-7 metal-glass package with flexible leads has been located. A drawing-derived footprint can now be drafted by transcribing the three terminal coordinates and mapping pad 1=B, pad 2=C, pad 3=E. This is a CAD/documentary reconstruction, not a physical sample fit. Do not reuse the old KT-26 / TO-92 footprint.
+
+
+The current project scope excludes physical manufacture, procurement, sample inspection, soldering and laboratory measurement. These source footprints remain candidates until KiCad 10 footprint validation, project-specific pad-map review and 3D/CAD clearance checks are complete. Any undocumented polarity or terminal orientation remains TBC rather than being inferred from a generic part family.
