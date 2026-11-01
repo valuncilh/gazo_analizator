@@ -47,7 +47,7 @@ USB-C не добавляется скрытыми цепями в E3. Отде�
 
 - DA1: TI NE555P PDIP-8, Package_DIP:DIP-8_W7.62mm, коммерческий диапазон 0…+70 °C. Проверить требования по температуре, иначе выбрать расширенный аналог без изменения netlist.
 - VT1: КТ3102Б без суффикса М — металлостеклянный корпус с гибкими выводами. Запрещено переносить старый KT-26/TO-92 footprint. Footprint не создан до измерения фактических выводов.
-- HA1: выбран документированный вариант Ningbo Kepo HCM1206X, drawing OEM2690R. Rated 6V, operating 4…8V, max rated current 40mA at 6V, SPL 88dB/10cm. Питание 5V допустимо по рабочему диапазону. Полярность по знаку плюс на верхней маркировке, но соответствующий физический вывод проверить на образце.
+- HA1: Ningbo Kepo HCM1206X, drawing OEM2690R. Model-specific OEM2690R gives 40mA at 6V and 4…8V, while the general HCM12X series sheet gives 30mA at 6V and 4…7V. Until the supplier confirms the delivered variant, use 40mA for worst-case current, voltage intersection 4…7V and temperature intersection −25…+70°C. Verify positive lead against the golden + mark on sample.
 - SA1: NKK AS11AP, SPST ON-NONE-OFF, straight PC terminals. AS11 соединяет terminals 3-1, terminal2 отсутствует. Custom pad1/2 correspond to physical1/3. Проверить ориентацию actuator и посадку.
 - Пассивы, LED и диод: кандидаты и MPN в реестре footprints. Ток LED/R6/R7 проверить по реальному UOH таймера.
 
