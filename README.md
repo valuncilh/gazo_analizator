@@ -59,7 +59,7 @@
 |---|---|---|
 | Схема E3 | **APPROVED** | Базовая редакция зафиксирована тегом gost-e3-approved-2026-11-01 |
 | ERC и XML-netlist E3 | **VERIFIED** | 0 ошибок ERC и 18 предупреждений в сохранённом отчёте |
-| MPN и footprints | **PRELIMINARY** | Выполнен документальный аудит 19 позиций E3 и кандидатов E4. Открыты drawing-derived VT1, pin maps A1/HA1 и KiCad footprint checks |
+| MPN и footprints | **PRELIMINARY** | Документально сверены 19 refs E3. Создан KT3102B footprint DRAFT, для KD510A выбран DO-35 с pad1=K. Открыты координатная сверка 1.2 mm для VT1, pin maps A1/HA1 и локальные KiCad 10 checks |
 | PCB E3 | **NOT STARTED** | Подготовлены netlist и план размещения. Трассированная плата ещё не создана |
 | USB-C E4 | **PREPARATION** | Архитектура определена. Схема, PCB и защита VBUS ещё не завершены |
 | Токовый бюджет | **BLOCKED** | Паспорт не задаёт полный максимальный ток A1. Worst-case всей системы пока не доказан |
