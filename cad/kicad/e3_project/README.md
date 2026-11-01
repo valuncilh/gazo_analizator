@@ -8,6 +8,7 @@
 - `fp-lib-table` — project-local GazoE3 library path, resolved relative to this directory.
 - `reports/e3_pad_net_map.csv` — 47 pin-to-net assignments derived from the approved XML-netlist.
 - `reports/footprint_assignment_status.csv` — reference-level candidate status and restrictions.
+- `reports/implementation_scaffold_validation.md` — source-content validation results and limitations.
 
 ## Footprint assignments
 
@@ -34,6 +35,16 @@ All 19 E3 references have a candidate footprint assignment. These are engineerin
 - Expected topology: 19 components, 15 nets, 47 connected pins.
 
 Do not edit the approved source schematic, XML-netlist or approved baseline to assign or refine implementation footprints. All further changes belong in this isolated implementation copy.
+
+## Reproducible source-level check
+
+From the repository root run:
+
+```fish
+python3 cad/scripts/verify_e3_implementation.py
+```
+
+The checker verifies the immutable source blob IDs, reversible-copy relationship, 19 footprint assignments, 47 pad-to-net rows and protected E3 nets. It does not run KiCad itself.
 
 ## Validation state
 
