@@ -20,7 +20,7 @@
 |---|---|---|---|
 | DA1 | Texas Instruments NE555P, PDIP-8 | Package_DIP:DIP-8_W7.62mm | Активный PDIP-8 вариант 0…+70 °C. Текущий выбор физического корпуса не меняет символ NE555D и значение NE555N в утверждённой E3. Согласовать температурный диапазон устройства. |
 | VT1 | КТ3102Б без суффикса М | Не назначен | Металлостеклянный корпус с гибкими выводами. Старый KT-26/TO-92 footprint запрещён. Нужен образец для измерения отверстий и ориентации pin 1/B, pin 2/C, pin 3/E. |
-| HA1 | Ningbo Kepo HCM1206X, drawing OEM2690R | GazoE3:HCM1206X_P7.6mm | Ø12 x 9.5 mm, lead pitch 7.6±0.2 mm, leads Ø0.6 mm. Rated 6 V, operating 4…8 V, max rated current 40 mA at 6 V, SPL 88 dB/10 cm. Polarity mark and corresponding lead must be checked on sample. |
+| HA1 | Ningbo Kepo HCM1206X, drawing OEM2690R | GazoE3:HCM1206X_P7.6mm | Model-specific OEM2690R: 6 V rated, 4…8 V, 40 mA max at 6 V, SPL 88 dB/10 cm. General HCM12X sheet conflicts (4…7 V, 30 mA). Use 40 mA for worst-case current, conservative voltage intersection 4…7 V and temperature intersection −25…+70 °C until supplier confirms delivered variant. Geometry Ø12 × 9.5 mm, pitch 7.6±0.2 mm, leads Ø0.6 mm. Verify positive lead on sample. |
 | SA1 | NKK AS11AP, SPST ON-NONE-OFF, straight PC | GazoE3:NKK_AS11AP_SPST_P5.08mm | Physical terminals 1 and 3 are fitted; terminal 2 is absent. Pad 1 maps to terminal 1, pad 2 to terminal 3. Contact rating 0.4 VA logic level. |
 | R1 | Yageo RC0805FR-07160KL, 160 kΩ, 1%, 0.125 W | Resistor_SMD:R_0805_2012Metric | Candidate MPN |
 | R2 | Yageo RC0805FR-0713KL, 13 kΩ, 1%, 0.125 W | Resistor_SMD:R_0805_2012Metric | Candidate MPN |
