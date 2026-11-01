@@ -21,7 +21,7 @@
  <rect x="66" y="248" width="76" height="24" rx="12" class="yellow"/>
  <text x="80" y="265" class="status" fill="#8b5d00">PARTIAL</text>
  <text x="66" y="303" class="h">P0 · Репозиторий</text>
- <text x="66" y="330" class="body">Удалённая ветка и</text><text x="66" y="351" class="body">политика проверены.</text>
+ <text x="66" y="330" class="body">Рабочая ветка — единственная.</text><text x="66" y="351" class="body">main удалена пользователем.</text>
  <text x="66" y="372" class="body">Локальный clone: TBC.</text>
 </g>
 <g>
