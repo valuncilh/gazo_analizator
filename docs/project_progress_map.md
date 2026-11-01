@@ -27,7 +27,7 @@
 | P0 | Репозиторий и исходная база | **PARTIAL** | GitHub подтверждает единственную рабочую/default ветку. Локальную синхронизацию клона ещё нужно подтвердить. |
 | P1 | Карта проекта и единая система статусов | **PASS** | Созданы эта страница и SVG-карта. README, ТЗ, матрица и журнал синхронизируются с ними. |
 | P2 | Элементная база и footprints E3/E4 | **PARTIAL** | Документально проверены 19 refs. Добавлен draft footprint КТ3102Б KT-1-7, для КД510А выбран DO-35 с pad1=K. Остались координатная сверка 1.2 mm callout VT1, A1/HA1 TBC, pad verification и KiCad 10 checks. См. [аудит footprints](../cad/footprint_audit_2026-11-02.md). |
-| P3 | Основная печатная плата E3 | **NOT STARTED** | Создать отдельный KiCad-проект, разместить элементы, назначить сети, выполнить трассировку и DRC. |
+| P3 | Основная печатная плата E3 | **PARTIAL** | Подготовлен изолированный schematic implementation scaffold с footprint assignments всех 19 refs, локальной GazoE3 table и 47-row pad-to-net map. `.kicad_pro`/`.kicad_pcb`, KiCad ERC, fresh netlist, placement, routing и DRC ещё не выполнены. См. [implementation scaffold](../cad/kicad/e3_project/README.md). |
 | P4 | Плата питания USB-C E4 | **NOT STARTED** | Создать отдельные схему и PCB E4, выполнить ERC/DRC и расчёт защиты. |
 | P5 | Механическая интеграция | **NOT STARTED** | Построить корпус вокруг проверенных STEP-моделей E3/E4 и габарита сенсорного модуля. Проверить коллизии, зазоры и сборку в CAD. |
 | P6 | Расчёты, графики, номограммы и ЕСКД | **PARTIAL** | Довести расчёты и документы по фактической CAD-конструкции, построить воспроизводимые графики и синхронизировать РПЗ. |
@@ -40,7 +40,7 @@
 | G0 | Конструктивные решения пользователя | **PASS** | 2 слоя, mixed SMD/THT, Joy-IT SEN-MQ4-V2, настольный корпус, USB 5 В, гибкие габариты, проектная документация. |
 | G1 | Утверждённая топология E3 | **PASS** | Immutable XML: 19 компонентов, 15 сетей, 47 подключённых выводов. Схема не меняется. |
 | G2 | Библиотеки и footprints | **PARTIAL** | Подтверждены пути KiCad, загрузка Molex/USB-C 2D/3D и source-level pad maps трёх custom footprints. KT3102B draft создан, KD510A DO-35 pad1=K сверено с KiCad library source. Требуются KiCad 10 checks всех назначений и уточнение TBC. |
-| G3 | E3 PCB | **NOT STARTED** | Нативная плата с полной parity к утверждённому XML, DRC без ошибок и unconnected, ручной просмотр обоих медных слоёв. |
+| G3 | E3 PCB | **PARTIAL** | Schematic implementation copy и candidate footprint assignments готовы. Следующий gate — KiCad 10 local open, library resolution, ERC и fresh XML parity. Только затем создавать `.kicad_pro`/`.kicad_pcb` и размещение. |
 | G4 | E4 USB-C | **NOT STARTED** | Схема, ERC, PCB, DRC, документированный выбор защиты VBUS и выходной разъём. |
 | G5 | Корпус и сборка | **NOT STARTED** | FCStd, STEP, чертежи и отчёт CAD-проверки пересечений. |
 | G6 | Документация и расчёты | **PARTIAL** | Актуализированные ТЗ, матрица, РПЗ, BOM, спецификации и графическая КД. |
@@ -51,6 +51,8 @@
 - Утверждённая схема E3: `cad/project_modification/gost_e3_final/gazo_analizator_E3_GOST_itog.kicad_sch`.
 - Утверждённый XML-netlist: `cad/project_modification/gost_e3_final/reports/kicad10/netlist_current.xml`.
 - Контроль топологии: `cad/scripts/verify_e3_netlist.py`.
+- Реализационная копия схемы E3 и таблица footprints: `cad/kicad/e3_project/`.
+- Проверка отдельной реализации: `cad/scripts/verify_e3_implementation.py`.
 - Реестр компонентов: `cad/footprint_selection_2026-11-01.md`.
 - Документальный аудит 19 компонентов E3 и E4: `cad/footprint_audit_2026-11-02.md`.
 - Основание проектирования: `cad/pcb_design_basis_2026-11-01.md`.
@@ -94,4 +96,4 @@
 
 ## 8. Следующий шаг
 
-Продолжить P2: закрыть размерную трактовку 1.2 mm для KT3102B draft, выполнить локальные KiCad 10 footprint checks всех 19 назначений, уточнить документальные pin maps A1/HA1 и подтвердить symbol pin → footprint pad → net matrix. После этого создать отдельный проект реализации E3. Approved E3 и XML-netlist не менять.
+Выполнить следующий gate P3: открыть `cad/kicad/e3_project/gazo_e3_implementation.kicad_sch` в KiCad 10.0.7, подтвердить загрузку локальной GazoE3 library, выполнить ERC и экспортировать свежий XML. Сверить топологию с immutable approved XML. Если результат совпадает, создать project/board файлы и перейти к placement. Отдельно продолжить уточнение 1.2 mm callout VT1 и оставить A1/HA1 pin mapping TBC. Approved E3 и XML-netlist не менять.
