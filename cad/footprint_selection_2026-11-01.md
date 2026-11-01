@@ -21,7 +21,7 @@
 | Позиция | Выбранный кандидат | Footprint KiCad | Состояние и ограничения |
 |---|---|---|---|
 | DA1 | Texas Instruments NE555P, PDIP-8 | Package_DIP:DIP-8_W7.62mm | Рабочая температура 0…+70 °C покрывает утверждённые +10…+35 °C. Утверждённый символ NE555D и значение NE555N не меняются. В отдельной реализации проверить одинаковую нумерацию функций symbol→footprint |
-| VT1 | КТ3102Б без суффикса М | Собственный footprint по чертежу KT-1-7, ещё не создан | Заводской чертёж семейства подтверждает металлостеклянный корпус с гибкими выводами и позволяет подготовить drawing-derived footprint. Старый KT-26/TO-92 footprint запрещён. Координаты трёх выводов и ориентацию сверить по рисунку до назначения |
+| VT1 | КТ3102Б без суффикса М | GazoE3:KT3102B_KT1-7_DWG_DRAFT | Создан чертёжный кандидат для металлостеклянного KT-1-7. Pad 1=B, pad 2=C, pad 3=E. Корпус Ø4.95 mm, макс. Ø5.8 mm, h=5.3 mm, выводы Ø0.45 mm, l=13.5 mm. Координаты верхнего вида остаются DRAFT/TBC до проверки размерной трактовки 1.2 mm callout. Старый TO-92 footprint запрещён |
 | HA1 | Ningbo Kepo HCM1206X, drawing OEM2690R | GazoE3:HCM1206X_P7.6mm | Чертёж OEM2690R: 6 V rated, 4…8 V, до 40 mA при 6 V, -25…+70 °C, корпус Ø12×9.5 mm, pitch 7.6±0.2 mm, leads Ø0.6 mm. Общая спецификация HCM12X расходится по току и напряжению. Для консервативного анализа оставить 40 mA и 4…7 V. Положительный физический вывод не определяется по доступному рисунку однозначно. Сохранить маркировку CHECK + и статус TBC |
 | SA1 | NKK AS11AP, SPST ON-NONE-OFF, straight PC | GazoE3:NKK_AS11AP_SPST_P5.08mm | Physical terminals 1 and 3 are fitted; terminal 2 is absent. Pad 1 maps to terminal 1, pad 2 to terminal 3. Contact rating 0.4 VA logic level. |
 | R1 | Yageo RC0805FR-07160KL, 160 kΩ, 1%, 0.125 W | Resistor_SMD:R_0805_2012Metric | Candidate MPN |
@@ -31,7 +31,7 @@
 | R6, R7 | Yageo RC0805FR-07220RL, 220 Ω, 1%, 0.125 W | Resistor_SMD:R_0805_2012Metric | Candidate MPN. Verify LED current using actual NE555 output level |
 | C1, C3 | Multicomp Pro MCGLR16V476M5X11, 47 µF, 16 V | Capacitor_THT:CP_Radial_D5.0mm_P2.00mm | Radial Ø5 x 11 mm, pitch 2 mm, ±20%, lifetime 2000 h at 105 °C, ripple 108 mA |
 | C2 | Yageo CC0805KRX7R9BB104, 100 nF, 50 V, X7R, 10% | Capacitor_SMD:C_0805_2012Metric | Candidate MPN |
-| VD1 | КД510А, glass axial diode | Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal | Candidate. Confirm cathode mark and map E3 symbol pin 1=K, pin 2=A |
+| VD1 | КД510А, стеклянный осевой диод | Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal | Паспортный чертёж задаёт стеклянный корпус 3.8×1.9 mm и гибкие выводы Ø0.5 mm. Библиотечный DO-35 рассчитан на 4×2 mm, pitch 7.62 mm и lead hole 0.8 mm. Геометрия близкая, pad 1=K в исходнике библиотеки. KiCad 10 local footprint check остаётся pending |
 | HL1 | Kingbright WP7083SED/J3, red 5 mm diffused | LED_THT:LED_D5.0mm | 625 nm, 600 mcd minimum / 1200 mcd typical at 20 mA, Vf typ 2.2 V |
 | HL2 | Kingbright WP7083ZGD/G, green 5 mm diffused | LED_THT:LED_D5.0mm | 525 nm, 1400 mcd minimum / 2200 mcd typical at 20 mA, Vf typ 3.2 V |
 
@@ -52,7 +52,7 @@
 - HCM1206X_P7.6mm — физическая геометрия из чертежа Ningbo Kepo OEM2690R. Pad 1/2 соответствуют HA1.1/HA1.2, полярность не кодируется до проверки образца.
 - NKK_AS11AP_SPST_P5.08mm — прямые выводы с межцентровым расстоянием 5.08 mm. Pad 1/2 соответствуют физическим контактам 1/3 switch.
 
-KT3102Б footprint намеренно не создавался. Паспорт подтверждает металлостеклянный корпус и гибкие выводы, но точную ориентацию и центры выводов необходимо получить с физического транзистора или заводского размерного чертежа.
+KT3102Б теперь имеет отдельный drawing-derived footprint DRAFT. Он предназначен только для CAD-компоновки. До закрытия размерной интерпретации 1.2 mm callout и проверки KiCad 10 его нельзя считать fabrication-ready. Физические образцы и измерения не входят в объём проекта.
 
 Source-level checker: cad/scripts/verify_gazo_e3_footprints.py. Он проверяет только исходный текст и координаты площадок, но не заменяет проверку в KiCad 10.
 
