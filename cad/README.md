@@ -86,8 +86,9 @@ An isolated implementation copy is prepared in [`kicad/e3_project/`](kicad/e3_pr
 - `fp-lib-table` — local GazoE3 footprint library registration.
 - `reports/e3_pad_net_map.csv` — 47 pin-to-net assignments.
 - `reports/footprint_assignment_status.csv` — 19-reference candidate/restriction register.
+- `reports/implementation_scaffold_validation.md` — source-level baseline and copy-integrity report.
 
-Run `python3 cad/scripts/verify_e3_implementation.py` from the repository root for source-level checks of the implementation copy and immutable schematic/netlist blob IDs. This script does not replace KiCad 10 validation.
+Run `python3 cad/scripts/verify_e3_implementation.py` from the repository root for source-level checks of the implementation copy and immutable schematic/netlist blob IDs. The [source validation report](kicad/e3_project/reports/implementation_scaffold_validation.md) records the current remote content check. This script does not replace KiCad 10 validation.
 
 No `.kicad_pro` or `.kicad_pcb` has been created in this scaffold yet. The next gate is to open the implementation schematic in KiCad 10.0.7, confirm the project-local GazoE3 library resolves, run ERC and export a fresh XML-netlist. Only after topology parity is confirmed should the board file be created.
 
