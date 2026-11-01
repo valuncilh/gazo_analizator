@@ -77,3 +77,16 @@ A preliminary FreeCAD sensor envelope macro is provided at `freecad/build_joyit_
 - Netlist regression: `python3 cad/scripts/verify_e3_netlist.py`
 
 These files describe the approved E3 logical topology only. They do not claim that the board has been placed, routed, or DRC-checked.
+
+
+## Approved E3 placement and routing plan
+
+The current placement zones and routing priorities derived from the immutable approved XML-netlist are documented in [`placement/e3_placement_plan.md`](placement/e3_placement_plan.md). Conceptual zone diagram: [`placement/e3_placement_zones.svg`](placement/e3_placement_zones.svg).
+
+The netlist audit script is [`scripts/verify_e3_netlist.py`](scripts/verify_e3_netlist.py). Run locally from the repository root with:
+
+```fish
+python3 cad/scripts/verify_e3_netlist.py --write-csv
+```
+
+The script checks the approved XML blob, all 19 component values, 15 exact nets and 47 connected pins, and exports a pad-to-net CSV. It is a topology check only, not KiCad DRC.

@@ -91,3 +91,17 @@ The current PCB is intentionally unrouted. Its DRC report is diagnostic only. No
 - [ ] Run native DRC and fix all unconnected items.
 - [ ] Route E3 and inspect copper/return paths manually.
 - [ ] Run netlist parity again after routing.
+
+
+## Approved E3 placement and connectivity — 01.11.2026
+
+- [x] Extract exact 19-component / 15-net topology from the approved XML-netlist.
+- [x] Freeze the placement zones: A1 interface, DOUT/VT1/RESET, DA1 timing core, LEDs, sounder/SA1/C3, XS1 input.
+- [x] Record A1.3 /AOUT as intentional isolated pad.
+- [x] Record C3.2/SA1.2 as a separate net, not Earth.
+- [x] Add XML blob-locked netlist audit and pad-to-net CSV generator.
+- [ ] Run `python3 cad/scripts/verify_e3_netlist.py --write-csv` locally.
+- [ ] Close VT1 exact lead coordinates and create the matching THT footprint.
+- [ ] Load all assigned footprints in KiCad 10.0.7 and run footprint checks.
+- [ ] Create the E3 PCB skeleton, import exact netlist and review pad-net parity.
+- [ ] Complete 2-layer placement, routing, DRC and 3D enclosure fit.
