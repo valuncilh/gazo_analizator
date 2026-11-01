@@ -22,6 +22,13 @@ EXPECTED = {
         "1": (0.0, -2.54),
         "2": (0.0, 2.54),
     },
+    # Drawing-derived draft for KT3102B, metal-glass KT-1-7 package.
+    # Coordinates are provisional pending a full review of the 1.2 mm callout.
+    "KT3102B_KT1-7_DWG_DRAFT.kicad_mod": {
+        "1": (0.8, -0.96177),   # B
+        "2": (0.0, 1.25),       # C
+        "3": (-0.8, -0.96177),  # E
+    },
 }
 PAD_RE = re.compile(
     r'\(pad\s+"(?P<num>\d+)"\s+\w+\s+\w+\s+'
