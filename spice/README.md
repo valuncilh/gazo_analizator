@@ -77,6 +77,22 @@ sh spice/run_vendor_model_test.sh
 
 Скрипт скачивает архивы TI во временный каталог, включает PSpice-совместимость ngspice, запускает модель и проверяет напряжения S для чистого воздуха, 1000 ppm и 5000 ppm, а также состояние RESET. Создаётся `spice/vendor_chain_plots.png`. Исходные архивы производителя в Git не копируются.
 
+## Графики сохранённых sensitivity-прогонов
+
+Графики построены по сохранённым логам ngspice. Они относятся к упрощённым моделям и не подтверждают фактическую полярность/структуру DOUT модуля SEN-MQ4-V2.
+
+<p align="center">
+  <img src="graphs/r1_pullup_reset_sensitivity.svg" alt="Напряжение RESET в зависимости от сценарного R1 при BF=50, 200 и 500" width="48%">
+  <img src="graphs/r1_pullup_sink_current.svg" alt="Расчётный sink-current DOUT для сценария OC LOW" width="48%">
+</p>
+
+<p align="center">
+  <img src="graphs/mq4_ratio_aout_transfer.svg" alt="Исследовательская модель Rs/R0 к AOUT" width="70%">
+</p>
+
+- [Реестр SPICE-графиков, источников и ограничений](graphs/README.md).
+- [Полный каталог визуальных материалов проекта](../docs/figures/README.md).
+
 ## Сопоставление моделей при общем сигнале S
 
 Для сравнения электронной цепочки без влияния различных моделей датчика запускается отдельный сценарий:
