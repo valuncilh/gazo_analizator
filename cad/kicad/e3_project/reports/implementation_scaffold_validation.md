@@ -43,7 +43,7 @@ The implementation copy contains assignments for:
 - HL1/HL2 — 5 mm LED candidate.
 - R1–R7 — 0805 resistor candidates.
 - SA1 — GazoE3 NKK AS11AP custom footprint.
-- VD1 — DO-35 candidate, pad 1=K and pad 2=A.
+- VD1 — selected DO-35 candidate for KД-2 package, pad 1=K and pad 2=A. KiCad 10 native footprint check remains pending.
 - VT1 — drawing-derived KT3102B KT-1-7 DRAFT, pad 1=B, pad 2=C, pad 3=E.
 - XS1 — Molex PicoBlade 53261-0271.
 
