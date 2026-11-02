@@ -54,6 +54,49 @@ The checker verifies the immutable source blob IDs, reversible-copy relationship
 - No PCB outline, placement, routing or manufacturing exports are created yet.
 - No physical fit, assembly or laboratory validation is claimed.
 
-## Next gate
+## Local KiCad 10.0.7 acceptance gate
 
-Open the schematic in KiCad 10.0.7, confirm that the project-local `GazoE3` library resolves, run ERC and export a fresh XML netlist. Compare the exported topology with the immutable approved XML before creating or editing a board. Then create the dedicated `.kicad_pro` and `.kicad_pcb` files in this directory.
+The next gate is deliberately local because the remote source-content checker cannot execute the user's KiCad installation.
+
+1. Update the working branch locally. Do not create or restore `main`.
+2. Open `gazo_e3_implementation.kicad_sch` in Eeschema. Confirm the schematic opens without missing symbols and inspect the project-local `GazoE3` footprint library path. The footprint table is `fp-lib-table` in this directory.
+3. Run ERC and export a fresh XML-netlist using the KiCad 10 CLI.
+4. Compare the fresh XML with the immutable approved netlist using the parity checker below.
+5. Send the ERC report and parity output for review. Do not create or edit a PCB until topology parity is confirmed.
+
+From the repository root, fish-compatible commands:
+
+```fish
+git fetch origin
+git switch analysis/vendor-behavioral-reconciliation
+git pull --ff-only origin analysis/vendor-behavioral-reconciliation
+
+python3 cad/scripts/verify_e3_implementation.py
+
+mkdir -p cad/kicad/e3_project/reports/local
+
+kicad-cli version
+
+kicad-cli sch erc --severity-all \
+  --output cad/kicad/e3_project/reports/local/implementation_erc.rpt \
+  cad/kicad/e3_project/gazo_e3_implementation.kicad_sch
+
+kicad-cli sch export netlist --format kicadxml \
+  --output cad/kicad/e3_project/reports/local/implementation_fresh.xml \
+  cad/kicad/e3_project/gazo_e3_implementation.kicad_sch
+
+python3 cad/scripts/compare_e3_netlists.py \
+  --candidate cad/kicad/e3_project/reports/local/implementation_fresh.xml
+
+python3 cad/scripts/compare_e3_netlists.py \
+  --candidate cad/kicad/e3_project/reports/local/implementation_fresh.xml \
+  --require-footprints
+```
+
+The first comparison checks the 19 component references/values, all 15 nets and 47 connected pins, plus the protected `/AOUT` and `Net-(SA1-B)` connections. The second also requires a non-empty Footprint field for all 19 components. If the second check reports missing footprint fields, keep the topology result separate and send the XML for investigation.
+
+**ERC is a report, not an automatic pass/fail command here.** The command intentionally omits `--exit-code-violations`, so warnings can be reviewed without treating every warning as a shell failure. Do not suppress warnings or alter the approved schematic to make the report clean.
+
+KiCad 10 CLI syntax is documented in the [official KiCad 10 reference](https://docs.kicad.org/10.0/en/cli/cli.html). ERC usage is `kicad-cli sch erc`; XML export uses `kicad-cli sch export netlist --format kicadxml`.
+
+Do not create `.kicad_pro` or `.kicad_pcb` files yet. They are the next remote CAD step only after the local gate confirms schematic loading, library resolution, ERC review and XML parity.
