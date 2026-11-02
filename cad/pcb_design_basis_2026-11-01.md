@@ -50,7 +50,7 @@ USB-C не добавляется скрытыми цепями в E3. Отде�
 - HA1: Ningbo Kepo HCM1206X, drawing OEM2690R. Drawing specifies 40 mA at 6 V, 4…8 V and −25…+70 °C. The general HCM12X family sheet conflicts on current and voltage. For conservative design retain 40 mA and 4…7 V. Physical pin corresponding to the golden + mark is not unambiguously identified in available documentation and remains TBC.
 - SA1: NKK AS11AP, SPST ON-NONE-OFF, straight PC terminals. AS11 соединяет terminals 3-1, terminal2 отсутствует. Custom pad1/2 correspond to physical1/3. Проверить ориентацию actuator и посадку.
 - VD1: КД510А в стеклянном корпусе КД-2. ГОСТ 18472-88 задаёт для КД-2 корпус Ø1.5…2.2 mm × 3.5…5.4 mm и выводы Ø0.45…0.56 mm. Для CAD выбран KiCad DO-35 horizontal 4×2 mm, pitch 7.62 mm, drill 0.8 mm. Pad 1=K, pad 2=A соответствует frozen E3. KiCad 10 footprint check pending.
-- Пассивы, LED и диод: кандидаты и MPN в реестре footprints. Ток LED/R6/R7 проверить по реальному UOH таймера.
+- Пассивы и LED: кандидаты и MPN в реестре footprints. Ток LED/R6/R7 проверить по worst-case параметрам NE555P и выбранных светодиодов.
 
 ## 7. USB-C питание и токовый бюджет
 
