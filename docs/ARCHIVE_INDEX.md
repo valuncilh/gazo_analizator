@@ -26,10 +26,9 @@
 
 ## Исторические расчёты и сравнения компонентов
 
-| data/initial_data.md | Первичная сводка ранних требований и сценариев | Содержит старые упоминания Joy-IT V1 и Amperka. Не использовать для текущей конфигурации SEN-MQ4-V2/E3. Актуальная замена — requirements/technical_assignment_draft.md и requirements/verification_matrix.md |
-
 | Путь | Содержание | Ограничение |
 |---|---|---|
+| data/initial_data.md | Первичная сводка ранних требований и сценариев | Содержит старые упоминания Joy-IT V1 и Amperka. Не использовать для текущей конфигурации SEN-MQ4-V2/E3. Актуальная замена — requirements/technical_assignment_draft.md и requirements/verification_matrix.md |
 | calculations/amperka_mq4_integration.md | Интерфейс Amperka S → U2 → DOUT' | Не относится к текущей E3 с Joy-IT DOUT |
 | calculations/u2_comparator_selection.md | Выбор TLV7041-Q1 и альтернатив U2 | U2 отсутствует в утверждённой E3 |
 | calculations/mq4_module_check.md | Сравнение ранних модулей MQ-4, включая Joy-IT V1 и Amperka | Не является паспортом SEN-MQ4-V2 |
