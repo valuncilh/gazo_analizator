@@ -10,7 +10,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/E3-APPROVED-18794E?style=flat-square" alt="E3 approved">
   <img src="https://img.shields.io/badge/ERC-0_ERRORS%20%7C%2018_WARNINGS-18794E?style=flat-square" alt="ERC zero errors and 18 warnings">
-  <img src="https://img.shields.io/badge/PCB-NOT_STARTED-64748B?style=flat-square" alt="PCB not started">
+  <img src="https://img.shields.io/badge/PCB-PREPARATION-64748B?style=flat-square" alt="PCB preparation">
   <img src="https://img.shields.io/badge/RPZ-IN_PROGRESS-D97706?style=flat-square" alt="RPZ in progress">
   <img src="https://img.shields.io/badge/DOCUMENTATION-RU-3157A5?style=flat-square" alt="Russian documentation">
   <a href="docs/PROJECT_TAGS.md"><img src="https://img.shields.io/badge/STATUS_TAGS-DEFINED-3157A5?style=flat-square" alt="Project status tags"></a>
@@ -21,6 +21,8 @@
 ## О проекте
 
 Курсовой инженерный проект МАИ по разработке бытового сигнализатора утечки метана (CH₄). В репозитории собраны принципиальная схема KiCad, расчёты, SPICE-модели и документация по подготовке печатной платы и корпуса.
+
+**Как читать обозначения:** E3 — утверждённая принципиальная электрическая схема основной платы, но не готовая печатная плата. E4 — отдельная плата ввода питания USB-C, её схема и PCB ещё не разработаны. РПЗ — расчётно-пояснительная записка.
 
 ## Утверждённая электрическая схема E3
 
@@ -37,6 +39,13 @@
 **Контрольные материалы:** [паспорт утверждённой редакции](cad/project_modification/gost_e3_final/APPROVED_BASELINE.md) · [XML-netlist](cad/project_modification/gost_e3_final/reports/kicad10/netlist_current.xml) · [карта соединений](docs/figures/e3_approved_netlist_map.md) · [ERC](cad/project_modification/gost_e3_final/reports/kicad10/erc_current.rpt).
 
 Обзорная функциональная SVG-визуализация не используется как замена листу ЕСКД. Для проверки оформления и печати открывайте нативный файл в KiCad.
+
+## Проверка проекта за 5–10 минут
+
+1. **Общее состояние:** откройте [путеводитель для проверяющего](docs/REVIEW_GUIDE.md). В нём собраны назначение, результаты и незавершённые части.
+2. **Требования и доказательства:** сверьте [проектное ТЗ](requirements/technical_assignment_draft.md), [матрицу верификации](requirements/verification_matrix.md) и [карту прогресса](docs/project_progress_map.md). ТЗ является самостоятельно подготовленным учебным документом, а не подписанным заданием преподавателя.
+3. **Главный электрический результат:** откройте [утверждённую E3](cad/project_modification/gost_e3_final/gazo_analizator_E3_GOST_itog.kicad_sch), её [паспорт](cad/project_modification/gost_e3_final/APPROVED_BASELINE.md), [XML-netlist](cad/project_modification/gost_e3_final/reports/kicad10/netlist_current.xml) и [ERC-отчёт](cad/project_modification/gost_e3_final/reports/kicad10/erc_current.rpt). В сохранённом ERC — 0 ошибок и 18 предупреждений, причины перечислены в паспорте.
+4. **Расчёты и пояснительная записка:** используйте [каталог глав РПЗ](docs/rpz/README.md). Статус каждой главы и ограничения приведены в самом каталоге.
 
 ## Быстрый доступ
 
