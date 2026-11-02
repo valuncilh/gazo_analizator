@@ -97,4 +97,4 @@
 
 ## 8. Следующий шаг
 
-Выполнить следующий gate P3: открыть `cad/kicad/e3_project/gazo_e3_implementation.kicad_sch` в KiCad 10.0.7, подтвердить загрузку локальной GazoE3 library, выполнить ERC и экспортировать свежий XML. Сверить топологию с immutable approved XML. Если результат совпадает, создать project/board файлы и перейти к placement. Отдельно продолжить уточнение 1.2 mm callout VT1 и оставить A1/HA1 pin mapping TBC. Approved E3 и XML-netlist не менять.
+Выполнить локальный gate P3: открыть `cad/kicad/e3_project/gazo_e3_implementation.kicad_sch` в KiCad 10.0.7, подтвердить загрузку локальной GazoE3 library, выполнить ERC и экспортировать свежий XML. Сравнить его с frozen approved XML скриптом `cad/scripts/compare_e3_netlists.py`. Если parity подтверждён, создать `.kicad_pro`/`.kicad_pcb` в отдельном каталоге реализации и перейти к placement. Координатный callout 1.2 mm VT1 оставить TBC, не блокируя предварительную CAD-компоновку. A1/HA1 pin mapping остаются TBC. Approved E3 и XML-netlist не менять.
