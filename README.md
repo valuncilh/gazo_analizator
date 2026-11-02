@@ -53,7 +53,7 @@
 |---|---|
 | Начать знакомство и проверить проект | [Маршрут для преподавателя и рецензента](docs/REVIEW_GUIDE.md) |
 | Посмотреть состояние работ | [Карта прогресса](docs/project_progress_map.md) · [визуальная карта SVG](docs/project_progress_map.svg) |
-| Изучить расчётно-пояснительную записку | [Структура и материалы РПЗ](docs/rpz/README.md) |
+| Изучить расчётно-пояснительную записку | [Главы и статусы РПЗ](docs/rpz/README.md) · [контрольная ODT-сборка, OneDrive](https://1drv.ms/w/c/24fda6920aa8c92a/IQBgvF5tTSGsRpjx8u47tfMPAWUgI9pUcU) |
 | Открыть стандарт оформления документации | [Documentation Style Guide](docs/DOCUMENTATION_STYLE.md) |
 | Разобраться в статусных метках | [Теги и статусы материалов](docs/PROJECT_TAGS.md) |
 | Посмотреть графики и иллюстрации | [Каталог изображений](docs/figures/README.md) |
