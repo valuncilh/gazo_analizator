@@ -5,7 +5,7 @@
 **Базовый commit при открытии этапов 0–1:** `314f8290cacf44b82ffa9761a7be3eaa0d2fd4b1`  
 **Политика веток:** [docs/branch_policy.md](branch_policy.md)  
 **Главная матрица приёмки:** [requirements/verification_matrix.md](../requirements/verification_matrix.md)  
-**Инженерный журнал:** [engineering_log_2026-10-25.md](engineering_log_2026-10-25.md)
+**Текущий инженерный журнал:** [engineering_log_2026-11-02.md](engineering_log_2026-11-02.md). Предыдущие записи: [25.10.2026](engineering_log_2026-10-25.md) и [01.11.2026](engineering_log_2026-11-01.md).
 
 > Карта показывает ход разработки и зависимости. Она не заменяет матрицу верификации. Статус PASS всегда относится только к указанному виду проверки, а не к физическому изделию в целом.
 
