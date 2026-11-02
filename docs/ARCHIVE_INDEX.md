@@ -26,6 +26,8 @@
 
 ## Исторические расчёты и сравнения компонентов
 
+| data/initial_data.md | Первичная сводка ранних требований и сценариев | Содержит старые упоминания Joy-IT V1 и Amperka. Не использовать для текущей конфигурации SEN-MQ4-V2/E3. Актуальная замена — requirements/technical_assignment_draft.md и requirements/verification_matrix.md |
+
 | Путь | Содержание | Ограничение |
 |---|---|---|
 | calculations/amperka_mq4_integration.md | Интерфейс Amperka S → U2 → DOUT' | Не относится к текущей E3 с Joy-IT DOUT |
