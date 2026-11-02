@@ -24,7 +24,7 @@ All 19 E3 references have a candidate footprint assignment. These are engineerin
 | HL1, HL2 | LED_D5.0mm | Pad 1=cathode according to the symbol. Verify candidate MPN drawings. |
 | R1–R7 | R_0805_2012Metric | 0805 candidates. Verify dissipation and current separately. |
 | SA1 | GazoE3:NKK_AS11AP_SPST_P5.08mm | Pad 1/2 map to physical terminals 1/3. Actuator orientation remains a CAD enclosure constraint. |
-| VD1 | D_DO-35_SOD27_P7.62mm_Horizontal | Pad 1=K, pad 2=A. Close dimensional candidate for KD510A. |
+| VD1 | D_DO-35_SOD27_P7.62mm_Horizontal | SELECTED candidate for KД-2 package. Pad 1=K, pad 2=A. KiCad 10 footprint validation remains pending. |
 | VT1 | GazoE3:KT3102B_KT1-7_DWG_DRAFT | Drawing-derived draft. Pad 1=B, 2=C, 3=E. Upper-view coordinate interpretation remains TBC. |
 | XS1 | Molex PicoBlade 53261-0271 1x02 | Pin 1=/VCC and pin 2=Earth per approved E3. Cable orientation remains TBC. |
 
