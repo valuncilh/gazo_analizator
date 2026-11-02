@@ -15,6 +15,6 @@ R5,Resistor_SMD:R_0805_2012Metric,CANDIDATE,Check power derating and 0805 land p
 R6,Resistor_SMD:R_0805_2012Metric,CANDIDATE,Check LED current and resistor dissipation in complete E3 topology.
 R7,Resistor_SMD:R_0805_2012Metric,CANDIDATE,Check LED/sound network currents and resistor dissipation.
 SA1,GazoE3:NKK_AS11AP_SPST_P5.08mm,CUSTOM CANDIDATE,Pad 1/2 map to NKK physical terminals 1/3. Confirm actuator orientation in enclosure CAD.
-VD1,Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal,CANDIDATE / pad map reviewed,Pad 1=K and pad 2=A. Compare exact KD510A body drawing to DO-35 courtyard and hole diameter.
+VD1,Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal,SELECTED CANDIDATE / pad map reviewed,KD-2 body envelope is compatible with DO-35. Pad 1=K and pad 2=A match frozen E3. KiCad 10 native footprint check and implementation pad-to-net review remain pending.
 VT1,GazoE3:KT3102B_KT1-7_DWG_DRAFT,DRAFT / coordinate TBC,Pad 1=B pad 2=C pad 3=E. The 1.2 mm drawing callout still requires coordinate interpretation.
 XS1,Connector_Molex:Molex_PicoBlade_53261-0271_1x02-1MP_P1.25mm_Horizontal,SELECTED / cable orientation TBC,Pin 1=/VCC and pin 2=Earth per approved E3. Harness orientation is not yet defined.
