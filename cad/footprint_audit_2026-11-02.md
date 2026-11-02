@@ -206,7 +206,7 @@ CC1 и CC2 не объединять. USB PD не применяется. Нел
 
 **Контроль копирования:** после сброса только 19 instance-level полей Footprint и возврата имени project instance к исходному значению, текст реализации совпал с утверждённым `.kicad_sch` точно. Отдельно сверены blob IDs approved schematic и XML-netlist. Следовательно, номиналы, symbol graphics, pins, wires, labels и net topology в копии не менялись.
 
-Проверяющий скрипт: `cad/scripts/verify_e3_implementation.py`. Его локальный запуск в KiCad/CachyOS ещё не подтверждён. В текущем scaffold отсутствуют `.kicad_pro` и `.kicad_pcb`. Они не создавались, чтобы не выдавать неподтверждённый KiCad project/board за проверенный. Следующий gate — открыть реализационную схему в KiCad 10.0.7, подтвердить библиотеку, выполнить ERC и экспортировать свежий XML. Только после parity разрешается создавать board.
+Проверяющий скрипт исходной копии: `cad/scripts/verify_e3_implementation.py`. Сравнение свежего XML с approved E3: `cad/scripts/compare_e3_netlists.py`. В текущем scaffold отсутствуют `.kicad_pro` и `.kicad_pcb`. Они не создавались, чтобы не выдавать неподтверждённый KiCad project/board за проверенный. Следующий gate — открыть реализационную схему в KiCad 10.0.7, подтвердить библиотеку, выполнить ERC, экспортировать свежий XML и сравнить топологию указанным parity checker. Только после этого разрешается создавать board.
 
 **Статус:** source-content verification PASS для копии; P3 PARTIAL / PREPARATION. Нативные KiCad ERC, fresh netlist, footprint checks и PCB DRC остаются pending.
 
