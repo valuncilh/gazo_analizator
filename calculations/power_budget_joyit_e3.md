@@ -158,7 +158,7 @@ I_{A1,mathrm{budget,conditional}}=300-77.6=222.4 	ext{мА}
 - Joy-IT SEN-MQ4-V2, datasheet 15.01.2026: https://joy-it.net/files/files/Produkte/SEN-MQ4-V2/SEN-MQ4-V2_Datasheet-EN_2026-01-15.pdf
 - Ningbo Kepo HCM1206X OEM2690R: https://kvarci.ru/files/files/HCM1206X%3DDAP1206X%5BOEM2690%5D.pdf
 - TI NE555 datasheet Rev. K: https://www.ti.com/lit/ds/symlink/ne555.pdf
-- Реальная топология E3: `cad/e3_netlist_map_2026-11-01.md`
-- Таблица компонентов/ограничений: `cad/footprint_audit_2026-11-02.md`
+- Реальная топология E3: `cad/kicad/e3_project/reports/e3_pad_net_map.csv`
+- Таблица компонентов/ограничений: `docs/preliminary_element_list_PЭ3.md`
 
 Физическое изготовление, лабораторные измерения, измерение токов и выбор F1 по фактической аппаратной нагрузке не входят в текущий объём.

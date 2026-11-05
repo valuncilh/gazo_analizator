@@ -115,5 +115,5 @@ P(t)=e^{-\lambda_{\Sigma}t},\qquad T_{\mathrm{ср}}=\frac{1}{\lambda_{\Sigma}}
 - MAI, «Основы конструирования и технологии производства РЭС», 1998, §4.6, приложение 10, таблицы П.10.1–П.10.6.
 - Joy-IT SEN-MQ4-V2 datasheet 2026-01-15: https://joy-it.net/files/files/Produkte/SEN-MQ4-V2/SEN-MQ4-V2_Datasheet-EN_2026-01-15.pdf
 - TI NE555 datasheet: https://www.ti.com/lit/ds/symlink/ne555.pdf
-- MPN and package audit: cad/footprint_audit_2026-11-02.md.
+- MPN and package audit: docs/preliminary_element_list_PЭ3.md.
 - Current power/thermal estimates: calculations/power_budget_joyit_e3.md, calculations/thermal_joyit_e3.md.

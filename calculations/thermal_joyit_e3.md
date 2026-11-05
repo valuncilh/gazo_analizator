@@ -140,6 +140,6 @@ Delta T=P_{Sigma}R_{	heta,mathrm{eq}}
 - Joy-IT SEN-MQ4-V2, datasheet 15.01.2026: https://joy-it.net/files/files/Produkte/SEN-MQ4-V2/SEN-MQ4-V2_Datasheet-EN_2026-01-15.pdf
 - Ningbo Kepo HCM1206X OEM2690R: https://kvarci.ru/files/files/HCM1206X%3DDAP1206X%5BOEM2690%5D.pdf
 - TI NE555 datasheet Rev. K: https://www.ti.com/lit/ds/symlink/ne555.pdf
-- Основание проектирования: `cad/pcb_design_basis_2026-11-01.md`
-- Реестр компонентов и ограничений: `cad/footprint_audit_2026-11-02.md`
+- Основание проектирования: `requirements/technical_assignment_draft.md`
+- Реестр компонентов и ограничений: `docs/preliminary_element_list_PЭ3.md`
 - Расчёт токов: `calculations/power_budget_joyit_e3.md`
