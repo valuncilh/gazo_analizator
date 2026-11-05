@@ -59,3 +59,18 @@ OpenCascade BREP-проверка STEP-файлов выполнена. В от�
 ## Артефакты
 
 Параметрический CadQuery/OpenCascade генератор, FreeCAD-макрос импорта STEP в отдельные FCStd-документы, индивидуальные STEP/STL, рендеры и отчёты проверки входят в локальный пакет выдачи. В среде подготовки отсутствовал FreeCAD runtime, поэтому исполнение макроса и сохранение нативных FCStd не подтверждены.
+
+
+## Download package — OneDrive
+
+The binary CAD deliverables are stored in OneDrive to keep the Git repository lightweight.
+
+Folder: https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sbb2ea0711d03488397c51b21fdd9c450
+
+- [Full package: both concepts, STEP/STL, PCB and sensor references, renders, source and reports](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sa096a265e43e4dfba1e67214b414a197)
+- [Variant A — separate housing parts, STEP](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sb1f90170b7634e36a3ec9f04644e5423)
+- [Variant B — integrated housing parts, STEP](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s3fff9de9288a470fbbe738ef1ce23b5e)
+- [Variant A + B assembled models and PCB STEP](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s8bd83add2f424df3a8b39c8d92530e99)
+- [Package README](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s158b5e1700fd4842824d5c7baf1eda49)
+
+OneDrive permissions are unchanged. Access requires an account that already has permission to the folder/files.
