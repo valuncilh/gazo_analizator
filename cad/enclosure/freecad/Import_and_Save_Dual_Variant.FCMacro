@@ -1,0 +1,172 @@
+# -*- coding: utf-8 -*-
+"""Create four FreeCAD review documents from the enclosure STEP exports.
+
+Run from cad/enclosure/freecad/ after extracting the CAD package.
+Creates separate housing-only and complete-assembly documents for variants A/B.
+"""
+import FreeCAD as App
+import FreeCADGui as Gui
+import Part
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+def load_step(rel):
+    path = ROOT / rel
+    if not path.exists():
+        raise RuntimeError("Missing STEP: " + str(path))
+    shape = Part.Shape()
+    shape.read(str(path))
+    if shape.isNull() or not shape.isValid():
+        raise RuntimeError("Invalid STEP BREP: " + str(path))
+    return shape
+
+def add_group(doc, name, label):
+    group = doc.addObject("App::DocumentObjectGroup", name)
+    group.Label = label
+    return group
+
+def add_part(doc, group, name, label, rel, offset=(0,0,0), color=(0.65,0.7,0.8), visible=True):
+    obj = doc.addObject("Part::Feature", name)
+    obj.Label = label
+    obj.Shape = load_step(rel)
+    obj.Placement.Base = App.Vector(*map(float, offset))
+    obj.addProperty("App::PropertyString", "SourceSTEP", "CAD provenance")
+    obj.SourceSTEP = rel
+    obj.addProperty("App::PropertyString", "Status", "CAD provenance")
+    obj.Status = "STEP BREP reference; parametric master is the CadQuery source"
+    try:
+        obj.ViewObject.ShapeColor = color
+        obj.ViewObject.Visibility = visible
+        obj.ViewObject.DisplayMode = "Flat Lines"
+    except Exception:
+        pass
+    group.addObject(obj)
+    return obj
+
+def add_parameters(doc, variant):
+    group = add_group(doc, "DesignParameters", "Design basis / parameters")
+    values = [
+        ("Variant", "App::PropertyString", variant),
+        ("Status", "App::PropertyString", "PRELIMINARY / NOT FOR FABRICATION"),
+        ("PCBWidth", "App::PropertyLength", 59.0),
+        ("PCBHeight", "App::PropertyLength", 45.0),
+        ("PCBThickness", "App::PropertyLength", 1.6),
+        ("PCBMountHoleDiameter", "App::PropertyLength", 2.2),
+        ("PCBMountPitchX", "App::PropertyLength", 52.0),
+        ("PCBMountPitchY", "App::PropertyLength", 37.0),
+        ("SensorLength", "App::PropertyLength", 41.0),
+        ("SensorWidth", "App::PropertyLength", 25.0),
+        ("SensorHeight", "App::PropertyLength", 21.0),
+        ("SensorInternalGeometry", "App::PropertyString", "ESTIMATED reference only"),
+        ("ThermalValidation", "App::PropertyString", "No thermal simulation or powered test"),
+        ("GasExchangeValidation", "App::PropertyString", "Open area is geometric only; diffusion not tested"),
+    ]
+    for name, typ, value in values:
+        group.addProperty(typ, name, "Design basis")
+        setattr(group, name, value)
+
+def finish(doc, path, visible_groups):
+    for obj in doc.Objects:
+        if obj.TypeId == "App::DocumentObjectGroup":
+            show = obj.Name in visible_groups or obj.Name == "DesignParameters"
+            for child in obj.Group:
+                try:
+                    child.ViewObject.Visibility = show
+                except Exception:
+                    pass
+    doc.recompute()
+    try:
+        Gui.activeDocument().activeView().viewAxonometric()
+        Gui.activeDocument().activeView().fitAll()
+    except Exception:
+        pass
+    doc.saveAs(str(path))
+
+BASE=(0.42,0.50,0.66)
+LID=(0.72,0.78,0.87)
+PCB=(0.12,0.43,0.32)
+SENSOR=(0.78,0.60,0.30)
+A_OFFSET=(-61.0,7.0,0.0)
+
+def new_doc(name, label, variant):
+    if App.getDocument(name):
+        App.closeDocument(name)
+    doc=App.newDocument(name,label)
+    add_parameters(doc,variant)
+    return doc
+
+# A / housing-only document
+doc=new_doc("Gazo_E3_A_Housings","Variant A / separate housings","A")
+closed=add_group(doc,"HousingClosed","A / closed housings")
+expl=add_group(doc,"HousingExploded","A / separated parts")
+parts=[
+ ("main_base","Main enclosure base","variant_A/A_main_base.step",(0,0,0),BASE),
+ ("main_lid","Main enclosure lid","variant_A/A_main_lid.step",(0,0,0),LID),
+ ("sensor_base","Sensor enclosure base","variant_A/A_sensor_base.step",A_OFFSET,BASE),
+ ("sensor_grille","Sensor ventilated grille","variant_A/A_sensor_grille.step",A_OFFSET,LID),
+ ("strain","Sensor cable strain relief","variant_A/A_sensor_strain_relief.step",A_OFFSET,BASE),
+ ("bridge","Coupling bridge","variant_A/A_coupling_bridge.step",(0,0,0),BASE)]
+for n,l,p,o,c in parts:
+    add_part(doc,closed,"C_"+n,l,p,o,c)
+    dz=15.0 if ("lid" in n or "grille" in n) else 0.0
+    add_part(doc,expl,"X_"+n,l+" / exploded",p,(o[0],o[1],o[2]+dz),c)
+finish(doc,ROOT/"variant_A"/"Gazo_E3_variant_A_housings.FCStd",{"HousingClosed"})
+
+# A / complete assembly document. The source PCB STEP contains 19 solids.
+doc=new_doc("Gazo_E3_A_Assembly","Variant A / complete assembly","A / complete")
+closed=add_group(doc,"AssembledClosed","A / closed exterior")
+opened=add_group(doc,"AssembledOpen","A / open service view")
+expl=add_group(doc,"AssemblyExploded","A / exploded view")
+parts=[
+ ("main_base","Main enclosure base","variant_A/A_main_base.step",(0,0,0),BASE,True),
+ ("pcb","E3 PCB / actual user KiCad STEP","variant_A/A_main_pcb_reference.step",(0,0,0),PCB,False),
+ ("main_lid","Main enclosure lid","variant_A/A_main_lid.step",(0,0,0),LID,True),
+ ("sensor_base","Sensor enclosure base","variant_A/A_sensor_base.step",A_OFFSET,BASE,True),
+ ("sensor","SEN-MQ4-V2 / internals estimated","variant_A/A_sensor_module_reference.step",A_OFFSET,SENSOR,False),
+ ("sensor_grille","Sensor grille","variant_A/A_sensor_grille.step",A_OFFSET,LID,True),
+ ("strain","Cable strain relief","variant_A/A_sensor_strain_relief.step",A_OFFSET,BASE,True),
+ ("bridge","Coupling bridge","variant_A/A_coupling_bridge.step",(0,0,0),BASE,True),
+ ("cable","A1 four-wire cable reference","variant_A/A_sensor_cable_reference.step",(0,0,0),BASE,False)]
+for n,l,p,o,c,v in parts:
+    add_part(doc,closed,"C_"+n,l,p,o,c,v)
+    dz=13.0 if n in ("main_lid","sensor_grille") else 0.0
+    add_part(doc,opened,"O_"+n,l,p,(o[0],o[1],o[2]+dz),c,True)
+    dz2=18.0 if dz else 0.0
+    add_part(doc,expl,"X_"+n,l+" / exploded",p,(o[0],o[1],o[2]+dz2),c,True)
+finish(doc,ROOT/"variant_A"/"Gazo_E3_variant_A_assembly.FCStd",{"AssembledOpen"})
+
+# B / housing-only document
+doc=new_doc("Gazo_E3_B_Housings","Variant B / integrated two-chamber housing","B")
+closed=add_group(doc,"HousingClosed","B / housing assembled")
+expl=add_group(doc,"HousingExploded","B / housing parts separated")
+parts=[
+ ("base","Integrated base with divider","variant_B/B_integrated_base.step",(0,0,0),BASE),
+ ("electronics_lid","Electronics chamber lid","variant_B/B_electronics_lid.step",(0,0,0),LID),
+ ("sensor_grille","Sensor chamber grille","variant_B/B_sensor_grille.step",(0,0,0),LID)]
+for n,l,p,o,c in parts:
+    add_part(doc,closed,"C_"+n,l,p,o,c)
+    dz=15.0 if n!="base" else 0.0
+    add_part(doc,expl,"X_"+n,l+" / exploded",p,(o[0],o[1],o[2]+dz),c)
+finish(doc,ROOT/"variant_B"/"Gazo_E3_variant_B_housings.FCStd",{"HousingClosed"})
+
+# B / complete assembly document
+doc=new_doc("Gazo_E3_B_Assembly","Variant B / complete integrated assembly","B / complete")
+closed=add_group(doc,"AssembledClosed","B / closed exterior")
+opened=add_group(doc,"AssembledOpen","B / open service view")
+expl=add_group(doc,"AssemblyExploded","B / exploded view")
+parts=[
+ ("base","Integrated base and divider","variant_B/B_integrated_base.step",(0,0,0),BASE,True),
+ ("pcb","E3 PCB / actual user KiCad STEP","variant_B/B_main_pcb_reference.step",(0,0,0),PCB,False),
+ ("electronics_lid","Electronics chamber lid","variant_B/B_electronics_lid.step",(0,0,0),LID,True),
+ ("sensor","SEN-MQ4-V2 / internals estimated","variant_B/B_sensor_module_reference.step",(0,0,0),SENSOR,False),
+ ("sensor_grille","Sensor chamber grille","variant_B/B_sensor_grille.step",(0,0,0),LID,True),
+ ("cable","A1 four-wire cable reference","variant_B/B_sensor_cable_reference.step",(0,0,0),BASE,False)]
+for n,l,p,o,c,v in parts:
+    add_part(doc,closed,"C_"+n,l,p,o,c,v)
+    dz=14.0 if n in ("electronics_lid","sensor_grille") else 0.0
+    add_part(doc,opened,"O_"+n,l,p,(o[0],o[1],o[2]+dz),c,True)
+    add_part(doc,expl,"X_"+n,l+" / exploded",p,(o[0],o[1],o[2]+(20.0 if dz else 0.0)),c,True)
+finish(doc,ROOT/"variant_B"/"Gazo_E3_variant_B_assembly.FCStd",{"AssembledOpen"})
+
+App.Console.PrintMessage("Created four FreeCAD documents: A housings, A assembly, B housings, B assembly.\n")
