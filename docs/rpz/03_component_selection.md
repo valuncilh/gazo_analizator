@@ -248,7 +248,7 @@ $$
 
 Для DA1 физический кандидат — TI NE555P в PDIP-8, footprint Package_DIP:DIP-8_W7.62mm. Символ/значение утверждённой E3 не изменяются. У NE555P рабочий диапазон 0…+70 °C, который покрывает +10…+35 °C. Проверка соответствия функций выводов symbol/footprint выполняется в отдельной реализации KiCad.
 
-Для VT1 паспорт семейства КТ3102 различает КТ3102Б с металлостеклянным корпусом и КТ3102БМ с пластмассовым. Старую посадочную модель KT-26/TO-92 использовать нельзя. Создан KT-1-7 drawing-derived footprint DRAFT; дополнительный размер 1,2 мм пока не сопоставлен центрам площадок, поэтому coordinates TBC.
+Для VT1 паспорт семейства КТ3102 различает КТ3102Б с металлостеклянным корпусом и КТ3102БМ с пластмассовым. По результатам сверки с физическим исполнением выбран готовый footprint стандартной библиотеки KiCad. Самодельный drawing-derived footprint DRAFT не является выбранным вариантом. Перед выпуском требуется нативная проверка PCB/DRC.
 
 Для HA1 выбран Ningbo Kepo HCM1206X, чертёж OEM2690R. Model-specific drawing указывает 6 V rated, 4…8 V operating, maximum rated current 40 mA at 6 V и SPL 88 dB/10 cm. Общая спецификация HCM12X расходится: 4…7 V operating и 30 mA max at 6 V. Для консервативного анализа использовать 40 mA и пересечение 4…7 V, −25…+70 °C. Геометрия OEM2690R: Ø12 mm, height 9.5 mm, lead pitch 7.6±0.2 mm, leads Ø0.6 mm. Физический вывод, соответствующий положительной маркировке, не определён однозначно доступным drawing и остаётся TBC.
 
@@ -256,4 +256,4 @@ $$
 
 Пассивы-кандидаты: Yageo RC0805FR 1% 0.125W для R1–R7; Yageo CC0805KRX7R9BB104 для C2; Multicomp Pro MCGLR16V476M5X11 для C1/C3. Для HL1/HL2 выбраны Kingbright WP7083SED/J3 и WP7083ZGD/G 5mm diffused. Для VD1 оставлен стандартный кандидат DO-35 horizontal с проверкой катода и pin numbering.
 
-Пользовательская библиотека GazoE3 содержит HCM1206X_P7.6mm, NKK_AS11AP_SPST_P5.08mm и KT3102B_KT1-7_DWG_DRAFT. Source-level checker cad/scripts/verify_gazo_e3_footprints.py проверяет номера/координаты pads в трёх custom footprints. Нативные проверки в KiCad 10.0.7 ещё pending.
+Пользовательская библиотека GazoE3 содержит HCM1206X_P7.6mm и NKK_AS11AP_SPST_P5.08mm. Для VT1 используется выбранный стандартный footprint KiCad. Source-level checker проверяет пользовательские footprints HA1 и SA1. Нативные проверки в KiCad 10.0.7 ещё pending.
