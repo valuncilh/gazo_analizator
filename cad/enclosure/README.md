@@ -61,16 +61,15 @@ OpenCascade BREP-проверка STEP-файлов выполнена. В от�
 Параметрический CadQuery/OpenCascade генератор, FreeCAD-макрос импорта STEP в отдельные FCStd-документы, индивидуальные STEP/STL, рендеры и отчёты проверки входят в локальный пакет выдачи. В среде подготовки отсутствовал FreeCAD runtime, поэтому исполнение макроса и сохранение нативных FCStd не подтверждены.
 
 
-## Download package — OneDrive
+## Public download links (OneDrive)
 
-The binary CAD deliverables are stored in OneDrive to keep the Git repository lightweight.
+Anonymous read-only links are enabled. Anyone with these links can view/download the files. No expiration was returned by OneDrive.
 
-Folder: https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sbb2ea0711d03488397c51b21fdd9c450
+- [Open CAD package folder (all files)](https://1drv.ms/f/c/24fda6920aa8c92a/IgBxoC67Ax2DSJfFGyH92cRQAcOIKdfqULnv10oopRvZU00)
+- [Full release candidate ZIP](https://1drv.ms/u/c/24fda6920aa8c92a/IQBlopagPuT7TaHmchS0FKGXAS6nOzJYxuf6eEByLbKPKZ0)
+- [Assembled A+B STEP models and PCB STEP](https://1drv.ms/u/c/24fda6920aa8c92a/IQDdOtiLQi_zTaiznI2SUw6ZAfn14_3gls4PJWbEq-bU7YM)
+- [Variant A separate housing parts STEP](https://1drv.ms/u/c/24fda6920aa8c92a/IQBwAfmxY7c2TqPsnwRkTlQjAVITT76uKrvgFF0UsyhaSFY)
+- Variant B separate housing parts: available in the [public package folder](https://1drv.ms/f/c/24fda6920aa8c92a/IgBxoC67Ax2DSJfFGyH92cRQAcOIKdfqULnv10oopRvZU00).
+- [Package README](https://1drv.ms/t/c/24fda6920aa8c92a/IQAXXosV_QBCSIJNXHuvHtpJAYTpJyBCsGtJiWx01bEtGoo)
 
-- [Full package: both concepts, STEP/STL, PCB and sensor references, renders, source and reports](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sa096a265e43e4dfba1e67214b414a197)
-- [Variant A — separate housing parts, STEP](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sb1f90170b7634e36a3ec9f04644e5423)
-- [Variant B — integrated housing parts, STEP](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s3fff9de9288a470fbbe738ef1ce23b5e)
-- [Variant A + B assembled models and PCB STEP](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s8bd83add2f424df3a8b39c8d92530e99)
-- [Package README](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s158b5e1700fd4842824d5c7baf1eda49)
-
-OneDrive permissions are unchanged. Access requires an account that already has permission to the folder/files.
+The folder and generated links use anonymous/view scope. No edit permission was granted.
