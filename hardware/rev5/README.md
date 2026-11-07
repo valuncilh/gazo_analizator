@@ -82,6 +82,6 @@ The user-selected Stage04R1 USB-C power-input design has been continued into Sta
 - [Stage05R1 package ZIP](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sec5ba7e03c40486783deb16d01dd8787)
 - [Stage05R1 GitHub artifact pointer](stage05_usb_c_routing/README.md)
 - Output PCB SHA-256: `3104cb4586c7380c1fde19ac9c895258d0de1e725fa75c4b5ec246cc6ac284f9`.  
-Updated Stage05 ZIP SHA-256: `dfa5cd6134340e97d9eb477e8acaab5cf505606623358e5729f3183cdfd3a1ac`.
+Updated Stage05 ZIP SHA-256: `30439da1fbe47a807b26c77a37506e4f62faed7b742fa2b26f9600cef810dd52`.
 
 Native KiCad 10.0.7 zone refill, ERC/DRC and 3D Viewer review are still required. Input protection/current limit is not selected because the exact SEN-MQ4-V2 current envelope is not documented in the available product data. Do not assume 1.5 A/3 A USB-C capability from passive Rd resistors. The next mechanical stage starts only after PCB freeze and STEP export, and must keep the MQ-4 sensing element's gas-exchange path open.
