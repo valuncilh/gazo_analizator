@@ -7,8 +7,8 @@
 
 - [Open MAI_GAZ_actor Stage05R2 folder](https://1drv.ms/f/c/24fda6920aa8c92a/IgDPFgSptzpLQJyZHScUdd5oASWy8KHSvaSuY83UYVDvcps)
 - Package ZIP: `Gazo_E3_Rev5_Stage05R2_USB_C_Long_Edge_Enclosure.zip`
-- ZIP SHA-256: `c3f30d029f9ea571c3d5b0b1def44688390c210f19110d0d646f1067e1874bbf`
-- SHA manifest: `SHA256SUMS_STAGE05R2.txt` (94 source/deliverable file hashes)
+- ZIP SHA-256: `d2c5a75ad8433e7b29547def1180584c102724a630ae25411e0d0f908bebf2d8`
+- SHA manifest: `SHA256SUMS_STAGE05R2.txt` (98 source/deliverable file hashes)
 - Manifest SHA-256: `b79d40b15dc7898bb8f23b7d16f8899195b2ae7e1a1dae9565abdd22ed6ade3c`
 
 ## Source baseline
@@ -68,4 +68,4 @@ The OneDrive package also includes `cad/freecad/Import_Stage05R2_VariantB_ExactU
 - [ExactUSB macro README in OneDrive](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s59b4ce9cb84f4a2ea24cd6405d85ca08)
 - [USB4105 model provenance note](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s08fe1ff39f8b4f7297f0160a4e26978c)
 
-The exact model macro has **not** been executed in FreeCAD in this environment. The exact J1 STEP import, BREP recompute, USB wall/aperture match and physical plug clearance remain pending on a machine with FreeCAD 1.1.x and the KiCad 3D library installed. Do not treat the case aperture as frozen.
+The exact model macro has **not** been executed in FreeCAD in this environment. Current package ZIP SHA-256: `d2c5a75ad8433e7b29547def1180584c102724a630ae25411e0d0f908bebf2d8`. Manifest SHA-256: `557a345fa895754f0d6831abb407e85019a013997f9f6d29e235f3a040e3ccc0` (98 files, all matched). The exact J1 STEP import, BREP recompute, USB wall/aperture match and physical plug clearance remain pending on a machine with FreeCAD 1.1.x and the KiCad 3D library installed. Do not treat the case aperture as frozen.
