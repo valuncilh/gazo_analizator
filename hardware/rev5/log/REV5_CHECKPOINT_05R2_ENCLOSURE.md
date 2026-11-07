@@ -33,13 +33,13 @@ Source: Stage04R2 long-edge USB-C PCB
 ## Artifacts
 
 - OneDrive Stage05R2: https://1drv.ms/f/c/24fda6920aa8c92a/IgDPFgSptzpLQJyZHScUdd5oASWy8KHSvaSuY83UYVDvcps
-- ZIP SHA-256: `d193ba3e0f0099174fef39ea11ab826372ee4247ced9bd35d95b780c029e4f61`
+- ZIP SHA-256: `c3f30d029f9ea571c3d5b0b1def44688390c210f19110d0d646f1067e1874bbf`
 - Manifest SHA-256: `b79d40b15dc7898bb8f23b7d16f8899195b2ae7e1a1dae9565abdd22ed6ade3c`
 
 ## Not done
 
 - Native KiCad Refill/ERC/DRC/3D Viewer.
-- Exact USB4105 supplier model or physical plug fit.
+- Exact USB4105 ordering suffix and matching supplier STEP/physical plug fit. The official GCT model generator has been located; shell-stake suffix 060/095/120 needs selection.
 - Native KiCad PCB STEP export.
 - Native FreeCAD recompute or FCStd output. FreeCAD runtime was unavailable; an import macro is provided.
 - Printing, physical assembly, gas response, sensor thermal and other hardware tests.
