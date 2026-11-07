@@ -10,7 +10,7 @@
 - Editable PCB: `gazo_e3_rev5_usb_c_power_R2_routed_candidate.kicad_pcb`
 - Stage04R1 source PCB SHA-256: `78840a0598cb7c21e2f556c656f200bf174126a7d0d94fdd7e42a084c783e162`
 - Stage05R1 output PCB SHA-256: `3104cb4586c7380c1fde19ac9c895258d0de1e725fa75c4b5ec246cc6ac284f9`
-- Stage05R1 package ZIP SHA-256: `a6d8b47537e86e7fff7bf269bd1389cdcbd081fca498986f861a79f6e92115f1`
+- Stage05R1 package ZIP SHA-256: `dfa5cd6134340e97d9eb477e8acaab5cf505606623358e5729f3183cdfd3a1ac`
 
 ## Changes
 
@@ -28,7 +28,8 @@
 - 207 original track segments retained; 11 added (218 total).
 - 21 original vias retained; 2 added (23 total).
 - Relevant pad-to-net mappings, VBUS trunk endpoint and Earth-zone polygon containment checked.
-- No source-level foreign-track, segment-pair, foreign-pad or via clearance flags below 0.20 mm in the performed checks.
+- No source-level foreign-track, segment-pair, foreign-pad, via-to-foreign-pad or via-to-foreign-via clearance flags below 0.20 mm in the performed checks.
+- A separate via-clearance script checks each new via against every foreign-net pad and existing via. Both new vias returned zero flags below 0.20 mm.
 
 ## Not done
 
