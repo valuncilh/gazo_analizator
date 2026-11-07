@@ -104,7 +104,7 @@ Stage04R2 is the active PCB source. Stage05R2 adapts the existing Variant B Turt
 
 - [Stage05R2 OneDrive work folder](https://1drv.ms/f/c/24fda6920aa8c92a/IgDPFgSptzpLQJyZHScUdd5oASWy8KHSvaSuY83UYVDvcps)
 - [Stage05R2 GitHub artifact pointer](stage05r2_enclosure/README.md)
-- Portable archive SHA-256: `d2c5a75ad8433e7b29547def1180584c102724a630ae25411e0d0f908bebf2d8`.
+- Portable archive SHA-256: `f6ad50de8aa6090d91aa7414e1b13722553e68e4d04cae2a7cd61ca859966450`.
 - 34/34 CadQuery/OpenCascade geometry checks and 4/4 STL topology checks passed.
 
 **Limitations:** USB4105 is represented by a simplified envelope pending exact supplier STEP/physical plug verification. GCT's official page offers a 3D Model Generator; the embedded preview is `USB4105-XX-A-060`, and the configurable selector includes 060/095/120 shell-stake variants. The exact BOM suffix is not frozen yet. Native KiCad checks and native FreeCAD recompute/FCStd output remain open. The Stage05R2 case is preliminary, not a fabrication release. Maintain the MQ-4 gas-exchange opening.
