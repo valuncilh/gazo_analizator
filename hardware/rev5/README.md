@@ -23,17 +23,15 @@
 [Stage 02R1 folder](https://1drv.ms/f/c/24fda6920aa8c92a/IgBUjMa7o1GZRKMwXr-iLH4hASQkkyOK6vWCT9Bu4TfnNjM)  
 [Stage 02R1 ZIP](https://1drv.ms/u/c/24fda6920aa8c92a/IQDAWMaNvP3mRa2qagX9FJv2ASr4eo9tBjtxCLmf4kpHgzo)
 
-## Stage 03 — новый PCB-файл с USB-C placement candidate
+## Stage 03R1 — PCB-файл с USB-C placement candidate. Исправленный статический аудит
 
-[Stage 03 folder](https://1drv.ms/f/c/24fda6920aa8c92a/IgDAm06P30bhQL4P4ST_QhPPAeOlVd40lZh9Fiod0AYJDjM)  
-[Полный Stage 03 ZIP](https://1drv.ms/u/c/24fda6920aa8c92a/IQAlDy0rexlITJ0wN4pNTUEEASRN_l5IGK1uom9vudSFx8E)  
-[Открыть PCB-кандидат в OneDrive](https://1drv.ms/u/c/24fda6920aa8c92a/IQC87rWVi-XjQohqghzMzB0QAaIV4ggXGasmHesOrV-PHiQ)  
-[PNG размещения](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s93860d4fdfdc4bab9aa4c37353784c5b)  
-[SVG размещения](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s5cd79c8880564216a401fb1c06b1c56e)
+[Stage 03R1 folder](https://1drv.ms/f/c/24fda6920aa8c92a/IgD9TMKIfuSgQa_O5KN5br94ATrWzH_ylvcmSph4diZcSJg)  
+[Полный исправленный ZIP](https://1drv.ms/u/c/24fda6920aa8c92a/IQC7gkvDHw_XQpgaaWC95G_bAXE4XZnOtcgD5lZMVie5jjY)  
+[Открыть PCB-кандидат в OneDrive](https://1drv.ms/u/c/24fda6920aa8c92a/IQCzsC2WfO1qQJQvzRn-aAclAT1bQYZMinb9vIwQqvtia24)
 
-В Stage 03 сохранены новый файл `gazo_e3_rev5_usb_c_placement.kicad_pcb`, исходная PCB, footprint/3D references, скрипты генерации, статический аудит, таблицы отверстий, общий drill schedule, PNG/SVG, README и SHA-256 manifest.
+Предыдущий Stage03 ZIP с неверно указанным количеством via сохранён в прежней папке и не удалён. Stage03R1 содержит исправленные отчёт, JSON, скрипт и SHA-256 manifest. Сам PCB-файл не менялся, его SHA-256 остаётся `ee73c41b8612b430947aaaffa848d30d5a6a46b0dfcfc78702200968f5eb1537`.
 
-### Текущий статус Stage 03
+### Текущий статус Stage03R1
 
 - Создан новый PCB-файл на базе исходной разведённой платы.
 - Добавлены J1 (USB4105), R8 и R9.
@@ -41,8 +39,10 @@
 - CC1 и CC2 разведены раздельно на индивидуальные 5,1 кОм pull-down резисторы.
 - D+/D−/SBU остались NC.
 - XS1 сохранён как временный старый вход. Удалять его будем только после проверки новой цепи питания.
-- Существующие M2 отверстия, исходный контур, дорожки, via и зоны сохранены.
+- Существующие M2 отверстия, исходный контур, дорожки, 21 via и 5 зон сохранены.
 - Статический анализ геометрии/UUID/привязок выполнен.
+
+**Коррекция аудита:** физически в исходной плате и в Stage03-кандидате по 21 via. Первоначальный скрипт ошибочно учёл ещё четыре параметра `(vias not_allowed)` из правил DRC. В Stage03R1 исправлен способ подсчёта. Данные PCB не менялись.
 
 **Нативный KiCad ERC/DRC не запускался.** До финализации нужно открыть файл в KiCad, обновить зоны и запустить DRC. Это не заявляется как DRC PASS.
 
