@@ -7,7 +7,7 @@
 
 - [Open MAI_GAZ_actor Stage05R2 folder](https://1drv.ms/f/c/24fda6920aa8c92a/IgDPFgSptzpLQJyZHScUdd5oASWy8KHSvaSuY83UYVDvcps)
 - Package ZIP: `Gazo_E3_Rev5_Stage05R2_USB_C_Long_Edge_Enclosure.zip`
-- ZIP SHA-256: `d193ba3e0f0099174fef39ea11ab826372ee4247ced9bd35d95b780c029e4f61`
+- ZIP SHA-256: `c3f30d029f9ea571c3d5b0b1def44688390c210f19110d0d646f1067e1874bbf`
 - SHA manifest: `SHA256SUMS_STAGE05R2.txt` (94 source/deliverable file hashes)
 - Manifest SHA-256: `b79d40b15dc7898bb8f23b7d16f8899195b2ae7e1a1dae9565abdd22ed6ade3c`
 
