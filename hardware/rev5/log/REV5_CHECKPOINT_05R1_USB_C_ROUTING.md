@@ -17,6 +17,7 @@ Source: Stage04R1 USB-C power-input replacement
 
 - OneDrive folder: https://1drv.ms/f/c/24fda6920aa8c92a/IgAgXbcAlTe0QL9uANXJdqSpATBVvYnUDeqEwvsW4NEXSsY
 - Stage05 ZIP: https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sec5ba7e03c40486783deb16d01dd8787
+- Updated ZIP SHA-256: `dfa5cd6134340e97d9eb477e8acaab5cf505606623358e5729f3183cdfd3a1ac`
 - Output PCB SHA-256: `3104cb4586c7380c1fde19ac9c895258d0de1e725fa75c4b5ec246cc6ac284f9`
 
 ## Checks actually performed
@@ -27,6 +28,7 @@ Source: Stage04R1 USB-C power-input replacement
 - VBUS route termination on an existing `/VCC` track endpoint.
 - Earth via containment in the B.Cu Earth zone polygon.
 - Source-level foreign-net track, segment-pair, pad and via clearance checks.
+- A separate via-to-foreign-pad and via-to-foreign-via check. Both new Earth vias returned zero flags below 0.20 mm.
 - SHA-256 manifest and ZIP integrity.
 
 ## Not done
