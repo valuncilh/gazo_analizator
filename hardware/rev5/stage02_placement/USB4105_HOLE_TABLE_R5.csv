@@ -1,0 +1,11 @@
+id,feature,type,x_mm,y_mm,drill,pad,notes
+MH1,PCB mounting,NPTH,172.0000,127.5000,2.20,2.20,M2 preserve exact center
+MH2,PCB mounting,NPTH,224.0000,127.5000,2.20,2.20,M2 preserve exact center
+MH3,PCB mounting,NPTH,172.0000,164.5000,2.20,2.20,M2 preserve exact center
+MH4,PCB mounting,NPTH,224.0000,164.5000,2.20,2.20,M2 preserve exact center
+USB_LOC_XP,USB4105 locator,NPTH,200.8900,129.7800,0.65,none,Manufacturer footprint locating hole at global +X after 180 degree rotation
+USB_LOC_XM,USB4105 locator,NPTH,195.1100,129.7800,0.65,none,Manufacturer footprint locating hole at global -X after 180 degree rotation
+USB_SH_XP_ROW1,USB4105 shell stake,PTH slot,202.3200,130.2800,0.60x1.70,1.00x2.10,Manufacturer footprint shell retention
+USB_SH_XM_ROW1,USB4105 shell stake,PTH slot,193.6800,130.2800,0.60x1.70,1.00x2.10,Manufacturer footprint shell retention
+USB_SH_XP_ROW2,USB4105 shell stake,PTH slot,202.3200,126.1000,0.60x1.40,1.00x1.80,Manufacturer footprint shell retention
+USB_SH_XM_ROW2,USB4105 shell stake,PTH slot,193.6800,126.1000,0.60x1.40,1.00x1.80,Manufacturer footprint shell retention
