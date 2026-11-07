@@ -10,7 +10,7 @@
 - Editable PCB: `gazo_e3_rev5_usb_c_power_R2_routed_candidate.kicad_pcb`
 - Stage04R1 source PCB SHA-256: `78840a0598cb7c21e2f556c656f200bf174126a7d0d94fdd7e42a084c783e162`
 - Stage05R1 output PCB SHA-256: `3104cb4586c7380c1fde19ac9c895258d0de1e725fa75c4b5ec246cc6ac284f9`
-- Stage05R1 package ZIP SHA-256: `dfa5cd6134340e97d9eb477e8acaab5cf505606623358e5729f3183cdfd3a1ac`
+- Stage05R1 package ZIP SHA-256: `30439da1fbe47a807b26c77a37506e4f62faed7b742fa2b26f9600cef810dd52`
 
 ## Changes
 
