@@ -30,7 +30,7 @@ Case transform:
 - 8/8 STL watertight, winding-consistent, one component.
 - Все экспортированные STEP BREP re-import и solid-count checks PASS.
 - Объёмные пересечения для основных узлов равны нулю при используемых упрощённых reference-моделях.
-- ZIP CRC PASS. В SHA manifest 44 файлов. ZIP SHA-256: `8dc190fbe34b4dcf2d345082e44deb52476dddb06af926c35f97b9d4f06d2322`.
+- ZIP CRC PASS. В SHA manifest 44 файлов. ZIP SHA-256: `6b370ea5381fcc663303474600a78a95cbf4e51f25ff8fe12a04bff8882f5f78`.
 
 ## Ограничения
 
