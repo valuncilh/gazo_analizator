@@ -1,4 +1,4 @@
-# Stage03 — USB-C placement candidate review
+# Stage03R1 — USB-C placement candidate review
 
 ## Changed
 
@@ -13,7 +13,7 @@
 - S-expression structural balance: PASS.
 - UUID uniqueness: 946/946, no duplicates.
 - Footprint/reference count: 26, no duplicate references.
-- Track segments/vias/zones unchanged vs source: 207/25/5.
+- Track segments/vias/zones unchanged vs source: 207/21/5.
 - M2 centers unchanged: PASS.
 - USB PCB-edge datum equals Edge.Cuts Y=123.500: PASS.
 - USB electrical pad assignment: static inspection PASS.
@@ -21,6 +21,10 @@
 - Minimum courtyard clearance: 0.885 mm.
 - Minimum new pad-edge to old track-edge clearance: 0.3169 mm.
 - Existing track crossings through USB courtyard: 0.
+
+## Audit correction
+
+The first Stage03 report counted four `(vias not_allowed)` DRC rule tokens as physical via objects. Direct recount of top-level physical `(via ...)` blocks gives **21 vias** in both the source and candidate. The PCB byte stream is unchanged. The earlier 25-via claim is superseded by this correction.
 
 ## Not done
 
@@ -33,11 +37,15 @@
 
 ## User review requested
 
-Open the Stage03 board in KiCad 10.0.7 and inspect:
+Open the Stage03R1 board in KiCad 10.0.7 and inspect:
 1. USB-C orientation and the side of the case where it exits.
 2. The two CC resistors and their clearance to the buzzer/LED.
 3. The four shell stakes and two locating holes.
 4. 3D Viewer connector shell projection.
 5. Board hole table against any mechanical STEP/reference.
 
-Run Refill All Zones and native DRC locally if possible. Send the DRC report or a screenshot of the PCB Editor/3D Viewer. Do not modify or save over the immutable baseline; use a copy of Stage03.
+Run Refill All Zones and native DRC locally if possible. Send the DRC report or a screenshot of the PCB Editor/3D Viewer. Do not modify or save over the immutable baseline; use a copy of Stage03R1.
+
+## Next engineering step
+
+Create the matching Rev5 schematic first, using a USB-C symbol whose shell pin number is `SH` to match the footprint, then define input protection from the verified 5 V load/current. After schematic/PCB parity is established, route VBUS, ground and the two CC branches. Only then remove XS1 from a subsequent revision. Do not overwrite this Stage03R1 placement candidate.
