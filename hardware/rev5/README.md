@@ -24,7 +24,7 @@
 [PCB datum audit](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s10acf4d4200b498fbe1bf3142caa9ca1)
 
 SHA-256:
-- ZIP: `8dc190fbe34b4dcf2d345082e44deb52476dddb06af926c35f97b9d4f06d2322`
+- ZIP: `6b370ea5381fcc663303474600a78a95cbf4e51f25ff8fe12a04bff8882f5f78`
 - Closed assembly STEP: `cc646e56c6b6bf8f3ae25c751619fc125ca3eed8d26dbfbfcf16347d29986e62`
 - Geometry validation: `f32b3b6e99f39078ac61f270d3fbf28c8031a35c388e6c80dbeaf723f272ac15`
 - FreeCAD macro: `a2439ab4a6476c296ef6b3c3c877ea71cc8e491688bdcaf916b5f7262ad57b41`
