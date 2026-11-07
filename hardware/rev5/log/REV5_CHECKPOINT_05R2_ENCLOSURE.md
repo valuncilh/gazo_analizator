@@ -33,7 +33,7 @@ Source: Stage04R2 long-edge USB-C PCB
 ## Artifacts
 
 - OneDrive Stage05R2: https://1drv.ms/f/c/24fda6920aa8c92a/IgDPFgSptzpLQJyZHScUdd5oASWy8KHSvaSuY83UYVDvcps
-- ZIP SHA-256: `c3f30d029f9ea571c3d5b0b1def44688390c210f19110d0d646f1067e1874bbf`
+- ZIP SHA-256: `d2c5a75ad8433e7b29547def1180584c102724a630ae25411e0d0f908bebf2d8`
 - Manifest SHA-256: `b79d40b15dc7898bb8f23b7d16f8899195b2ae7e1a1dae9565abdd22ed6ade3c`
 
 ## Not done
