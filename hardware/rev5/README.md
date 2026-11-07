@@ -97,3 +97,14 @@ Stage03R1 сохранён как промежуточная ревизия, и�
 5. При замечаниях выпускать Stage04R3, не перезаписывая Stage04R2.
 6. После пользовательского/native подтверждения экспортировать PCB STEP и актуализировать параметрическую модель корпуса в FreeCAD.
 7. Подтвердить пусковой/установившийся ток SEN-MQ4-V2 и выбрать защиту входа.
+
+## Stage05R2 — Variant B Turtle adapted to Stage04R2 USB-C long-edge PCB
+
+Stage04R2 is the active PCB source. Stage05R2 adapts the existing Variant B Turtle R3 case to the long-edge USB-C orientation, retaining the separate A1 sensor side and open MQ-4 gas-exchange geometry.
+
+- [Stage05R2 OneDrive work folder](https://1drv.ms/f/c/24fda6920aa8c92a/IgDPFgSptzpLQJyZHScUdd5oASWy8KHSvaSuY83UYVDvcps)
+- [Stage05R2 GitHub artifact pointer](stage05r2_enclosure/README.md)
+- Portable archive SHA-256: `d193ba3e0f0099174fef39ea11ab826372ee4247ced9bd35d95b780c029e4f61`.
+- 34/34 CadQuery/OpenCascade geometry checks and 4/4 STL topology checks passed.
+
+**Limitations:** USB4105 is represented by a simplified envelope pending exact supplier STEP/physical plug verification. Native KiCad checks and native FreeCAD recompute/FCStd output remain open. The Stage05R2 case is preliminary, not a fabrication release. Maintain the MQ-4 gas-exchange opening.
