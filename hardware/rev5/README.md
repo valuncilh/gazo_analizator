@@ -7,7 +7,31 @@
 
 Переработать двухслойную плату E3 под вход питания USB-C 5 В, сохранить существующую схему газового датчика/сигнализатора и согласовать PCB с новой параметрической моделью корпуса Variant B Turtle.
 
-## Текущий этап — Stage05R3: корпус FreeCAD Variant B Turtle для PCB R3
+## Текущий этап — Stage05R4: корпус Split-Deck
+
+Полностью переработана архитектура Stage05R3. Вместо удлинённой общей оболочки используется отдельный электронный короб с самостоятельной крышкой и независимая открытая съёмная кассета MQ-4. USB-C и SA1 выполнены сменными вставками, добавлены световоды HL1/HL2, акустические отверстия HA1 и втулка кабельного ввода A1.
+
+- Электронный короб: 65×70×28 мм, крышка 3 мм. Полный габарит около 65×114×31 мм.
+- PCB Stage04R3 неизменна. Координаты J1/A1/HL1/HL2/HA1/SA1 и 4×M2 проверены из PCB S-expression: 10/10 PASS.
+- Геометрический журнал: 52/52 PASS. STL: 8/8 watertight.
+- Макрос FreeCAD 1.1.x подготовлен, но native recompute и FCStd generation пока не выполнены.
+- USB4105 exact suffix/plug fit, реальная ориентация SA1 и внутренние размеры SEN-MQ4-V2 остаются открытыми. Не manufacturing release.
+
+[Stage05R4 папка OneDrive](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sb995a379d890428daa116d62d08965fa)  
+[Stage05R4 полный ZIP](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sbee3c9b863624278839e68f9866b4323)  
+[FreeCAD макрос](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sef8f81d3cd0a4c0d8478190539087a75)  
+[Закрытая сборка PNG](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s8070dcc867b94110995297f7be3024f4)  
+[PCB datum audit](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s10acf4d4200b498fbe1bf3142caa9ca1)
+
+SHA-256:
+- ZIP: `8dc190fbe34b4dcf2d345082e44deb52476dddb06af926c35f97b9d4f06d2322`
+- Closed assembly STEP: `cc646e56c6b6bf8f3ae25c751619fc125ca3eed8d26dbfbfcf16347d29986e62`
+- Geometry validation: `f32b3b6e99f39078ac61f270d3fbf28c8031a35c388e6c80dbeaf723f272ac15`
+- FreeCAD macro: `a2439ab4a6476c296ef6b3c3c877ea71cc8e491688bdcaf916b5f7262ad57b41`
+
+Подробности: `этапы/Этап 05R4 — корпус Split-Deck/README.md` и `log/REV5_CHECKPOINT_VLAR_STAGE05R4_SPLIT_DECK_2026-11-07.md`.
+
+## Архивный этап — Stage05R3: корпус FreeCAD Variant B Turtle для PCB R3
 
 Продолжена механическая конструкция Variant B Turtle Stage05R2, поскольку Stage04R3 изменил только ориентацию R8/R9 на 180°. Все footprint centres, J1/A1, контур PCB и M2 датумы остались прежними.
 
