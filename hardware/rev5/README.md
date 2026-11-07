@@ -16,52 +16,60 @@
 - Use a single full-size lid fixed by four corner fasteners. Do not create side-wall slots or cutouts for the lid. The enclosure side walls must remain continuous except for intentional interfaces and ventilation.
 - Put USB-C on a separate case side from the sensor connector.
 
+## Immutable source baseline
+
+The original PCB, schematic, board STEP, DRC reports, repair patch, and previous enclosure/sensor packages have been archived without modification.
+
+- [Open immutable baseline folder on OneDrive](https://1drv.ms/f/c/24fda6920aa8c92a/IgAnVFgpfc9WQK9nWuSqdRp3AbaSeJAc8tlWTGNKwYewT6k)
+- [Download complete immutable baseline ZIP](https://1drv.ms/u/c/24fda6920aa8c92a/IQBHREov1F1bSay7DkcBEFrQAWv0sY4f9sOWANQYgvgHAPk)
+
+The folder also contains individual source files and `SHA256SUMS.txt`. Do not overwrite or delete these inputs. The mandatory rule is documented in [SOURCE_PRESERVATION_POLICY.md](SOURCE_PRESERVATION_POLICY.md).
+
 ## Source-of-truth inputs
 
-1. `gazo_e3_E3_DRC2_repaired.kicad_pcb` uploaded by the user. This is the best available routed PCB base. It contains 23 footprints, 207 track segments, 21 vias, and 5 zones.
-2. `gazo_e3_implementation(8).kicad_pcb` and the original-coordinate PCB STEP are geometry references. They confirm the 59 × 45 mm outline and M2 pattern, but the KiCad reference file is not a fully routed PCB.
-3. `gazo_e3_implementation(2).kicad_sch` is the current uploaded schematic candidate. It must be reconciled with the selected routed PCB and new USB-C input.
-4. Variant B Turtle R3 is a mechanical precedent only. Its external outline and PCB/sensor layout are references, not the final Rev5 enclosure.
+1. `gazo_e3_E3_DRC2_repaired.kicad_pcb` — routed PCB candidate, 23 footprints, 207 track segments, 21 vias, 5 copper zones.
+2. `gazo_e3_implementation(8).kicad_pcb` — second PCB snapshot and placement geometry reference, with the same outline and hole pattern but without routes/zones.
+3. `gazo_e3_implementation(2).kicad_sch` — uploaded schematic candidate. It must be reconciled with the chosen routed PCB and the new USB-C input.
+4. `gazo_e3_implementation.step` — previous PCB STEP export. This is an immutable mechanical reference, not a Rev5 export.
+5. R3 Turtle and sensor packages — preserved references only. The Rev5 enclosure must be regenerated against the frozen Rev5 PCB STEP.
 
 ## Confirmed mechanical datums
 
-- PCB outline: X = 168.5…227.5 mm, Y = 123.5…168.5 mm in the routed DRC2 source coordinate frame.
-- PCB thickness: 1.6 mm.
-- Holes: MH1 (172.0, 127.5), MH2 (224.0, 127.5), MH3 (172.0, 164.5), MH4 (224.0, 164.5) mm.
-- Hole diameter: Ø2.2 mm, NPTH.
-- Hole pattern: 52.0 × 37.0 mm.
-- A1: (173.0, 140.0), currently on the left short edge.
-- XS1: (173.0, 151.21), the power connector to be removed.
-- USB-C candidate: GCT USB4105 top-mount horizontal receptacle on the opposite short edge, with PCB-edge alignment derived from the manufacturer footprint and drawing. Final coordinate and orientation are pending pad/courtyard/3D verification.
+- PCB outline in routed source coordinate frame: X = 168.5…227.5 mm, Y = 123.5…168.5 mm.
+- PCB size: 59 × 45 mm. Thickness: 1.6 mm.
+- Four mounting holes Ø2.2 mm, NPTH:
+  - MH1: (172.0, 127.5) mm.
+  - MH2: (224.0, 127.5) mm.
+  - MH3: (172.0, 164.5) mm.
+  - MH4: (224.0, 164.5) mm.
+- Pattern: 52 × 37 mm.
+- A1: (173.0, 140.0), rotation −90°, sensor interface.
+- XS1: (173.0, 151.21), rotation −90°, old power input to be removed only from the new Rev5 working copy.
 
 ## Electrical intent
 
-USB-C is a sink-only 5 V input, not a data port. VBUS pins are paralleled to the existing `/VCC` rail. All GND pins and shield are connected to `Earth`. CC1 and CC2 each receive an independent Rd = 5.1 kΩ to `Earth`. D+/D− and SBU pins remain unconnected and are documented as such. Input protection and current limiting must be checked against measured/expected load before release.
+USB-C is a sink-only 5 V input, not a data port. VBUS pins are paralleled to the existing `/VCC` rail. GND pins and shield connect to the ground return. CC1 and CC2 each receive an independent Rd = 5.1 kΩ to ground. D+/D− and SBU pins remain unconnected and explicitly documented. Input protection and current limit must be checked against the actual load before release.
 
 ## Validation policy
 
-Do not claim native KiCad DRC PASS unless KiCad 10 DRC has actually been run on the saved board with zones refilled. Static geometry/net/track checks are supplemental and must be reported separately. Do not hide or exclude DRC violations merely to obtain a clean report.
+Do not claim native KiCad DRC PASS unless KiCad DRC has actually been run on the saved project after zones are refilled. Static geometry/connectivity checks are supplemental and must be reported separately. Do not hide or exclude DRC violations merely to obtain a clean report.
 
 Before release, validate:
 - schematic ↔ PCB parity and net connectivity
-- full USB4105 recommended land pattern and shell stakes
+- USB4105 manufacturer-recommended land pattern, shell stakes, pin map and 3D envelope
 - board outline and copper clearances
-- all routing and via clearances
-- solder-mask bridge clearances
+- routing and via clearances
+- solder-mask and silkscreen clearances
 - THT drill/pad and courtyard clearances
-- silkscreen-to-mask and silkscreen-to-courtyard clearance
 - unconnected items and dangling tracks
 - filled zones and connectivity after refill
-- 3D fit of USB-C plug shell and case aperture
+- USB-C plug fit and case aperture
 - M2 hole table and case boss centers
-- STEP/FreeCAD import and final enclosure interference checks
+- STEP/FreeCAD import and enclosure interference checks
 
-## Next steps
+## Current checkpoint
 
-1. Complete the PCB baseline audit and determine the exact VBUS, GND, CC, and existing XS1 trace topology.
-2. Replace XS1 with USB-C and add the two CC pull-down resistors. Add required VBUS protection based on the circuit load.
-3. Update the schematic and PCB together. Preserve all unrelated nets and the existing M2 pattern.
-4. Re-route and verify the whole PCB. Produce the final coordinate/hole schedule.
-5. Freeze the PCB and export an authoritative PCB STEP.
-6. Build the Rev5 FreeCAD enclosure around the final board and exact connector envelope.
-7. Run final KiCad DRC and mechanical checks, package the source/STEP/STL/FCStd outputs, and update the engineering log.
+- Done: branch created, source baseline archived, hashes recorded, source preservation policy committed.
+- Not done: no new schematic, PCB, USB-C footprints or Rev5 FreeCAD outputs have been released yet.
+- Next: audit the power net and XS1 connectivity, freeze the USB4105 footprint orientation and recommended land pattern, then update schematic and PCB in a separate versioned working copy.
+- Environment note: KiCad CLI and FreeCAD are not installed in the current preparation environment. Native ERC/DRC and FreeCAD recompute are not being claimed.
