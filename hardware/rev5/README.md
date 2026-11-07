@@ -7,7 +7,38 @@
 
 Переработать двухслойную плату E3 под вход питания USB-C 5 В, сохранить существующую схему газового датчика/сигнализатора и согласовать PCB с новой параметрической моделью корпуса Variant B Turtle.
 
-## Текущий этап — Stage04R3: исправление DRC на пользовательской шелкографии
+## Текущий этап — Stage05R3: корпус FreeCAD Variant B Turtle для PCB R3
+
+Продолжена механическая конструкция Variant B Turtle Stage05R2, поскольку Stage04R3 изменил только ориентацию R8/R9 на 180°. Все footprint centres, J1/A1, контур PCB и M2 датумы остались прежними.
+
+- Основание, единая крышка, четыре M2 стойки, две направляющие сенсора MQ-4.
+- USB-C на длинной стенке +X, противоположной A1.
+- Плата 59×45×1.6 мм; внешний envelope корпуса 65×127×32.5 мм.
+- 35/35 геометрических BREP/координатных/interference/STEP round-trip проверок PASS.
+- 4/4 STL watertight, consistent winding, один компонент каждая.
+- Подготовлен макрос FreeCAD 1.1.x для четырёх FCStd: Housing, Closed Assembly, Service Assembly, Exploded Assembly.
+- Native FreeCAD recompute/FCStd ещё не выполнялся; FCStd не заявляются как уже созданные.
+- Exact GCT USB4105 ordering code/shell-stake suffix не подтверждён. Окно 9.8×4.2 мм и gap 3.05 мм provisional.
+- PCB STEP — упрощённый механический reference без copper/vias R3; внутренние позиции SEN-MQ4-V2 частично оценочные.
+
+[Stage05R3 папка OneDrive](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sb1cfb4de66144227ab8e2f89e1d86737)
+[Stage05R3 ZIP](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s5ec2f86d9fc54eb2a98d5a10e64fc8f0)
+[Макрос FreeCAD](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s2ff2efe0e18840a5b9cc15ac610a8c85)
+[Габаритный чертёж](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s885ee2fba2704caabd3616606890ba2a)
+[Закрытая сборка PNG](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sd43b36c74147467e84e050964c73e912)
+[Сервисная сборка PNG](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sd3f354fbe2114cd782bad291f20b0752)
+[Геометрический аудит](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sc98c2ce897584b8e9fb9bc7bb97af3d7)
+
+Контрольные суммы:
+- PCB Stage04R3: ac120c090f22f84342e3be6635b659c08afdf5558355b38c02d2e7035dfdc671
+- ZIP Stage05R3: 05257f5a223b15f5565075254262a195e6ed0c7cebce4b35eb373db22d7968d9
+- FreeCAD macro: 8d9ce80a07ce62d856567f25e7e79211179df70f5646b8de7e27d381eab51086
+- Geometry validation: d73bc02f22b613c52bebb35b267e84f67302cada8ff068a3d2e1056190c02237
+- Mesh validation: 36ec28f8d9ca188c4776f94017c8909271d3edfb1d2cf3c5bcfe5c1b92a898b6
+
+Подробности: этапы/Этап 05R3 — корпус Variant B Turtle/README.md и checkpoint log/REV5_CHECKPOINT_VLAR_STAGE05R3_FREECAD_ENCLOSURE_2026-11-07.md.
+
+## Архивный этап — Stage04R3: исправление DRC на пользовательской шелкографии
 
 Исправления выполнены поверх последней пользовательской версии R2, включая его изменения шелкографии. Исходная пользовательская PCB сохранена в Stage04R3-пакете отдельно.
 
