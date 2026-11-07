@@ -60,3 +60,12 @@
 5. Keep the MQ-4 gas-exchange path open.
 
 Binary CAD/EDA files are stored in OneDrive. This GitHub folder is the versioned pointer/checkpoint, not a claim that binary project files are committed to Git.
+## Exact USB4105 3D model integration
+
+The OneDrive package also includes `cad/freecad/Import_Stage05R2_VariantB_ExactUSB.FCMacro` and `README_FREECAD_EXACT_USB.md`. The macro searches the installed official KiCad 3D library for `USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal.step` and replaces the one known simplified J1 body only when exactly one envelope match exists. Otherwise it explicitly retains the simplified fallback.
+
+- [ExactUSB FreeCAD macro in OneDrive](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s899718b29019442fb2fddba1b8dda7f0)
+- [ExactUSB macro README in OneDrive](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s59b4ce9cb84f4a2ea24cd6405d85ca08)
+- [USB4105 model provenance note](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s08fe1ff39f8b4f7297f0160a4e26978c)
+
+The exact model macro has **not** been executed in FreeCAD in this environment. The exact J1 STEP import, BREP recompute, USB wall/aperture match and physical plug clearance remain pending on a machine with FreeCAD 1.1.x and the KiCad 3D library installed. Do not treat the case aperture as frozen.
