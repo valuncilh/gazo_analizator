@@ -76,11 +76,12 @@ Stage03R1 сохранён как промежуточная ревизия, и�
 
 ## Stage05R1 — USB-C copper routing candidate
 
-The user-selected Stage04R1 USB-C power-input design has been continued into Stage05R1. R8/R9 were rotated 180° without changing pad numbers or nets; 11 F.Cu segments and 2 Earth vias were added for CC1, CC2, duplicated VBUS and USB-C ground returns. The original Stage04 PCB and schematic remain preserved. The Stage05 result is a **source-level routed candidate only**.
+The user-selected Stage04R1 USB-C power-input design has been continued into Stage05R1. R8/R9 were rotated 180° without changing pad numbers or nets; 11 F.Cu segments and 2 Earth vias were added for CC1, CC2, duplicated VBUS and USB-C ground returns. The original Stage04 PCB and schematic remain preserved. The Stage05 result is a **source-level routed candidate only**. A separate via-to-foreign-pad/via clearance check also returned zero static flags below 0.20 mm.
 
 - [Stage05R1 OneDrive work folder](https://1drv.ms/f/c/24fda6920aa8c92a/IgAgXbcAlTe0QL9uANXJdqSpATBVvYnUDeqEwvsW4NEXSsY)
 - [Stage05R1 package ZIP](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sec5ba7e03c40486783deb16d01dd8787)
 - [Stage05R1 GitHub artifact pointer](stage05_usb_c_routing/README.md)
-- Output PCB SHA-256: `3104cb4586c7380c1fde19ac9c895258d0de1e725fa75c4b5ec246cc6ac284f9`.
+- Output PCB SHA-256: `3104cb4586c7380c1fde19ac9c895258d0de1e725fa75c4b5ec246cc6ac284f9`.  
+Updated Stage05 ZIP SHA-256: `dfa5cd6134340e97d9eb477e8acaab5cf505606623358e5729f3183cdfd3a1ac`.
 
 Native KiCad 10.0.7 zone refill, ERC/DRC and 3D Viewer review are still required. Input protection/current limit is not selected because the exact SEN-MQ4-V2 current envelope is not documented in the available product data. Do not assume 1.5 A/3 A USB-C capability from passive Rd resistors. The next mechanical stage starts only after PCB freeze and STEP export, and must keep the MQ-4 sensing element's gas-exchange path open.
