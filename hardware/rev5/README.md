@@ -5,9 +5,40 @@
 
 ## Цель
 
-Переработать двухслойную плату E3 под вход питания USB-C 5 В, сохранить существующую схему газового датчика/сигнализатора и согласовать PCB с новой параметрической моделью корпуса Variant B Turtle.
+Переработать двухслойную плату E3 под вход питания USB-C 5 В, сохранить существующую схему газового датчика/сигнализатора и согласовать PCB с отдельным модульным корпусом и удалённым сенсорным модулем.
 
-## Текущий этап — Stage05R5: Wall/Table Mount для уточнённой PCB и SEN-MQ4-V2
+## Текущий этап — Stage05R5R2: установка уточнённой PCB и Type-C
+
+Исправлена компоновка основного корпуса по новой пользовательской STL платы. Плата теперь действительно установлена внутри корпуса по правильному 90° преобразованию координат. Реальные четыре монтажных отверстия выровнены с опорами M2. Два прямоугольных placeholder тела J1 удалены из mesh, вместо них помещён визуальный BREP USB4105 с металлической скруглённой оболочкой, внутренней полостью, язычком и контактами.
+
+- Основной корпус 50,8×69×27,2 мм.
+- Крышка на 4×M2.5, PCB на 4×M2, крепление корпуса к стене/столу — 4×M3.
+- Сквозное отверстие USB-C в стенке +X: 9,4×3,6 мм, R1,7. Без рамки, накладки и вставки.
+- A1 выведен через соседнюю +Y стенку по фактическому положению на новой PCB.
+- На крышке только «Детектор метана» и CH4 в шестиугольнике.
+- Сенсорный модуль на точной STEP-сборке SEN-MQ4-V2 сохранён самостоятельным, с отдельной винтовой крышкой и 4×M3 креплением.
+- Геометрия: 38/38 PASS. STEP round-trip 12/12 PASS. Корпусные STL 4/4 watertight.
+- PCB остаётся многокомпонентной mesh-сборкой 3319 компонентов, 85214 facets. Она включена в GLB и FreeCAD macro, но не в BREP-only STEP.
+
+[Stage05R5R2 OneDrive folder](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s43e86e3cd2554478a3df742657a181a8)  
+[Full ZIP](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sc21342f6d56843a29c551f0a3fd855f6)  
+[Installed PCB GLB](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sf8263a6cc1934c44b4296f94f10a0ed3)  
+[FreeCAD macro](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s0bb718d2d183470cbba71423e23361e1)  
+[PCB installed in base preview](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s3a05f6db64ed4ec5bd30d0702b37afbd)  
+[USB-C receptacle detail](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s48ec2b341e304224b8d2ba0298b3682b)
+
+SHA-256:
+- ZIP: `3657170fd33f151edff0ae570b49526113ba1bcc761c39b1cbe0d00b33bcaa58`
+- Manifest: `ea24ab7e0acd80144f0638c52ec09469711ca3dbb945a6964fd94ade0e5e6e23`
+- Main installed GLB: `2b93f2d0e007a9438ecc0eebedfc174f1ef8d9e4afdd35979d52f3fc46155dba`
+- Corrected PCB source: `0a6489358d9ff5d8a8fbd0f9e5916dcffeefa2e925c6cb4ce9a08b2220c7703b`
+- Sensor STEP source: `d064355fa01dd6ed99a5886260bc3dadf1f246ba39076c1bb64b40fadc283ee7`
+- Geometry validation: `618d5699504a9601fc490b95fbb27a630cf28b0c23960b56273bc6628c1c253a`
+- USB4105 visual BREP: `b62f208d44d870ac329c477d9cc61b82c0ef42234bd45a22b835b01cac2cbbe7`
+
+Подробности: `этапы/Этап 05R5R2 — corrected PCB USB-C/README.md` и checkpoint `log/REV5_CHECKPOINT_VLAR_STAGE05R5R2_PCB_INSTALLED_USB_C_2026-11-08.md`.
+
+## Архивный этап — Stage05R5: Wall/Table Mount до корректной установки PCB и USB-C
 
 Корпус полностью перестроен по двум новым пользовательским механическим исходникам. Основной электронный модуль и сенсорный блок стали отдельными самостоятельными корпусами, каждый с собственным настенным/настольным креплением и съёмной винтовой крышкой.
 
