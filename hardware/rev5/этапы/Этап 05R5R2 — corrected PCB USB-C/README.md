@@ -68,10 +68,12 @@ The macro `Создать_нативные_документы_Stage05R5R2.FCMacr
 ## Checksums
 
 - ZIP SHA-256: `3657170fd33f151edff0ae570b49526113ba1bcc761c39b1cbe0d00b33bcaa58`
-- Manifest SHA-256: `a pending`
+- Manifest SHA-256: `ea24ab7e0acd80144f0638c52ec09469711ca3dbb945a6964fd94ade0e5e6e23`
 - Main installed GLB: `2b93f2d0e007a9438ecc0eebedfc174f1ef8d9e4afdd35979d52f3fc46155dba`
 - Main PCB source: `0a6489358d9ff5d8a8fbd0f9e5916dcffeefa2e925c6cb4ce9a08b2220c7703b`
 - Sensor source STEP: `d064355fa01dd6ed99a5886260bc3dadf1f246ba39076c1bb64b40fadc283ee7`
 - Geometry report: `618d5699504a9601fc490b95fbb27a630cf28b0c23960b56273bc6628c1c253a`
 - USB4105 visual BREP: `b62f208d44d870ac329c477d9cc61b82c0ef42234bd45a22b835b01cac2cbbe7`
 
+
+[Closed main housing STEP](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sfac205a4b97f41b1a0b2b167c78cadcb)
