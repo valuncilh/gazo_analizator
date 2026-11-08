@@ -7,7 +7,7 @@
 
 Переработать двухслойную плату E3 под вход питания USB-C 5 В, сохранить существующую схему газового датчика/сигнализатора и согласовать PCB и SEN-MQ4-V2 в одном общем корпусе с общей съёмной крышкой.
 
-## Текущий этап — Stage05R5R3R1: единый корпус, HL1/HL2 и HA1
+## Текущий этап — Stage05R5R3R2: правильная сторона зенковок настенного крепления
 
 В Stage05R5R3 исправлена сама архитектура. Основная плата газоанализатора и SEN-MQ4-V2 установлены **в один общий корпус** под **одной общей съёмной крышкой**. Обе платы горизонтальны и лежат на одной высоте Z=6,4…8,0 мм. Каждая закреплена четырьмя винтами M2. Общая крышка держится на шести M2.5. Сам корпус имеет четыре отверстия M3 для монтажа на стену/панель/стол.
 
@@ -17,24 +17,20 @@ A1 основной PCB направлен к четырём штырьковы�
 - На крышке только дуговая надпись «Детектор метана» вокруг головки MQ-4. CH4 и другой декор отсутствуют.
 - USB-C — простое скруглённое отверстие 9,4×3,6 мм, R1,7, без рамки и вставки.
 - В Stage05R5R3R1 добавлены сквозные световые каналы Ø5,4 мм с наружной направляющей Ø6,4 мм над HL1 (красный LED) и HL2 (зелёный LED), а также 3×3 акустические отверстия Ø1,6 мм с шагом 2,7 мм над HA1 (HCM1206X).
-- Новая R3R1 сборка построена по пользовательской детальной STEP-плате с реальным USB-C. Standalone case: 2 valid BREP solids. Assembly: 314 valid BREP solids. Оба STEP прошли round-trip импорт.
+- Stage05R5R3R2 исправляет ориентацию четырёх зенковок M3: широкая сторона Ø6,2 мм перенесена на внутреннюю сторону пола корпуса. Наружная стеновая поверхность остаётся плоской, кроме проходных отверстий Ø3,4 мм. Координаты и профиль креплений сохранены.
+- Новая R3R2 сборка построена на базе пользовательской детальной STEP-платы с реальным USB-C. Standalone case: 2 valid BREP solids. Assembly: 314 valid BREP solids. Оба STEP прошли round-trip импорт.
 - Основной компонент по Z оставляет около 0,405 мм номинального зазора до крышки. Светопроводимость, акустическая эффективность, физическая примерка жгута/USB-C, печать и native FreeCAD recompute пока не выполнены.
 
-[Stage05R5R3 OneDrive folder](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sad33bab3433346379845c3f11d35c6a5)  
-[Full Stage05R5R3 ZIP](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sa683bd43cfc544828ea4257c6568dead)  
-[Closed GLB](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s111c1ae988724a218c03ed8903ff27fd)  
-[Open GLB](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sa7d48b50ebf842c49f4b7f0da77b7a7f)  
-[FreeCAD macro](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s86cb8081df7a4d2282061486dba3c143)  
-[Top view — both boards and harness](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s61e2e33777ea41439c01a2088a6cc472)  
-[A1–Molex–sensor pins close-up](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s44e100321d1d43cd907c1a019b27b4eb)
+[Stage05R5R3R2 — зенковка крепления на стену (OneDrive)](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s73661b9f2fa04aae857a2b9d5da65cec)  
+[Корпус отдельно — R3R2](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!sad26192c77284edda748a3ea26b1089c)  
+[Сборка с двумя платами — R3R2](https://onedrive.live.com?cid=24FDA6920AA8C92A&id=24FDA6920AA8C92A!s19202e00b8d24322ae2f54dba1687b8a)  
+[Checkpoint Stage05R5R3R2](https://github.com/valuncilh/gazo_analizator/blob/design/usb-c-pcb-enclosure-r5/hardware/rev5/log/REV5_CHECKPOINT_VLAR_STAGE05R5R3R2_WALL_MOUNT_COUNTERSINK_2026-11-08.md)
 
 SHA-256:
-- ZIP: `98d53bfab82a1a1f1421b828d70854dfa22bbf9fddd0e1411554110b4325a6b5`
-- Manifest: `f944979eafb2b1fdf2a9905484f4416bc7c7792fef546ea71a3997ce3769df78`
-- Corrected main PCB source: `0a6489358d9ff5d8a8fbd0f9e5916dcffeefa2e925c6cb4ce9a08b2220c7703b`
-- Sensor STEP source: `d064355fa01dd6ed99a5886260bc3dadf1f246ba39076c1bb64b40fadc283ee7`
+- Корпус отдельно: `a3dcbdf89ca9c214a1bbf629ce64aa5a4b26dc91137a6d9c8d2a9b77a8076ee4`
+- Сборка с платами: `9ac8ce0ac8aae9197f29824f6bb9e1c8f2e69b07ca5dbce9b5bbfde6fa37aaea`
 
-Подробности: `этапы/Этап 05R5R3 — единый корпус и обе платы/README.md` и checkpoint `log/REV5_CHECKPOINT_VLAR_STAGE05R5R3_COMMON_TWO_PCBS_2026-11-08.md`.
+Предыдущая R3R1 и полный Stage05R5R3 пакет сохранены в OneDrive без перезаписи.
 
 ## Архивный этап — Stage05R5R2: установка уточнённой PCB и Type-C
 
